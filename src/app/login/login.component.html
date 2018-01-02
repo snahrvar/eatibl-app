@@ -1,0 +1,48 @@
+<form novalidate [formGroup]="myForm">
+  <fieldset>
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text"
+             class="form-control"
+             formControlName = "firstName"
+             required
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text"
+             class="form-control"
+             formControlName = "lastName"
+             required
+      >
+    </div>
+  </fieldset>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email"
+           class="form-control"
+           fomrControlName = "email"
+           required
+    >
+  </div>
+
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password"
+           class="form-control"
+           formControlName = "password"
+           required
+    >
+  </div>
+
+  <div class="form-group">
+    <label>Language</label>
+    <select class="form-control">
+      <option value="">Please select a language</option>
+    </select>
+  </div>
+
+  <pre>{{myForm.value | json}}</pre>
+</form>
