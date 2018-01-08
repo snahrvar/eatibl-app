@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import {Routes, RouterModule} from "@angular/router";
-import { ReactiveFormsModule} from "@angular/forms";
+import { FormsModule } from '@angular/forms';
+import { NouisliderModule } from 'ng2-nouislider';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -19,7 +20,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule,
+    NouisliderModule,
+    FormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
