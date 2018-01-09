@@ -1,0 +1,21 @@
+<ul>
+  <li>
+    <h2><a rel="noopener" href="/login">Login</a></h2>
+    <p>Monday</p>
+    <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[0]"></nouislider>
+    <p>Tuesday</p>
+    <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[1]"></nouislider>
+    <p>Wednesday</p>
+    <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[2]"></nouislider>
+    <p>Thursday</p>
+    <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[3]"></nouislider>
+    <p>Friday</p>
+    <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[4]"></nouislider>
+    <p>Saturday</p>
+    <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[5]"></nouislider>
+    <p>Sunday</p>
+    <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[6]"></nouislider>
+  </li>
+</ul>
+
+<button (click)="submitHours()">Submit</button>

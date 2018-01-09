@@ -7,15 +7,20 @@ import { NouisliderModule } from 'ng2-nouislider';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { BusinessHoursComponent } from './business-hours/business-hours.component';
+import { KeyHoursComponent } from './key-hours/key-hours.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent }
+  { path: 'step1', component: BusinessHoursComponent },
+  { path: 'step2', component: KeyHoursComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    BusinessHoursComponent,
+    KeyHoursComponent
   ],
   imports: [
     BrowserModule,

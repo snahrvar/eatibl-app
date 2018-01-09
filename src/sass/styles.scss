@@ -1,3 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+//Third party css imports
 @import "~nouislider/distribute/nouislider.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
+
+//Internal scss imports
+@import './variables';
+@import './mixins';

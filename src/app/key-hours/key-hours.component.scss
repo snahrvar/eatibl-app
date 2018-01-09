@@ -1,0 +1,25 @@
+.button-row{
+  display: flex;
+  flex-direction: row;
+  .button-group{
+    display: flex;
+    flex-direction: column;
+    .hour-button{
+      width: 80px;
+      &.active{
+        background-color: lightgreen;
+      }
+    }
+    .peak-button{
+      opacity: 0;
+      pointer-events: none;
+      &.displayed{
+        opacity: 1;
+        pointer-events: auto;
+      }
+      &.active{
+        background-color: orange;
+      }
+    }
+  }
+}
