@@ -2,6 +2,140 @@
 @import "~nouislider/distribute/nouislider.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
 
+//Fonts
+@font-face {
+  font-family: "Quicksand Regular";
+  src: url("/assets/fonts/Quicksand-Regular.ttf") format("ttf");
+}
+
 //Internal scss imports
 @import './variables';
 @import './mixins';
+
+//General styling
+body{
+  background-color: $light-grey;
+  margin: 0;
+}
+
+a{
+  text-decoration: none;
+}
+
+button{
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+p, h2, a, button{
+  font-family: "Quicksand Regular";
+  color: $dark-grey;
+}
+
+h2{
+  margin: 0;
+  color: $eatibl-red;
+}
+
+//Elements
+.separator{
+  margin: 12px 0;
+  border-top: 1px solid $light-grey;
+  width: 100%;
+}
+
+nouislider{
+  .noUi-target{
+    .noUi-base{
+      .noUi-origin{
+        .noUi-handle{
+          width: 30px;
+          height: 30px;
+          border-radius: 15px;
+          top: -8px;
+          outline: none;
+          &:before{
+            content: none;
+          }
+          &:after{
+            content: none;
+          }
+          .noUi-tooltip{
+            font-family: "Quicksand Regular";
+            outline: none;
+          }
+        }
+      }
+      .noUi-connect{
+        background: $eatibl-blue;
+      }
+    }
+  }
+}
+
+//General use classes
+.button{
+  text-align: center;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: $eatibl-red;
+  color: #fff;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.button-small{
+  text-align: center;
+  width: 80px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  border-radius: 3px;
+  color: #fff;
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.button, .button-small{
+  &.red{
+    background-color: $eatibl-red;
+  }
+  &.blue{
+    background-color: $eatibl-blue;
+  }
+}
+
+//Layout
+.frame{
+  width: 1400px;
+  height: 100%;
+  padding: 0 30px;
+  margin: 0 auto;
+  @media (max-width: 1599px) {
+    width: 1200px;
+  }
+  @media (max-width: 1199px) {
+    width: 992px;
+  }
+  @media (max-width: 991px) {
+    width: 600px;
+  }
+  @media(max-width: 599px) {
+    width: 100%;
+  }
+}
+
+.card{
+  background-color: #fff;
+  border-radius: 2px;
+  width: 100%;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}

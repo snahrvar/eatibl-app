@@ -1,25 +1,61 @@
-.button-row{
+//Imports
+@import '~sass/variables';
+
+//Styling
+.day{
   display: flex;
   flex-direction: row;
-  .button-group{
+  align-items: center;
+  margin: 8px 0;
+  p{
+    width: 100px;
+    line-height: 30px;
+    margin: 0;
+  }
+  .button-row{
     display: flex;
-    flex-direction: column;
-    .hour-button{
-      width: 80px;
-      &.active{
-        background-color: lightgreen;
+    flex-direction: row;
+    overflow-x: auto;
+    width: 100%;
+    .button-group{
+      display: flex;
+      flex-direction: column;
+      .hour-button{
+        width: 80px;
+        height: 30px;
+        margin: 5px 0;
+        background-color: #fff;
+        -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        &.active{
+          background-color: $eatibl-blue;
+          color: #fff;
+        }
       }
-    }
-    .peak-button{
-      opacity: 0;
-      pointer-events: none;
-      &.displayed{
-        opacity: 1;
-        pointer-events: auto;
+      .peak-button, .off-peak-button{
+        height: 30px;
+        opacity: 0;
+        pointer-events: none;
+        background-color: darken($light-grey, 5%);
+        &.displayed{
+          opacity: 1;
+          pointer-events: auto;
+        }
       }
-      &.active{
-        background-color: orange;
+      .peak-button.active{
+        background-color: lighten( $eatibl-green, 15%);
+      }
+      .off-peak-button.active{
+        background-color: lighten($eatibl-orange, 15%);
       }
     }
   }
+}
+
+.confirm{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }

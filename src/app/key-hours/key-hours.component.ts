@@ -27,15 +27,25 @@ export class KeyHoursComponent implements OnInit {
   }
 
   addPoint(event, type, index, hour){
+    console.log(event)
     var existingIndex = this.dailyHours[index][type].indexOf(hour);
 
     if(existingIndex == -1) { //if peak hour not including in existing data, push it. Push it good.
       this.dailyHours[index][type].push(hour);
-      this.renderer.addClass(event.target, "active");
+      //If user clicks on the fontawesome i element, add active to button not i
+      if(event.target.localName == "i")
+        this.renderer.addClass(event.target.parentElement, "active");
+      else
+        this.renderer.addClass(event.target, "active");
     }
     else { //if peak hour already in array, take it out
       this.dailyHours[index][type].splice(existingIndex, 1);
       this.renderer.removeClass(event.target, "active");
+      //If user clicks on the fontawesome i element, add active to button not i
+      if(event.target.localName == "i")
+        this.renderer.removeClass(event.target.parentElement, "active");
+      else
+        this.renderer.removeClass(event.target, "active");
     }
 
     console.log(this.dailyHours[index]);
