@@ -1,0 +1,14 @@
+<div class="frame">
+  <div class="card">
+    <h2>{{day | uppercase}}</h2>
+    <div class="separator"></div>
+    <div class="discount-group">
+      <div class="discount-slider">
+        <nouislider [config]="rangeConfig" [(ngModel)]="test"></nouislider>
+        <button class="button-mini blue"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+        <input type="number">
+        <button class="button-mini blue"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+</div>

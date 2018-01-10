@@ -1,0 +1,17 @@
+.card{
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  .day{
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    h2{
+      margin-bottom: 12px;
+    }
+  }
+  p-chart{
+    width: 100%;
+  }
+}

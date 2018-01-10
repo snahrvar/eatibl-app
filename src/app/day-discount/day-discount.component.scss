@@ -1,0 +1,34 @@
+//Imports
+@import '~sass/variables';
+
+//Styling
+.card{
+  display: flex;
+  flex-direction: column;
+  .discount-group{
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    .discount-slider{
+      padding: 0 6px;
+      width: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      nouislider{
+        height: 100%;
+      }
+      input{
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        font-family: "Quicksand Regular";
+        font-size: 16px;
+        margin: 6px 0;
+        border-radius: 3px;
+        border: 1px solid $grey;
+        outline: none;
+      }
+    }
+  }
+}

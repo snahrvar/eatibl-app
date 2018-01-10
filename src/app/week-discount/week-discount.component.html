@@ -1,0 +1,10 @@
+<div class="frame">
+  <div class="card" *ngFor="let day of discountArray; let i = index">
+    <div class="day">
+      <h2>{{day.day}}</h2>
+      <button class="button blue">Edit</button>
+    </div>
+    <div class="separator-v"></div>
+    <p-chart type="bar" height="200" [data]="graph[i].data" [options]="graph[i].options"></p-chart>
+  </div>
+</div>
