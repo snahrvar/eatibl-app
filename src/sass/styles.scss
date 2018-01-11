@@ -93,6 +93,9 @@ nouislider{
   }
   .noUi-vertical{
     height: 100%;
+    .noUi-handle{
+      top: -16px !important;
+    }
   }
 }
 
@@ -148,6 +151,10 @@ nouislider{
   }
   &.blue{
     background-color: $eatibl-blue;
+  }
+  &.white{
+    background-color: #fff;
+    color: $eatibl-red;
   }
 }
 

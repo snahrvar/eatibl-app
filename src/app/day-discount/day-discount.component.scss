@@ -2,10 +2,17 @@
 @import '~sass/variables';
 
 //Styling
+.frame{
+  display: flex;
+  justify-content: center;
+}
 .card{
   display: flex;
   flex-direction: column;
+  width: auto;
+  float: left;
   .discount-group{
+    margin: 0 30px;
     height: 400px;
     display: flex;
     flex-direction: row;
@@ -30,5 +37,11 @@
         outline: none;
       }
     }
+  }
+  .confirm{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 }
