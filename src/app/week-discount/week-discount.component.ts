@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-week-discount',
@@ -17,6 +18,7 @@ export class WeekDiscountComponent implements OnInit {
   businessHours: any;
   graph = [];
   discountArray = [];
+  apiUrl = environment.apiURL;
 
   //To build the daily discount bars cards on front end
   buildDiscountArray(discounts, businessHours){
@@ -95,12 +97,12 @@ export class WeekDiscountComponent implements OnInit {
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
       this.restaurantId = params['restaurantId'];
-      this.http.get('http://localhost:3000/discount/' + this.restaurantId + '/week')
+      this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/week')
         .subscribe(
           res => {
             this.discounts = res;
             console.log(this.discounts);
-            this.http.get('http://localhost:3000/hours/' + this.restaurantId)
+            this.http.get(this.apiUrl + '/hours/' + this.restaurantId)
               .subscribe(
                 res => {
                   this.businessHours = res;

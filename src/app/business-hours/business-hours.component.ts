@@ -2,6 +2,7 @@ import { Component,OnInit  } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class BusinessHoursComponent implements OnInit {
   result: any; //Store http get result to be able to use .length
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
+  apiUrl = environment.apiURL;
 
   //Default business hours
   businessHoursArray = [];
@@ -34,7 +36,7 @@ export class BusinessHoursComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       this.restaurantId = params['restaurantId'];
       //Only get restaurant information if we are editing an existing one
-      this.http.get('http://localhost:3000/hours/' + this.restaurantId)
+      this.http.get(this.apiUrl + '/hours/' + this.restaurantId)
         .subscribe(
           res => {
             this.result = res; //res alone will not accept a .length check
@@ -76,7 +78,7 @@ export class BusinessHoursComponent implements OnInit {
 
   submitHours(){
     this.submitted = true;
-    this.http.post('http://localhost:3000/hours/' + this.restaurantId + '/create', this.businessHours)
+    this.http.post(this.apiUrl + '/hours/' + this.restaurantId + '/create', this.businessHours)
       .subscribe(
         res => {
           console.log(res);

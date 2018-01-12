@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-restaurant-list',
@@ -9,9 +10,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 export class RestaurantListComponent implements OnInit {
   restaurants: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
+  apiUrl = environment.apiURL;
 
   constructor(private http: HttpClient) {
-    this.http.get('http://localhost:3000/restaurant/all')
+    this.http.get(this.apiUrl + '/restaurant/all')
       .subscribe(
         res => {
           this.restaurants = res;
