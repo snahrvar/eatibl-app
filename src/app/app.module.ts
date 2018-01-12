@@ -7,7 +7,6 @@ import { NouisliderModule } from 'ng2-nouislider';
 import { ChartModule, ProgressSpinnerModule } from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { BusinessHoursComponent } from './business-hours/business-hours.component';
 import { KeyHoursComponent } from './key-hours/key-hours.component';
 import { WeekDiscountComponent } from './week-discount/week-discount.component';
@@ -28,7 +27,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     BusinessHoursComponent,
     KeyHoursComponent,
     WeekDiscountComponent,

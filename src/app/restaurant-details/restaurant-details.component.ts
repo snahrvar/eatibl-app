@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-restaurant-details',
@@ -15,6 +16,7 @@ export class RestaurantDetailsComponent implements OnInit {
   restaurant: Object = {};
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
+  apiUrl = environment.apiURL;
 
   constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router ) {
 
@@ -24,7 +26,7 @@ export class RestaurantDetailsComponent implements OnInit {
       this.restaurantId = params['restaurantId'];
       //Only get restaurant information if we are editing an existing one
       if(this.action == 'Edit')
-        this.http.get('http://localhost:3000/restaurant/' + this.restaurantId)
+        this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
           .subscribe(
             res => {
               this.restaurant = res;
@@ -41,7 +43,7 @@ export class RestaurantDetailsComponent implements OnInit {
 
   submitRestaurant(){
     this.submitted = true;
-    this.http.post('http://localhost:3000/restaurant/create', this.restaurant)
+    this.http.post(this.apiUrl + '/restaurant/create', this.restaurant)
       .subscribe(
         res => { //Returns restaurant ID
           console.log(res);

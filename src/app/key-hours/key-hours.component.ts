@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewChecked, Renderer2 } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-key-hours',
@@ -17,6 +18,7 @@ export class KeyHoursComponent implements OnInit {
 
   dailyHours: any;
   totalHours = [];
+  apiUrl = environment.apiURL;
 
   displayArrows(event){
     if(event.target.classList.value.indexOf("active") >= 0){
@@ -59,7 +61,7 @@ export class KeyHoursComponent implements OnInit {
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
       this.restaurantId = params['restaurantId'];
-    this.http.get('http://localhost:3000/hours/' + this.restaurantId)
+    this.http.get(this.apiUrl + '/hours/' + this.restaurantId)
       .subscribe(
         res => {
           this.dailyHours = res;
@@ -81,11 +83,11 @@ export class KeyHoursComponent implements OnInit {
   submitKeyHours(){
     console.log(this.dailyHours)
     this.submitted = true;
-    this.http.post('http://localhost:3000/hours/' + this.restaurantId + '/update', this.dailyHours)
+    this.http.post(this.apiUrl + '/hours/' + this.restaurantId + '/update', this.dailyHours)
       .subscribe(
         res => {
           console.log(res);
-          this.http.get('http://localhost:3000/discount/' + this.restaurantId + '/generate')
+          this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/generate')
             .subscribe(
               res => {
                 console.log(res);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import * as _ from 'underscore';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-restaurant-list',
@@ -11,14 +12,15 @@ export class RestaurantListComponent implements OnInit {
   restaurants: any;
   discounts: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
+  apiUrl = environment.apiURL;
 
   constructor(private http: HttpClient) {
-    this.http.get('http://localhost:3000/restaurant/all')
+    this.http.get(this.apiUrl + '/restaurant/all')
       .subscribe(
         res => {
           this.restaurants = res;
           console.log(this.restaurants);
-          this.http.get('http://localhost:3000/discount/all')
+          this.http.get(this.apiUrl + '/discount/all')
             .subscribe(
               res => {
                 this.discounts = res;

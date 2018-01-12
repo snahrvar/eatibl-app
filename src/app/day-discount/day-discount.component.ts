@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'underscore';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-day-discount',
@@ -17,16 +18,17 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
   private sub: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
+  apiUrl = environment.apiURL;
 
   constructor( private http: HttpClient, private route:ActivatedRoute ) {
     this.sub = this.route.params.subscribe(params => {
       this.day = params['day'];
       this.restaurantId = params['restaurantId'];
-      this.http.get('http://localhost:3000/discount/' + this.restaurantId + '/' + this.day)
+      this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/' + this.day)
         .subscribe(
           res => {
             this.discounts = res;
-            this.http.get('http://localhost:3000/hours/' + this.restaurantId)
+            this.http.get(this.apiUrl + '/hours/' + this.restaurantId)
               .subscribe(
                 res => {
                   this.hours = res;
@@ -114,7 +116,7 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
 
   submitDiscounts(){
     this.submitted = true;
-    this.http.post('http://localhost:3000/discount/' + this.restaurantId + '/update', this.discounts)
+    this.http.post(this.apiUrl + '/discount/' + this.restaurantId + '/update', this.discounts)
       .subscribe(
         res => {
           console.log(res);
