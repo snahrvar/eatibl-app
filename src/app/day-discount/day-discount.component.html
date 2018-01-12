@@ -3,7 +3,10 @@
 </div>
 <div class="frame" *ngIf="contentLoaded">
   <div class="card">
-    <h2>{{day}}</h2>
+    <div class="card-header">
+      <h2>{{day}}</h2>
+      <a href="{{restaurantId}}/discount/week" class="button blue"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</a>
+    </div>
     <div class="separator"></div>
     <div class="card-content flex-row">
       <div class="row-titles">
@@ -32,7 +35,7 @@
     <div class="separator"></div>
     <div class="card-footer">
       <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-      <button class="button blue" (click)="submitDiscounts()" [disabled]="submitted">Submit</button>
+      <button class="button blue" (click)="submitDiscounts()" [disabled]="submitted">Update</button>
     </div>
   </div>
 </div>

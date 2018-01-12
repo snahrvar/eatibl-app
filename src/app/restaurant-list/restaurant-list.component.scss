@@ -11,6 +11,10 @@
     .column-name{
       color: $eatibl-red;
       padding-bottom: 12px;
+      &.icon{
+        display: flex;
+        justify-content: center;
+      }
     }
   }
   .table-content{
@@ -22,6 +26,12 @@
       .list-field{
         color: $dark-grey;
         height: 60px;
+        &.icon{
+          color: $eatibl-green;
+          display: flex;
+          justify-content: center;
+          font-size: 20px;
+        }
       }
       .list-buttons{
         width: 25%;
@@ -49,9 +59,12 @@
       width: 25%;
     }
     &:nth-of-type(3){
-      width: 25%;
+      width: 15%;
     }
     &:nth-of-type(4){
+      width: 10%;
+    }
+    &:nth-of-type(5){
       width: 10%;
     }
   }

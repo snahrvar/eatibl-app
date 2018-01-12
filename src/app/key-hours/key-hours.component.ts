@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, Renderer2 } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
@@ -11,6 +11,7 @@ import * as _ from 'underscore';
 export class KeyHoursComponent implements OnInit {
   private sub: any;
   restaurantId: any;
+  buttonGroupElements: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
 
@@ -50,6 +51,7 @@ export class KeyHoursComponent implements OnInit {
       else
         this.renderer.removeClass(event.target, "active");
     }
+    console.log(this.dailyHours);
   }
 
   constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router  ) {
@@ -77,6 +79,7 @@ export class KeyHoursComponent implements OnInit {
   }
 
   submitKeyHours(){
+    console.log(this.dailyHours)
     this.submitted = true;
     this.http.post('http://localhost:3000/hours/' + this.restaurantId + '/update', this.dailyHours)
       .subscribe(
@@ -101,5 +104,13 @@ export class KeyHoursComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  // ngAfterViewChecked(){
+  //   this.buttonGroupElements = document.getElementsByClassName("button-row");
+  //   if (this.buttonGroupElements.length)
+  //     for (var i = 0; i < this.buttonGroupElements.length; i++){
+  //       console.log(this.buttonGroupElements[i]);
+  //     }
+  // }
 
 }
