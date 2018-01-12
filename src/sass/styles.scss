@@ -29,12 +29,12 @@ button{
   cursor: pointer;
 }
 
-p, h2, a, button{
+p, h2, h4, a, button{
   font-family: "Quicksand Regular";
   color: $dark-grey;
 }
 
-h2{
+h2, h4{
   margin: 0;
   color: $eatibl-red;
 }
@@ -73,6 +73,7 @@ nouislider{
           height: 30px;
           border-radius: 15px;
           top: -8px;
+          left: -15px;
           outline: none;
           &:before{
             content: none;
@@ -90,12 +91,52 @@ nouislider{
         background: $eatibl-blue;
       }
     }
+    .noUi-pips-horizontal{
+      height: 20px;
+    }
+    .noUi-pips-vertical{
+      .noUi-value{
+        font-family: "Quicksand Regular";
+      }
+    }
   }
   .noUi-vertical{
     height: 100%;
     .noUi-handle{
+      left: -7px !important;
       top: -16px !important;
     }
+  }
+}
+
+p-progressspinner{
+  max-height: 40px;
+  .ui-progress-spinner{
+    width: 40px;
+    height: 40px;
+  }
+  &.content-loading{
+    max-height: 100px;
+    .ui-progress-spinner{
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
+
+@keyframes ui-progress-spinner-color {
+  100%,
+  0% {
+    stroke: $eatibl-red;
+  }
+  25% {
+    stroke: $eatibl-blue;
+  }
+  50% {
+    stroke: $eatibl-red;
+  }
+  70% {
+    stroke: $eatibl-blue;
   }
 }
 
@@ -127,8 +168,6 @@ nouislider{
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
-
-
 .button-mini{
   display: flex;
   align-items: center;
@@ -156,6 +195,46 @@ nouislider{
     background-color: #fff;
     color: $eatibl-red;
   }
+  &:disabled, &[disabled]{
+    box-shadow: none;
+    color: $dark-grey;
+    background-color: darken($light-grey, 10%);
+    pointer-events: none;
+  }
+}
+.icon-padding{
+  padding-right: 5px;
+}
+
+//Form Styling
+form{
+  .form-group{
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0;
+    label{
+      color: $eatibl-red;
+      font-family: "Quicksand Regular";
+      margin-bottom: 6px;
+    }
+    input, textarea{
+      font-family: "Quicksand Regular";
+      padding: 6px;
+    }
+    .radio-group{
+      font-family: "Quicksand Regular";
+      height: 32px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      input[type=radio]{
+        font-family: "Quicksand Regular";
+        &:not(:first-of-type){
+          margin-left: 12px;
+        }
+      }
+    }
+  }
 }
 
 //Layout
@@ -176,6 +255,17 @@ nouislider{
   @media(max-width: 599px) {
     width: 100%;
   }
+  &.content-loading{
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.flex-row{
+  display: flex;
+  flex-direction: row;
 }
 
 .card{
@@ -185,4 +275,18 @@ nouislider{
   padding: 16px;
   margin: 16px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .card-footer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    button{
+      margin-left: 12px;
+    }
+  }
 }

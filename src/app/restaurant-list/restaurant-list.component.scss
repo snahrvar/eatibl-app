@@ -1,0 +1,58 @@
+//Imports
+@import '~sass/variables';
+
+//Styling
+.restaurant-table{
+  .table-header{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $grey;
+    padding: 0 8px;
+    .column-name{
+      color: $eatibl-red;
+      padding-bottom: 12px;
+    }
+  }
+  .table-content{
+    .list-item{
+      display: flex;
+      flex-direction: row;
+      border-bottom: 1px solid darken($light-grey, 5%);
+      padding: 0 8px;
+      .list-field{
+        color: $dark-grey;
+        height: 60px;
+      }
+      .list-buttons{
+        width: 25%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      &:last-of-type{
+        border-bottom: 1px solid $grey;
+      }
+      &:nth-of-type(even){
+        background-color: $light-grey;
+      }
+    }
+  }
+  .list-field, .column-name{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-family: "Quicksand Regular";
+    &:first-of-type{
+      width: 15%;
+    }
+    &:nth-of-type(2){
+      width: 25%;
+    }
+    &:nth-of-type(3){
+      width: 25%;
+    }
+    &:nth-of-type(4){
+      width: 10%;
+    }
+  }
+}

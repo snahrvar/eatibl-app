@@ -1,38 +1,19 @@
-<div class="frame">
-  <div class="card">
+<div class="frame" [ngClass]="{'content-loading': !contentLoaded}">
+  <p-progressSpinner class="content-loading" strokeWidth="4" *ngIf="!contentLoaded"></p-progressSpinner>
+  <div class="card" *ngIf="contentLoaded">
     <h2>Business Hours</h2>
     <div class="separator"></div>
-    <div class="hour-slider">
-      <p>Monday</p>
-      <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[0]"></nouislider>
-    </div>
-    <div class="hour-slider">
-      <p>Tuesday</p>
-      <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[1]"></nouislider>
-    </div>
-    <div class="hour-slider">
-      <p>Wednesday</p>
-      <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[2]"></nouislider>
-    </div>
-    <div class="hour-slider">
-      <p>Thursday</p>
-      <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[3]"></nouislider>
-    </div>
-    <div class="hour-slider">
-      <p>Friday</p>
-      <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[4]"></nouislider>
-    </div>
-    <div class="hour-slider">
-      <p>Saturday</p>
-      <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[5]"></nouislider>
-    </div>
-    <div class="hour-slider">
-      <p>Sunday</p>
-      <nouislider [config]="rangeConfig" [(ngModel)]="businessHours[6]"></nouislider>
-    </div>
-    <div class="separator"></div>
-    <div class="confirm">
-      <button class="button blue" (click)="submitHours()">Submit</button>
+    <div class="slider-group">
+      <div class="hour-slider" *ngFor="let day of businessHours; let i = index">
+        <p>{{day.day}}</p>
+        <nouislider [config]="rangeConfig" [(ngModel)]="businessHoursArray[i]"></nouislider>
+      </div>
+
+      <div class="separator"></div>
+      <div class="card-footer">
+        <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
+        <button class="button blue" (click)="submitHours()"  [disabled]="submitted">Submit</button>
+      </div>
     </div>
   </div>
 </div>

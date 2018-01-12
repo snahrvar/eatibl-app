@@ -1,20 +1,22 @@
-<div class="frame">
-  <div class="card">
+<div class="frame" [ngClass]="{'content-loading': !contentLoaded}">
+  <p-progressSpinner class="content-loading" strokeWidth="4" *ngIf="!contentLoaded"></p-progressSpinner>
+  <div class="card" *ngIf="contentLoaded">
     <h2>Key Hours</h2>
     <div class="separator"></div>
     <div class="day" *ngFor="let day of dailyHours; let i = index">
       <p>{{day.day}}</p>
       <div class="button-row">
         <div *ngFor="let hour of totalHours[i]; let a = index" class="button-group">
-          <button class="peak-button" (click)="addPoint($event, 'peak', i, day.open + a)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-          <button class="hour-button" (click)="displayArrows($event)">{{day.open + a}}</button>
-          <button class="off-peak-button" (click)="addPoint($event, 'offPeak', i, day.open + a)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+          <button class="peak-button" [ngClass]="{'active displayed': day.peak.indexOf(day.open + a) > -1}" (click)="addPoint($event, 'peak', i, day.open + a)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+          <button class="hour-button"[ngClass]="{'active': day.peak.indexOf(day.open + a) > -1 || day.offPeak.indexOf(day.open + a) > -1}" (click)="displayArrows($event)">{{day.open + a}}</button>
+          <button class="off-peak-button" [ngClass]="{'active displayed': day.offPeak.indexOf(day.open + a) > -1}" (click)="addPoint($event, 'offPeak', i, day.open + a)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
         </div>
       </div>
     </div>
     <div class="separator"></div>
-    <div class="confirm">
-      <button class="button blue" (click)="submitKeyHours()">Submit</button>
+    <div class="card-footer">
+      <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
+      <button class="button blue" (click)="submitKeyHours()" [disabled]="submitted">Submit</button>
     </div>
   </div>
 </div>

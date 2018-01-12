@@ -2,22 +2,18 @@
 @import '~sass/variables';
 
 //Styling
-.hour-slider{
-  display: flex;
-  flex-direction: row;
-  margin-top: 30px;
-  p{
-    width: 100px;
-    margin-right: 16px;
+.slider-group{
+  padding: 0 16px;
+  .hour-slider{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    p{
+      width: 100px;
+      margin-right: 16px;
+    }
+    nouislider{
+      width: 100%;
+    }
   }
-  nouislider{
-    width: 100%;
-  }
-}
-
-.confirm{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
 }

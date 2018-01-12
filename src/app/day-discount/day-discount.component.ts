@@ -10,14 +10,23 @@ import * as _ from 'underscore';
 })
 export class DayDiscountComponent implements OnInit, OnDestroy {
 
+  day: any;
+  discounts: any;
+  hours: any;
+  restaurantId: any;
+  private sub: any;
+  contentLoaded = false; //Prevent content from loading until api calls are returned
+  submitted = false; //Used to disable submit button once pressed
+
   constructor( private http: HttpClient, private route:ActivatedRoute ) {
     this.sub = this.route.params.subscribe(params => {
       this.day = params['day'];
-      this.http.get('http://localhost:3000/discount/' + this.day)
+      this.restaurantId = params['restaurantId'];
+      this.http.get('http://localhost:3000/discount/' + this.restaurantId + '/' + this.day)
         .subscribe(
           res => {
             this.discounts = res;
-            this.http.get('http://localhost:3000/hours')
+            this.http.get('http://localhost:3000/hours/' + this.restaurantId)
               .subscribe(
                 res => {
                   this.hours = res;
@@ -34,12 +43,6 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
         );
     });
   }
-
-  day: any;
-  discounts: any;
-  hours: any;
-  private sub: any;
-  contentLoaded = false; //Changes to true once api calls are returned
 
   //Configurations for all sliders. Second range config adds pips to last slider
   rangeConfig= [{
@@ -110,13 +113,16 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
   }
 
   submitDiscounts(){
-    this.http.post('http://localhost:3000/discount/update', this.discounts)
+    this.submitted = true;
+    this.http.post('http://localhost:3000/discount/' + this.restaurantId + '/update', this.discounts)
       .subscribe(
         res => {
           console.log(res);
+          this.submitted = false; //After completion enable submit button
         },
         err => {
           console.log("Error occurred");
+          this.submitted = false; //After completion enable submit button
         }
       );
   }

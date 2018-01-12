@@ -1,0 +1,17 @@
+form{
+  display: flex;
+  flex-direction: row;
+  .form-cluster{
+    padding: 0 8px;
+    width: 25%;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    .form-group{
+      flex: 1;
+      textarea{
+        height: 100%;
+      }
+    }
+  }
+}

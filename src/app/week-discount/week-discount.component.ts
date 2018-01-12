@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-week-discount',
@@ -7,6 +8,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrls: ['./week-discount.component.scss']
 })
 export class WeekDiscountComponent implements OnInit {
+  private sub: any;
+  private router: any;
+  restaurantId: any;
+  contentLoaded = false; //Prevent content from loading until api calls are returned
 
   discounts: any;
   businessHours: any;
@@ -41,6 +46,7 @@ export class WeekDiscountComponent implements OnInit {
 
       this.discountArray.push(day);
     }
+    this.contentLoaded = false;
   }
 
   //Generate discount bar charts
@@ -82,31 +88,38 @@ export class WeekDiscountComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient) {
-    this.http.get('http://localhost:3000/discount/week')
-      .subscribe(
-        res => {
-          this.discounts = res;
-          console.log(this.discounts);
-          this.http.get('http://localhost:3000/hours')
-            .subscribe(
-              res => {
-                this.businessHours = res;
-                console.log(this.businessHours);
-                this.buildDiscountArray(this.discounts, this.businessHours);
-                console.log(this.discountArray);
-                this.generateCharts();
-                console.log(this.graph)
-              },
-              err => {
-                console.log("Error occurred");
-              }
-            );
-        },
-        err => {
-          console.log("Error occurred");
-        }
-      );
+  constructor(private http: HttpClient, private route:ActivatedRoute) {
+    //Initialize router
+    this.router = Router;
+
+    //Subscribe to the route parameters
+    this.sub = this.route.params.subscribe(params => {
+      this.restaurantId = params['restaurantId'];
+      this.http.get('http://localhost:3000/discount/' + this.restaurantId + '/week')
+        .subscribe(
+          res => {
+            this.discounts = res;
+            console.log(this.discounts);
+            this.http.get('http://localhost:3000/hours/' + this.restaurantId)
+              .subscribe(
+                res => {
+                  this.businessHours = res;
+                  console.log(this.businessHours);
+                  this.buildDiscountArray(this.discounts, this.businessHours);
+                  console.log(this.discountArray);
+                  this.generateCharts();
+                  console.log(this.graph)
+                },
+                err => {
+                  console.log("Error occurred");
+                }
+              );
+          },
+          err => {
+            console.log("Error occurred");
+          }
+        );
+    })
   }
 
   ngOnInit() {

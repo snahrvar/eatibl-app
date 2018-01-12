@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {Routes, RouterModule} from "@angular/router";
 import { FormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
-import { ChartModule } from 'primeng/primeng';
+import { ChartModule, ProgressSpinnerModule } from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -12,12 +12,17 @@ import { BusinessHoursComponent } from './business-hours/business-hours.componen
 import { KeyHoursComponent } from './key-hours/key-hours.component';
 import { WeekDiscountComponent } from './week-discount/week-discount.component';
 import { DayDiscountComponent } from './day-discount/day-discount.component';
+import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
+import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
 
 const routes: Routes = [
-  { path: 'step1', component: BusinessHoursComponent },
-  { path: 'step2', component: KeyHoursComponent },
-  { path: 'step3', component: WeekDiscountComponent },
-  { path: 'step3/:day', component: DayDiscountComponent }
+  { path: '', component: RestaurantListComponent },
+  { path: ':restaurantId/hours', component: BusinessHoursComponent },
+  { path: ':restaurantId/keyHours', component: KeyHoursComponent },
+  { path: ':restaurantId/discount/week', component: WeekDiscountComponent },
+  { path: ':restaurantId/discount/:day', component: DayDiscountComponent },
+  { path: 'restaurant/:action', component: RestaurantDetailsComponent },
+  { path: ':restaurantId/:action', component: RestaurantDetailsComponent },
 ];
 
 @NgModule({
@@ -27,13 +32,16 @@ const routes: Routes = [
     BusinessHoursComponent,
     KeyHoursComponent,
     WeekDiscountComponent,
-    DayDiscountComponent
+    DayDiscountComponent,
+    RestaurantListComponent,
+    RestaurantDetailsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     NouisliderModule,
     ChartModule,
+    ProgressSpinnerModule,
     FormsModule,
     RouterModule.forRoot(routes)
   ],
