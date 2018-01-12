@@ -109,6 +109,15 @@ nouislider{
   }
 }
 
+.loading-content{
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 p-progressspinner{
   max-height: 40px;
   .ui-progress-spinner{
@@ -254,12 +263,6 @@ form{
   }
   @media(max-width: 599px) {
     width: 100%;
-  }
-  &.content-loading{
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
 

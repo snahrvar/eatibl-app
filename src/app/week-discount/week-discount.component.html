@@ -1,4 +1,7 @@
-<div class="frame">
+<div class="loading-content" *ngIf="!contentLoaded">
+  <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
+</div>
+<div class="frame" *ngIf="contentLoaded">
   <div class="card" *ngFor="let day of discountArray; let i = index">
     <div class="day">
       <h2>{{day.day}}</h2>

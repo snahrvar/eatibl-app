@@ -1,6 +1,8 @@
-<div class="frame" [ngClass]="{'content-loading': !contentLoaded}">
-  <p-progressSpinner class="content-loading" strokeWidth="4" *ngIf="!contentLoaded"></p-progressSpinner>
-  <div class="card" *ngIf="contentLoaded">
+<div class="loading-content" *ngIf="!contentLoaded">
+  <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
+</div>
+<div class="frame" *ngIf="contentLoaded">
+  <div class="card">
     <div class="card-header">
       <h2>Restaurant List</h2>
       <a href="/restaurant/Add" class="button blue"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>New</a>

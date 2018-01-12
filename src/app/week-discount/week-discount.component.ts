@@ -46,7 +46,7 @@ export class WeekDiscountComponent implements OnInit {
 
       this.discountArray.push(day);
     }
-    this.contentLoaded = false;
+    this.contentLoaded = true;
   }
 
   //Generate discount bar charts

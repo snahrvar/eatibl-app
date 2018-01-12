@@ -1,6 +1,8 @@
-<div class="frame" [ngClass]="{'content-loading': !contentLoaded}">
-  <p-progressSpinner class="content-loading" strokeWidth="4" *ngIf="!contentLoaded"></p-progressSpinner>
-  <div class="card" *ngIf="contentLoaded">
+<div class="loading-content" *ngIf="!contentLoaded">
+  <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
+</div>
+<div class="frame" *ngIf="contentLoaded">
+  <div class="card">
     <h2>Key Hours</h2>
     <div class="separator"></div>
     <div class="day" *ngFor="let day of dailyHours; let i = index">
