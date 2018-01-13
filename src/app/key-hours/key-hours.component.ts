@@ -16,6 +16,7 @@ export class KeyHoursComponent implements OnInit {
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
 
+  discounts: any;
   dailyHours: any;
   totalHours = [];
   apiUrl = environment.apiURL;
@@ -84,14 +85,26 @@ export class KeyHoursComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
-          this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/generate')
+          this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/week')
             .subscribe(
               res => {
-                console.log(res);
-                this.router.navigateByUrl('/' + this.restaurantId + '/discount/week');
+                this.discounts = res;
+                if(!this.discounts.length)
+                  this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/generate')
+                    .subscribe(
+                      res => {
+                        console.log(res);
+                        this.router.navigateByUrl('/' + this.restaurantId + '/discount/week');
+                      },
+                      err => {
+                        console.log(err);
+                      }
+                    );
+                else
+                  this.router.navigateByUrl('/' + this.restaurantId + '/discount/week');
               },
               err => {
-                console.log(err);
+                console.log("Error occurred");
               }
             );
         },
