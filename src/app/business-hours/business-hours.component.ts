@@ -29,6 +29,7 @@ export class BusinessHoursComponent implements OnInit {
     {day: "Saturday", open: 9, close: 21},
     {day: "Sunday", open: 9, close: 21}
   ];
+  newHours = [];
 
   constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router  ){
 
@@ -59,6 +60,16 @@ export class BusinessHoursComponent implements OnInit {
     this.contentLoaded = true;
   }
 
+  processHours(businessHoursArray){
+    for( var i = 0; i < businessHoursArray.length; i++){
+      this.newHours.push({
+        day: this.businessHours[i]['day'],
+        open: businessHoursArray[i][0],
+        close: businessHoursArray[i][1]
+      })
+    }
+  }
+
   rangeConfig: any = {
     connect: true,
     range: {
@@ -78,7 +89,8 @@ export class BusinessHoursComponent implements OnInit {
 
   submitHours(){
     this.submitted = true;
-    this.http.post(this.apiUrl + '/hours/' + this.restaurantId + '/create', this.businessHours)
+    this.processHours(this.businessHoursArray);
+    this.http.post(this.apiUrl + '/hours/' + this.restaurantId + '/create', this.newHours)
       .subscribe(
         res => {
           console.log(res);
