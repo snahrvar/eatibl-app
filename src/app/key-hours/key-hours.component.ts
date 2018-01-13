@@ -53,7 +53,6 @@ export class KeyHoursComponent implements OnInit {
       else
         this.renderer.removeClass(event.target, "active");
     }
-    console.log(this.dailyHours);
   }
 
   constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router  ) {
@@ -70,7 +69,6 @@ export class KeyHoursComponent implements OnInit {
             var hoursThisDay = new Array(this.dailyHours[i].close - this.dailyHours[i].open)
             this.totalHours.push(hoursThisDay);
           }
-          console.log(this.dailyHours);
           this.contentLoaded = true;
         },
         err => {
@@ -81,7 +79,6 @@ export class KeyHoursComponent implements OnInit {
   }
 
   submitKeyHours(){
-    console.log(this.dailyHours)
     this.submitted = true;
     this.http.post(this.apiUrl + '/hours/' + this.restaurantId + '/update', this.dailyHours)
       .subscribe(
