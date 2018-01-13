@@ -65,12 +65,7 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
       },
       step: 10,
       direction: 'rtl',
-      orientation: 'vertical',
-      pips: { // Show a scale with the slider
-        mode: 'steps',
-        stepped: true,
-        density: 20
-      }
+      orientation: 'vertical'
     }
   ]; //End of rangeconfig
 

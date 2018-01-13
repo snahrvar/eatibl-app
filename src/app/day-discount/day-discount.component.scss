@@ -12,48 +12,56 @@
   width: auto;
   float: left;
   margin-top: 0;
+  max-width: 100%;
   .row-titles{
     display: flex;
     flex-direction: column;
+    width: 10%;
     .title{
       display: flex;
-      flex-direciton: row;
+      flex-direction: row;
       justify-content: flex-end;
       align-items: center;
-      height: 10%;
+      height: 11%;
       &:first-of-type{
-        height: 70%;
+        height: 63%;
       }
       &:last-of-type{
-        height: 20%;
+        height: 16%;
       }
     }
   }
   .discount-group{
-    margin-right: 48px;
-    margin-left: 24px;
-    height: 400px;
-    display: flex;
-    flex-direction: row;
-    .discount-slider{
-      padding: 0 6px;
-      width: 30px;
+    //margin-right: 48px;
+    //margin-left: 24px;
+    max-width: 90%;
+    overflow-x: auto;
+    padding: 0 16px 16px 16px;
+    .scroll-wrapper{
+      height: 400px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      nouislider{
-        height: 100%;
-      }
-      input{
-        text-align: center;
+      flex-direction: row;
+      width: 100%;
+      .discount-slider{
+        padding: 0 6px;
         width: 30px;
-        height: 30px;
-        font-family: "Quicksand Regular";
-        font-size: 16px;
-        margin: 6px 0;
-        border-radius: 3px;
-        border: 1px solid $grey;
-        outline: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        nouislider{
+          height: 100%;
+        }
+        input{
+          text-align: center;
+          width: 30px;
+          height: 30px;
+          font-family: "Quicksand Regular";
+          font-size: 16px;
+          margin: 6px 0;
+          border-radius: 3px;
+          border: 1px solid $grey;
+          outline: none;
+        }
       }
     }
   }
