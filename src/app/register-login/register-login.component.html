@@ -30,7 +30,7 @@
       <form id="registerForm">
         <div class="form-group">
           <label for="fullName">Full Name</label>
-          <input type="text" class="form-control" id="fullName" name="full_name" placeholder="Full Name" [(ngModel)]="newUser.full_name" required>
+          <input type="text" class="form-control" id="fullName" name="full_name" placeholder="Full Name" [(ngModel)]="newUser.name" required>
         </div>
         <div class="form-group">
           <label for="newEmail">Email</label>
@@ -43,10 +43,6 @@
         <div class="form-group">
           <label for="newPassword">Password</label>
           <input type="text" class="form-control" id="newPassword" name="password" placeholder="Password" [(ngModel)]="newUser.password" required>
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="text" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" [(ngModel)]="newUser.confirm_password" required>
         </div>
         <button class="button-full blue" (click)="submitRegister()" [disabled]="submitted">Register</button>
       </form>
