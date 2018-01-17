@@ -16,9 +16,11 @@ import { RestaurantListComponent, RestaurantListDeleteDialog } from './restauran
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material';
+import { RegisterLoginComponent } from './register-login/register-login.component';
 
 const routes: Routes = [
   { path: '', component: RestaurantListComponent },
+  { path: 'login', component: RegisterLoginComponent },
   { path: ':restaurantId/hours', component: BusinessHoursComponent },
   { path: ':restaurantId/keyHours', component: KeyHoursComponent },
   { path: ':restaurantId/discount/week', component: WeekDiscountComponent },
@@ -36,7 +38,8 @@ const routes: Routes = [
     DayDiscountComponent,
     RestaurantListComponent,
     RestaurantDetailsComponent,
-    RestaurantListDeleteDialog
+    RestaurantListDeleteDialog,
+    RegisterLoginComponent
   ],
   imports: [
     BrowserModule,
