@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import * as _ from 'underscore';
 import { environment } from '../../environments/environment';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-restaurant-list',
@@ -14,7 +15,7 @@ export class RestaurantListComponent implements OnInit {
   contentLoaded = false; //Prevent content from loading until api calls are returned
   apiUrl = environment.apiURL;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public dialog: MatDialog) {
     this.http.get(this.apiUrl + '/restaurant/all')
       .subscribe(
         res => {
@@ -39,6 +40,21 @@ export class RestaurantListComponent implements OnInit {
       );
   }
 
+  deleteRestaurant(restaurantId){
+    let dialogRef = this.dialog.open(RestaurantListDeleteDialog, {
+      width: '250px'
+    });
+    // this.http.get(this.apiUrl + '/restaurant/' + restaurantId + '/disable',)
+    //   .subscribe(
+    //     res => {
+    //       console.log(res);
+    //     },
+    //     err => {
+    //       console.log("Error occurred");
+    //     }
+    //   );
+  }
+
   checkDiscounts(){
     for(var i = 0; i < this.restaurants.length; i++){
       var restaurant = this.restaurants[i];
@@ -50,6 +66,22 @@ export class RestaurantListComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+}
+
+@Component({
+  selector: 'restaurant-list-delete-dialog',
+  templateUrl: 'restaurant-list-delete-dialog.html',
+})
+export class RestaurantListDeleteDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<RestaurantListDeleteDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

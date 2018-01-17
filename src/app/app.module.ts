@@ -5,14 +5,17 @@ import {Routes, RouterModule} from "@angular/router";
 import { FormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
 import { ChartModule, ProgressSpinnerModule } from 'primeng/primeng';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { BusinessHoursComponent } from './business-hours/business-hours.component';
 import { KeyHoursComponent } from './key-hours/key-hours.component';
 import { WeekDiscountComponent } from './week-discount/week-discount.component';
 import { DayDiscountComponent } from './day-discount/day-discount.component';
-import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
+import { RestaurantListComponent, RestaurantListDeleteDialog } from './restaurant-list/restaurant-list.component';
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDialogModule} from '@angular/material';
 
 const routes: Routes = [
   { path: '', component: RestaurantListComponent },
@@ -32,7 +35,8 @@ const routes: Routes = [
     WeekDiscountComponent,
     DayDiscountComponent,
     RestaurantListComponent,
-    RestaurantDetailsComponent
+    RestaurantDetailsComponent,
+    RestaurantListDeleteDialog
   ],
   imports: [
     BrowserModule,
@@ -41,8 +45,11 @@ const routes: Routes = [
     ChartModule,
     ProgressSpinnerModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
     RouterModule.forRoot(routes)
   ],
+  entryComponents: [RestaurantListDeleteDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

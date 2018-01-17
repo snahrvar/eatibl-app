@@ -38,6 +38,9 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        button{
+          margin-left: 6px;
+        }
       }
       &:last-of-type{
         border-bottom: 1px solid $grey;

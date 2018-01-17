@@ -24,7 +24,8 @@
           <div class="list-field">{{restaurant.state}}</div>
           <div class="list-field icon"><i *ngIf="restaurant.discounts" class="fa fa-check" aria-hidden="true"></i></div>
           <div class="list-buttons">
-            <a href="{{restaurant._id}}/Edit" class="button blue"><i class="fa fa-pencil icon-padding" aria-hidden="true"></i>Edit</a>
+            <a href="{{restaurant._id}}/Edit" class="button-icon blue"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            <button class="button-icon red"><i class="fa fa-times" aria-hidden="true" (click)="deleteRestaurant(restaurant._id)"></i></button>
           </div>
         </div>
       </div>

@@ -77,7 +77,6 @@ export class BusinessHoursComponent implements OnInit {
       max: 24
     },
     step: 0.5,
-    behaviour: 'drag',
     tooltips: [true, true],
     pips: { // Show a scale with the slider
       mode: 'values',
