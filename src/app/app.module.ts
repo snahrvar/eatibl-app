@@ -12,11 +12,12 @@ import { BusinessHoursComponent } from './business-hours/business-hours.componen
 import { KeyHoursComponent } from './key-hours/key-hours.component';
 import { WeekDiscountComponent } from './week-discount/week-discount.component';
 import { DayDiscountComponent } from './day-discount/day-discount.component';
-import { RestaurantListComponent, RestaurantListDeleteDialog } from './restaurant-list/restaurant-list.component';
+import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterLoginComponent } from './register-login/register-login.component';
+import { AppMaterialModule } from './app-material/app-material.module';
+import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component'; //Angular Material components
 
 const routes: Routes = [
   { path: '', component: RestaurantListComponent },
@@ -38,8 +39,8 @@ const routes: Routes = [
     DayDiscountComponent,
     RestaurantListComponent,
     RestaurantDetailsComponent,
-    RestaurantListDeleteDialog,
-    RegisterLoginComponent
+    RegisterLoginComponent,
+    DialogConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -49,10 +50,10 @@ const routes: Routes = [
     ProgressSpinnerModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatDialogModule,
+    AppMaterialModule,
     RouterModule.forRoot(routes)
   ],
-  entryComponents: [RestaurantListDeleteDialog],
+  entryComponents: [DialogConfirmComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

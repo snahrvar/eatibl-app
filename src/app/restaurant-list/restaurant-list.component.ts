@@ -3,6 +3,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import * as _ from 'underscore';
 import { environment } from '../../environments/environment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+
 
 @Component({
   selector: 'app-restaurant-list',
@@ -14,6 +16,8 @@ export class RestaurantListComponent implements OnInit {
   discounts: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   apiUrl = environment.apiURL;
+
+  confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
 
   constructor(private http: HttpClient, public dialog: MatDialog) {
     this.http.get(this.apiUrl + '/restaurant/all')
@@ -40,19 +44,34 @@ export class RestaurantListComponent implements OnInit {
       );
   }
 
-  deleteRestaurant(restaurantId){
-    let dialogRef = this.dialog.open(RestaurantListDeleteDialog, {
-      width: '250px'
+  deleteRestaurant(restaurant){
+    console.log(restaurant);
+    this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+      data: {
+        title: "Delete Restaurant",
+        message: "Would you like to delete " + restaurant.name + "?"
+      }
     });
-    // this.http.get(this.apiUrl + '/restaurant/' + restaurantId + '/disable',)
-    //   .subscribe(
-    //     res => {
-    //       console.log(res);
-    //     },
-    //     err => {
-    //       console.log("Error occurred");
-    //     }
-    //   );
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if(result)
+        this.http.get(this.apiUrl + '/restaurant/' + restaurant._id + '/disable',)
+        .subscribe(
+          res => {
+            this.removeRestaurant(restaurant._id);
+            console.log(this.restaurants);
+          },
+          err => {
+            console.log("Error occurred");
+          }
+        );
+    })
+  }
+
+  removeRestaurant(restaurantId){
+    var index = _.findIndex(this.restaurants, function(restaurant){
+      return restaurant._id == restaurantId
+    });
+    this.restaurants.splice(index);
   }
 
   checkDiscounts(){
@@ -67,21 +86,4 @@ export class RestaurantListComponent implements OnInit {
 
   ngOnInit() {
   }
-
-}
-
-@Component({
-  selector: 'restaurant-list-delete-dialog',
-  templateUrl: 'restaurant-list-delete-dialog.html',
-})
-export class RestaurantListDeleteDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<RestaurantListDeleteDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
 }
