@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-login',
@@ -14,14 +15,13 @@ export class RegisterLoginComponent implements OnInit {
     password: ''
   };
   newUser = {
-    full_name: '',
-    newEmail: '',
+    name: '',
+    email: '',
     phone: '',
-    newPassword: '',
-    confirmPassword: ''
+    password: ''
   };
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.contentLoaded = true;
   }
 
@@ -29,11 +29,27 @@ export class RegisterLoginComponent implements OnInit {
   }
 
   submitLogin(){
-
+    this.http.post(this.apiUrl + '/user/login', this.user)
+      .subscribe(
+        res => { //Returns restaurant ID
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      );
   }
 
   submitRegister(){
-
+    this.http.post(this.apiUrl + '/user/create', this.newUser)
+      .subscribe(
+        res => { //Returns restaurant ID
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        }
+      );
   }
 
 }
