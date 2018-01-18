@@ -8,16 +8,16 @@ export class DialogService {
 
   constructor(private dialog: MatDialog) { }
 
-  public confirm(title: string, message: string): Observable<boolean> {
+  // public confirm(title: string, message: string): Observable<boolean> {
 
-    let dialogRef: MatDialogRef<DialogConfirmComponent>;
-
-    dialogRef = this.dialog.open(DialogConfirmComponent);
-
-    dialogRef.componentInstance.title = title;
-    dialogRef.componentInstance.message = message;
-
-    return dialogRef.afterClosed();
-  }
+    // let dialogRef: MatDialogRef<DialogConfirmComponent>;
+    //
+    // dialogRef = this.dialog.open(DialogConfirmComponent);
+    //
+    // dialogRef.componentInstance.title = title;
+    // dialogRef.componentInstance.message = message;
+    //
+    // return dialogRef.afterClosed();
+  // }
 
 }

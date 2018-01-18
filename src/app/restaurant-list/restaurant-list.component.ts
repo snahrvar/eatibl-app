@@ -69,7 +69,7 @@ export class RestaurantListComponent implements OnInit {
 
   removeRestaurant(restaurantId){
     var index = _.findIndex(this.restaurants, function(restaurant){
-      return restaurant._id == restaurantId
+      return restaurant['_id'] == restaurantId
     });
     this.restaurants.splice(index);
   }
