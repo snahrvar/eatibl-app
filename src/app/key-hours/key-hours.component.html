@@ -1,7 +1,8 @@
 <div class="loading-content" *ngIf="!contentLoaded">
   <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
 </div>
-<div class="frame overflow-scroll" *ngIf="contentLoaded">
+<div class="frame overflow-scroll has-footer" *ngIf="contentLoaded">
+  <div class="overflow-card-wrapper">
     <div class="card">
       <h2>Key Hours</h2>
       <div class="separator"></div>
@@ -15,10 +16,13 @@
           </div>
         </div>
       </div>
-      <div class="separator"></div>
-      <div class="card-footer">
-        <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-        <button class="button blue" (click)="submitKeyHours()" [disabled]="submitted">Submit</button>
-      </div>
     </div>
+  </div>
+</div>
+<div id="footer">
+  <a href="{{restaurantId}}/hours" class="button blue"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</a>
+  <div class="flex-row">
+    <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
+    <button class="button blue" (click)="submitKeyHours()" [disabled]="submitted">Submit</button>
+  </div>
 </div>

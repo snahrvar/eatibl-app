@@ -2,17 +2,10 @@
 @import '~sass/variables';
 
 //Styling
-.frame{
-  display: flex;
-  justify-content: center;
-}
 .card{
   display: flex;
   flex-direction: column;
   width: auto;
-  float: left;
-  margin-top: 0;
-  max-width: 100%;
   .row-titles{
     display: flex;
     flex-direction: column;
@@ -22,34 +15,49 @@
       flex-direction: row;
       justify-content: flex-end;
       align-items: center;
-      height: 11%;
+      height: 10%;
       &:first-of-type{
         height: 63%;
       }
       &:last-of-type{
-        height: 16%;
+        height: 25%;
       }
     }
   }
   .discount-group{
     //margin-right: 48px;
     //margin-left: 24px;
-    max-width: 90%;
-    overflow-x: auto;
     padding: 0 16px 16px 16px;
-    .scroll-wrapper{
-      height: 400px;
+    .discount-scroll-wrapper{
+      height: 340px;
       display: flex;
       flex-direction: row;
       width: 100%;
       .discount-slider{
         padding: 0 6px;
-        width: 80px;
+        width: 40px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        .time{
+          white-space: nowrap;
+        }
         nouislider{
           height: 100%;
+          .noUi-vertical{
+            .noUi-target{
+              .noUi-base{
+                .noUi-origin{
+                  .noUi-handle{
+                    .noUi-tooltip{
+                      top: -70%;
+                      right: auto;
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
         input{
           text-align: center;
