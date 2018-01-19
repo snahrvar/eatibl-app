@@ -117,7 +117,6 @@ export class WeekDiscountComponent implements OnInit {
         .subscribe(
           res => {
             this.discounts = res;
-            console.log(this.discounts);
             this.http.get(this.apiUrl + '/hours/' + this.restaurantId)
               .subscribe(
                 res => {
@@ -126,7 +125,6 @@ export class WeekDiscountComponent implements OnInit {
                   this.buildDiscountArray(this.discounts, this.businessHours);
                   console.log(this.discountArray);
                   this.generateCharts();
-                  console.log(this.graph)
                 },
                 err => {
                   console.log("Error occurred");
