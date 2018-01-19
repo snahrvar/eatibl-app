@@ -84,8 +84,10 @@ export class KeyHoursComponent implements OnInit {
   //Used to display the raw time data as a clocktime on the frontend
   formatTime(value){
     var hour = Math.floor(value);
-    if(hour < 13)
+    if(hour < 12)
       return hour + ' AM';
+    else if(hour < 13 && hour >= 12)
+      return hour + ' PM';
     else if(hour >= 13 && hour < 24){
       hour = hour - 12;
       return hour + ' PM';
