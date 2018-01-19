@@ -25,7 +25,7 @@
           <div class="discount-slider" *ngFor="let timeslot of discounts; let i = index">
             <nouislider [config]="i < discounts.length  - 1 ? rangeConfig[0] : rangeConfig[1]" [(ngModel)]="timeslot.discount"></nouislider>
             <div class="time">
-              <p>{{timeslot.time}}</p>
+              <p>{{formatTime(timeslot.time)}}</p>
             </div>
             <button class="button-mini blue" (click)="changeQuantity(timeslot.time, 1)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
             <input type="number" min="0" [(ngModel)]="timeslot.quantity">

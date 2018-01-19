@@ -21,6 +21,8 @@ export class KeyHoursComponent implements OnInit {
   totalHours = [];
   apiUrl = environment.apiURL;
 
+  Math = Math; //Allow front end to use math.round or math.floor etc.
+
   displayArrows(event){
     if(event.target.classList.value.indexOf("active") >= 0){
       this.renderer.removeClass(event.target.previousElementSibling,"displayed");
@@ -67,7 +69,7 @@ export class KeyHoursComponent implements OnInit {
           this.dailyHours = res;
           for(var i=0; i < this.dailyHours.length; i++){
             //create an empty array where the size is determined by the total number of business hours for that day
-            var hoursThisDay = new Array(this.dailyHours[i].close - this.dailyHours[i].open)
+            var hoursThisDay = new Array(Math.ceil(this.dailyHours[i].close) - Math.floor(this.dailyHours[i].open));
             this.totalHours.push(hoursThisDay);
           }
           this.contentLoaded = true;
@@ -77,6 +79,22 @@ export class KeyHoursComponent implements OnInit {
         }
       );
     })
+  }
+
+  //Used to display the raw time data as a clocktime on the frontend
+  formatTime(value){
+    var hour = Math.floor(value);
+    var minutes = (value - hour) > 0 ? ':30' : ':00';
+    if(hour < 13)
+      return hour + minutes + ' AM';
+    else if(hour >= 13 && hour < 24){
+      hour = hour - 12;
+      return hour + minutes + ' PM';
+    }
+    else if(hour >= 24){
+      hour = hour - 24;
+      return hour + minutes + ' AM';
+    }
   }
 
   submitKeyHours(){

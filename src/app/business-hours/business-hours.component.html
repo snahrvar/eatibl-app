@@ -3,7 +3,10 @@
 </div>
 <div class="frame" *ngIf="contentLoaded">
   <div class="card">
-    <h2>Business Hours</h2>
+    <div class="card-header">
+      <h2>Business Hours</h2>
+      <button class="button blue" (click)="open24hrs()">Open 24Hrs</button>
+    </div>
     <div class="separator"></div>
     <div class="slider-group">
       <div class="hour-slider" *ngFor="let day of businessHours; let i = index">

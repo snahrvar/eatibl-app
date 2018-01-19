@@ -69,6 +69,22 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
     }
   ]; //End of rangeconfig
 
+  //Used to display the raw time data as a clocktime on the frontend
+  formatTime(value){
+    var hour = Math.floor(value);
+    var minutes = (value - hour) > 0 ? ':30' : ':00';
+    if(hour < 13)
+      return hour + minutes + ' AM';
+    else if(hour >= 13 && hour < 24){
+      hour = hour - 12;
+      return hour + minutes + ' PM';
+    }
+    else if(hour >= 24){
+      hour = hour - 24;
+      return hour + minutes + ' AM';
+    }
+  }
+
   //To build the daily discount bars cards on front end
   buildDiscountArray(discounts, businessHours){
     var today = this.day;

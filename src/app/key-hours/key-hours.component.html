@@ -1,24 +1,24 @@
 <div class="loading-content" *ngIf="!contentLoaded">
   <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
 </div>
-<div class="frame" *ngIf="contentLoaded">
-  <div class="card">
-    <h2>Key Hours</h2>
-    <div class="separator"></div>
-    <div class="day" *ngFor="let day of dailyHours; let i = index">
-      <p>{{day.day}}</p>
-      <div class="button-row">
-        <div *ngFor="let hour of totalHours[i]; let a = index" class="button-group">
-          <button class="peak-button" (click)="addPoint($event, 'peak', i, day.open + a)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-          <button class="hour-button" (click)="displayArrows($event)">{{day.open + a}}</button>
-          <button class="off-peak-button" (click)="addPoint($event, 'offPeak', i, day.open + a)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+<div class="frame overflow-scroll" *ngIf="contentLoaded">
+    <div class="card">
+      <h2>Key Hours</h2>
+      <div class="separator"></div>
+      <div class="day" *ngFor="let day of dailyHours; let i = index">
+        <p>{{day.day}}</p>
+        <div class="button-row">
+          <div *ngFor="let hour of totalHours[i]; let a = index" class="button-group">
+            <button class="peak-button" (click)="addPoint($event, 'peak', i, Math.floor(day.open) + a)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+            <button class="hour-button" (click)="displayArrows($event)">{{formatTime(Math.floor(day.open) + a)}}</button>
+            <button class="off-peak-button" (click)="addPoint($event, 'offPeak', i, Math.floor(day.open) + a)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+          </div>
         </div>
       </div>
+      <div class="separator"></div>
+      <div class="card-footer">
+        <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
+        <button class="button blue" (click)="submitKeyHours()" [disabled]="submitted">Submit</button>
+      </div>
     </div>
-    <div class="separator"></div>
-    <div class="card-footer">
-      <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-      <button class="button blue" (click)="submitKeyHours()" [disabled]="submitted">Submit</button>
-    </div>
-  </div>
 </div>

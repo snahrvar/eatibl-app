@@ -82,6 +82,22 @@ export class WeekDiscountComponent implements OnInit {
             xAxes: [{
               gridLines: {
                 display: false
+              },
+              ticks: {
+                callback: function(value, index, values) {
+                  var hour = Math.floor(value);
+                  var minutes = (value - hour) > 0 ? ':30' : ':00';
+                  if(hour < 13)
+                    return hour + minutes + ' AM';
+                  else if(hour >= 13 && hour < 24){
+                    hour = hour - 12;
+                    return hour + minutes + ' PM';
+                  }
+                  else if(hour >= 24){
+                    hour = hour - 24;
+                    return hour + minutes + ' AM';
+                  }
+                }
               }
             }]
           }

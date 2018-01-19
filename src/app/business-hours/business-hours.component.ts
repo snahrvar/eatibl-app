@@ -31,6 +31,46 @@ export class BusinessHoursComponent implements OnInit {
   ];
   newHours = [];
 
+  rangeConfig: any = {
+    connect: true,
+    range: {
+      min: 6,
+      max: 30
+    },
+    step: 0.5,
+    tooltips: [true, true],
+    pips: { // Show a scale with the slider
+      mode: 'values',
+      values: [],
+      density: 100/24,
+      stepped: true
+    },
+    format: {
+      to: function (value) {
+        console.log(value);
+        var clockTime;
+        var hour = Math.floor(value);
+        var minutes = (value - hour) == 0.5 ? ':30' : ':00';
+        if(hour < 12)
+          clockTime = hour + minutes + ' AM';
+        else if(hour < 13 && hour >= 12)
+          clockTime = hour + minutes + ' PM';
+        else if(hour >= 13 && hour < 24){
+          hour = hour - 12;
+          clockTime = hour + minutes + ' PM';
+        }
+        else if(hour >= 24){
+          hour = hour - 24;
+          clockTime = hour + minutes + ' AM';
+        }
+        return clockTime;
+      },
+      from: function (value) {
+        return value;
+      }
+    }
+  };
+
   constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router  ){
 
     //Subscribe to the route parameters
@@ -53,6 +93,10 @@ export class BusinessHoursComponent implements OnInit {
     });
   }
 
+  open24hrs(){
+    this.businessHoursArray = [[6,30],[6,30],[6,30],[6,30],[6,30],[6,30],[6,30]];
+  }
+
   buildBusinessHoursArray(businessHours){
     for (var i = 0; i < businessHours.length; i++){
       this.businessHoursArray.push([businessHours[i].open, businessHours[i].close]);
@@ -62,28 +106,37 @@ export class BusinessHoursComponent implements OnInit {
 
   processHours(businessHoursArray){
     for( var i = 0; i < businessHoursArray.length; i++){
+      var openHour = businessHoursArray[i][0],
+          closeHour = businessHoursArray[i][1];
+      if(typeof openHour == 'string')
+        openHour = this.formatHoursToDecimal(openHour, 'open');
+      if(typeof closeHour == 'string')
+        closeHour = this.formatHoursToDecimal(closeHour, 'close');
       this.newHours.push({
         day: this.businessHours[i]['day'],
-        open: businessHoursArray[i][0],
-        close: businessHoursArray[i][1]
+        open: openHour,
+        close: closeHour
       })
     }
+    console.log(this.newHours);
   }
 
-  rangeConfig: any = {
-    connect: true,
-    range: {
-      min: 0,
-      max: 24
-    },
-    step: 0.5,
-    tooltips: [true, true],
-    pips: { // Show a scale with the slider
-      mode: 'values',
-      values: [],
-      density: 100/24,
-      stepped: true
-    }
+  formatHoursToDecimal(value, type){
+    var decimalTime;
+    var timeArray = value.split(/[\s:]+/);
+    var time = parseInt(timeArray[0]) + (parseInt(timeArray[1])/60);
+
+    //Make sure if closing time is at 6 that 24 is added for saving into the database
+    var openHour = (type == 'open') ? 6 : 6.5;
+    var closeHour = (type == 'close') ? 6 : 5.5;
+
+    if(timeArray[2] == 'AM' && time >= openHour)
+      decimalTime = time;
+    else if(timeArray[2] == 'PM')
+      decimalTime = time + 12;
+    else if(timeArray[2] == 'AM' && time <= closeHour)
+      decimalTime = time + 24;
+    return decimalTime;
   }
 
   submitHours(){
