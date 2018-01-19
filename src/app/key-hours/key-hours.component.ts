@@ -24,15 +24,17 @@ export class KeyHoursComponent implements OnInit {
   Math = Math; //Allow front end to use math.round or math.floor etc.
 
   displayArrows(event){
-    if(event.target.classList.value.indexOf("active") >= 0){
-      this.renderer.removeClass(event.target.previousElementSibling,"displayed");
-      this.renderer.removeClass(event.target.nextElementSibling,"displayed");
-      this.renderer.removeClass(event.target,"active");
-    }
-    else{
-      this.renderer.addClass(event.target.previousElementSibling,"displayed");
-      this.renderer.addClass(event.target.nextElementSibling,"displayed");
-      this.renderer.addClass(event.target,"active");
+    if(event.target.classList.value.indexOf("activeDynamic") == -1){
+      if(event.target.classList.value.indexOf("active") >= 0){
+        this.renderer.removeClass(event.target.previousElementSibling,"displayed");
+        this.renderer.removeClass(event.target.nextElementSibling,"displayed");
+        this.renderer.removeClass(event.target,"active");
+      }
+      else{
+        this.renderer.addClass(event.target.previousElementSibling,"displayed");
+        this.renderer.addClass(event.target.nextElementSibling,"displayed");
+        this.renderer.addClass(event.target,"active");
+      }
     }
   }
 
@@ -72,6 +74,7 @@ export class KeyHoursComponent implements OnInit {
             var hoursThisDay = new Array(Math.ceil(this.dailyHours[i].close) - Math.floor(this.dailyHours[i].open));
             this.totalHours.push(hoursThisDay);
           }
+          console.log(this.dailyHours);
           this.contentLoaded = true;
         },
         err => {
@@ -135,13 +138,5 @@ export class KeyHoursComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  // ngAfterViewChecked(){
-  //   this.buttonGroupElements = document.getElementsByClassName("button-row");
-  //   if (this.buttonGroupElements.length)
-  //     for (var i = 0; i < this.buttonGroupElements.length; i++){
-  //       console.log(this.buttonGroupElements[i]);
-  //     }
-  // }
 
 }

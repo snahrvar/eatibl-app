@@ -10,9 +10,9 @@
         <p>{{day.day}}</p>
         <div class="button-row">
           <div *ngFor="let hour of totalHours[i]; let a = index" class="button-group">
-            <button class="peak-button" (click)="addPoint($event, 'peak', i, Math.floor(day.open) + a)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-            <button class="hour-button" (click)="displayArrows($event)">{{formatTime(Math.floor(day.open) + a)}}</button>
-            <button class="off-peak-button" (click)="addPoint($event, 'offPeak', i, Math.floor(day.open) + a)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+            <button class="peak-button" [ngClass]="{'activeDynamic' : (day.peak.indexOf(Math.floor(day.open) + a) > -1), 'displayDynamic' : (day.offPeak.indexOf(Math.floor(day.open) + a) > -1) || (day.peak.indexOf(Math.floor(day.open) + a) > -1)}" (click)="addPoint($event, 'peak', i, Math.floor(day.open) + a)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+            <button class="hour-button" [ngClass]="{'activeDynamic' : (day.offPeak.indexOf(Math.floor(day.open) + a) > -1) || (day.peak.indexOf(Math.floor(day.open) + a) > -1)}" (click)="displayArrows($event)">{{formatTime(Math.floor(day.open) + a)}}</button>
+            <button class="off-peak-button" [ngClass]="{'activeDynamic' : (day.offPeak.indexOf(Math.floor(day.open) + a) > -1), 'displayDynamic' : (day.offPeak.indexOf(Math.floor(day.open) + a) > -1) || (day.peak.indexOf(Math.floor(day.open) + a) > -1)}" (click)="addPoint($event, 'offPeak', i, Math.floor(day.open) + a)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
