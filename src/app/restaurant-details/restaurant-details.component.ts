@@ -41,8 +41,24 @@ export class RestaurantDetailsComponent implements OnInit {
     });
   }
 
+  addContact(){
+    var contact = {
+      name: '',
+      position: '',
+      email: '',
+      phone: '',
+      notes: ''
+    };
+    this.restaurant['contacts'].push(contact);
+  }
+
+  removeContact(index){
+    this.restaurant['contacts'].splice(index, 1);
+  }
+
   submitRestaurant(){
     this.submitted = true;
+    console.log(this.restaurant);
     this.http.post(this.apiUrl + '/restaurant/create', this.restaurant)
       .subscribe(
         res => { //Returns restaurant ID

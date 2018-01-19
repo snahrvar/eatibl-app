@@ -56,6 +56,44 @@
         </div>
       </form>
     </div>
+    <div class="card">
+      <div class="card-header">
+        <h2>Contacts</h2>
+        <button class="button blue" (click)="addContact()"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>Add</button>
+      </div>
+      <div class="contact-list" *ngFor="let contact of restaurant.contacts; let i = index">
+        <div class="separator"></div>
+        <form>
+          <div class="form-cluster">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" name="name" placeholder="Name" [(ngModel)]="contact.name" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="contact.email" required>
+            </div>
+          </div>
+          <div class="form-cluster">
+            <div class="form-group">
+              <label>Position</label>
+              <input type="text" class="form-control" name="position" placeholder="Position" [(ngModel)]="contact.position" required>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" class="form-control" name="phone" placeholder="Phone Number" [(ngModel)]="contact.phone" required>
+            </div>
+          </div>
+          <div class="form-cluster textarea-group">
+            <div class="form-group">
+              <label>Notes</label>
+              <textarea class="form-control" name="notes" placeholder="Notes" [(ngModel)]="contact.notes" required></textarea>
+            </div>
+            <button class="button-icon red" (click)="removeContact(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 <div id="footer">
