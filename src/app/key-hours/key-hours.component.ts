@@ -123,7 +123,7 @@ export class KeyHoursComponent implements OnInit {
                       }
                     );
                 else
-                  this.router.navigateByUrl('/' + this.restaurantId + '/discount/week');
+                  this.router.navigateByUrl('/' + this.restaurantId + '/pricing/week');
               },
               err => {
                 console.log("Error occurred");
