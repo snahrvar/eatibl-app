@@ -47,7 +47,6 @@ export class BusinessHoursComponent implements OnInit {
     },
     format: {
       to: function (value) {
-        console.log(value);
         var clockTime;
         var hour = Math.floor(value);
         var minutes = (value - hour) == 0.5 ? ':30' : ':00';
@@ -84,7 +83,6 @@ export class BusinessHoursComponent implements OnInit {
             if (this.result.length)
               this.businessHours = this.result;
             this.buildBusinessHoursArray(this.businessHours);
-            console.log(this.businessHours);
           },
           err => {
             console.log("Error occurred");
@@ -98,7 +96,7 @@ export class BusinessHoursComponent implements OnInit {
   }
 
   closedToday(index){
-    this.businessHoursArray[index] = [6,6];
+    this.businessHoursArray[index] = [9,9];
   }
 
   buildBusinessHoursArray(businessHours){
