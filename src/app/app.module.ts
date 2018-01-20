@@ -24,8 +24,8 @@ const routes: Routes = [
   { path: 'login', component: RegisterLoginComponent },
   { path: ':restaurantId/hours', component: BusinessHoursComponent },
   { path: ':restaurantId/keyHours', component: KeyHoursComponent },
-  { path: ':restaurantId/discount/week', component: WeekDiscountComponent },
-  { path: ':restaurantId/discount/:day', component: DayDiscountComponent },
+  { path: ':restaurantId/pricing/week', component: WeekDiscountComponent },
+  { path: ':restaurantId/pricing/:day', component: DayDiscountComponent },
   { path: 'restaurant/:action', component: RestaurantDetailsComponent },
   { path: ':restaurantId/:action', component: RestaurantDetailsComponent },
 ];
