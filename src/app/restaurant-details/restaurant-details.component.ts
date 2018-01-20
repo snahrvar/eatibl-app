@@ -13,7 +13,9 @@ export class RestaurantDetailsComponent implements OnInit {
   private sub: any;
   action: any;
   restaurantId: number;
-  restaurant: Object = {};
+  restaurant: Object = {
+    contacts: []
+  };
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
