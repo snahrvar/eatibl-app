@@ -97,6 +97,10 @@ export class BusinessHoursComponent implements OnInit {
     this.businessHoursArray = [[6,30],[6,30],[6,30],[6,30],[6,30],[6,30],[6,30]];
   }
 
+  closedToday(index){
+    this.businessHoursArray[index] = [6,6];
+  }
+
   buildBusinessHoursArray(businessHours){
     for (var i = 0; i < businessHours.length; i++){
       this.businessHoursArray.push([businessHours[i].open, businessHours[i].close]);

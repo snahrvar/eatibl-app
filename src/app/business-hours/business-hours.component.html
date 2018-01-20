@@ -13,6 +13,7 @@
         <div class="hour-slider" *ngFor="let day of businessHours; let i = index">
           <p>{{day.day}}</p>
           <nouislider [config]="rangeConfig" [(ngModel)]="businessHoursArray[i]"></nouislider>
+          <button class="button" [ngClass]="[businessHoursArray[i][0] == businessHoursArray[i][1] ? 'red' : 'blue']" (click)="closedToday(i)" [disabled]="submitted">{{businessHoursArray[i][0] == businessHoursArray[i][1] ? 'Closed' : 'Open'}}</button>
         </div>
       </div>
     </div>
