@@ -16,11 +16,13 @@ import { RestaurantListComponent } from './restaurant-list/restaurant-list.compo
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterLoginComponent } from './register-login/register-login.component';
+import { SampleService } from './sample.service';
+import { AuthGuard } from './_guards/auth.guard'; //login permissions
 import { AppMaterialModule } from './app-material/app-material.module';
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component'; //Angular Material components
 
 const routes: Routes = [
-  { path: '', component: RestaurantListComponent },
+  { path: '', component: RestaurantListComponent, canActivate: [AuthGuard] },
   { path: 'login', component: RegisterLoginComponent },
   { path: ':restaurantId/hours', component: BusinessHoursComponent },
   { path: ':restaurantId/keyHours', component: KeyHoursComponent },
@@ -54,7 +56,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent],
-  providers: [],
+  providers: [SampleService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
