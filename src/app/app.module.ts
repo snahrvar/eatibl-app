@@ -12,21 +12,22 @@ import { BusinessHoursComponent } from './business-hours/business-hours.componen
 import { KeyHoursComponent } from './key-hours/key-hours.component';
 import { WeekDiscountComponent } from './week-discount/week-discount.component';
 import { DayDiscountComponent } from './day-discount/day-discount.component';
-import { RestaurantListComponent, RestaurantListDeleteDialog } from './restaurant-list/restaurant-list.component';
+import { RestaurantListComponent } from './restaurant-list/restaurant-list.component';
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { SampleService } from './sample.service';
 import { AuthGuard } from './_guards/auth.guard.ts'; //login permissions
+import { AppMaterialModule } from './app-material/app-material.module';
+import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component'; //Angular Material components
 
 const routes: Routes = [
   { path: '', component: RestaurantListComponent, canActivate: [AuthGuard] },
   { path: 'login', component: RegisterLoginComponent },
   { path: ':restaurantId/hours', component: BusinessHoursComponent },
   { path: ':restaurantId/keyHours', component: KeyHoursComponent },
-  { path: ':restaurantId/discount/week', component: WeekDiscountComponent },
-  { path: ':restaurantId/discount/:day', component: DayDiscountComponent },
+  { path: ':restaurantId/pricing/week', component: WeekDiscountComponent },
+  { path: ':restaurantId/pricing/:day', component: DayDiscountComponent },
   { path: 'restaurant/:action', component: RestaurantDetailsComponent },
   { path: ':restaurantId/:action', component: RestaurantDetailsComponent },
 ];
@@ -40,8 +41,8 @@ const routes: Routes = [
     DayDiscountComponent,
     RestaurantListComponent,
     RestaurantDetailsComponent,
-    RestaurantListDeleteDialog,
-    RegisterLoginComponent
+    RegisterLoginComponent,
+    DialogConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -51,10 +52,10 @@ const routes: Routes = [
     ProgressSpinnerModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatDialogModule,
+    AppMaterialModule,
     RouterModule.forRoot(routes)
   ],
-  entryComponents: [RestaurantListDeleteDialog],
+  entryComponents: [DialogConfirmComponent],
   providers: [SampleService, AuthGuard],
   bootstrap: [AppComponent]
 })

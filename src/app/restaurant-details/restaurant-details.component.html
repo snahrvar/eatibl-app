@@ -1,63 +1,105 @@
 <div class="loading-content" *ngIf="!contentLoaded">
   <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
 </div>
-<div class="frame" *ngIf="contentLoaded">
-  <div class="card">
-    <div class="card-header">
-      <h2>{{action}} Restaurant</h2>
-    </div>
-    <div class="separator"></div>
-    <form>
-      <div class="form-cluster">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Name" [(ngModel)]="restaurant.name" required>
-        </div>
-        <div class="form-group">
-          <label for="address">Address</label>
-          <input type="text" class="form-control" id="address" name="address" placeholder="Address" [(ngModel)]="restaurant.address" required>
-        </div>
-        <div class="form-group">
-          <label>Price</label>
-          <div class="radio-group">
-            <input type="radio" name="price" [value]="1" [(ngModel)]="restaurant.price"> $
-            <input type="radio" name="price" [value]="2" [(ngModel)]="restaurant.price"> $$
-            <input type="radio" name="price" [value]="3" [(ngModel)]="restaurant.price"> $$$
-            <input type="radio" name="price" [value]="4" [(ngModel)]="restaurant.price"> $$$$
+<div class="scroll-wrapper has-footer" *ngIf="contentLoaded">
+  <div class="frame">
+    <div class="card">
+      <div class="card-header">
+        <h2>{{action}} Restaurant</h2>
+      </div>
+      <div class="separator"></div>
+      <form>
+        <div class="form-cluster">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name" [(ngModel)]="restaurant.name" required>
+          </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Address" [(ngModel)]="restaurant.address" required>
+          </div>
+          <div class="form-group">
+            <label>Price</label>
+            <div class="radio-group">
+              <input type="radio" name="price" [value]="1" [(ngModel)]="restaurant.price"> $
+              <input type="radio" name="price" [value]="2" [(ngModel)]="restaurant.price"> $$
+              <input type="radio" name="price" [value]="3" [(ngModel)]="restaurant.price"> $$$
+              <input type="radio" name="price" [value]="4" [(ngModel)]="restaurant.price"> $$$$
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-cluster">
-        <div class="form-group">
-          <label for="city">City</label>
-          <input type="text" class="form-control" id="city" name="city" placeholder="City" [(ngModel)]="restaurant.city" required>
+        <div class="form-cluster">
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" name="city" placeholder="City" [(ngModel)]="restaurant.city" required>
+          </div>
+          <div class="form-group">
+            <label for="state">Province</label>
+            <input type="text" class="form-control" id="state" name="state" placeholder="Province" [(ngModel)]="restaurant.state" required>
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" class="form-control" id="country" name="country" placeholder="Country" [(ngModel)]="restaurant.country" required>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="state">Province</label>
-          <input type="text" class="form-control" id="state" name="state" placeholder="Province" [(ngModel)]="restaurant.state" required>
+        <div class="form-cluster">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" placeholder="Description" [(ngModel)]="restaurant.description" required></textarea>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="country">Country</label>
-          <input type="text" class="form-control" id="country" name="country" placeholder="Country" [(ngModel)]="restaurant.country" required>
+        <div class="form-cluster">
+          <div class="form-group">
+            <label for="discountDetails">Discount Details</label>
+            <textarea class="form-control" id="discountDetails" name="discountDetails" placeholder="Discount Details" [(ngModel)]="restaurant.discountDetails" required></textarea>
+          </div>
         </div>
-      </div>
-      <div class="form-cluster">
-        <div class="form-group">
-          <label for="description">Description</label>
-          <textarea class="form-control" id="description" name="description" placeholder="Description" [(ngModel)]="restaurant.description" required></textarea>
-        </div>
-      </div>
-      <div class="form-cluster">
-        <div class="form-group">
-          <label for="discountDetails">Discount Details</label>
-          <textarea class="form-control" id="discountDetails" name="discountDetails" placeholder="Discount Details" [(ngModel)]="restaurant.discountDetails" required></textarea>
-        </div>
-      </div>
-    </form>
-    <div class="separator"></div>
-    <div class="card-footer">
-      <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-      <button class="button blue" (click)="submitRestaurant()" [disabled]="submitted">Submit</button>
+      </form>
     </div>
+    <div class="card">
+      <div class="card-header">
+        <h2>Contacts</h2>
+        <button class="button blue" (click)="addContact()"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>Add</button>
+      </div>
+      <div class="contact-list" *ngFor="let contact of restaurant.contacts; let i = index">
+        <div class="separator"></div>
+        <form>
+          <div class="form-cluster">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control" name="name" placeholder="Name" [(ngModel)]="contact.name" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="contact.email" required>
+            </div>
+          </div>
+          <div class="form-cluster">
+            <div class="form-group">
+              <label>Position</label>
+              <input type="text" class="form-control" name="position" placeholder="Position" [(ngModel)]="contact.position" required>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="text" class="form-control" name="phone" placeholder="Phone Number" [(ngModel)]="contact.phone" required>
+            </div>
+          </div>
+          <div class="form-cluster textarea-group">
+            <div class="form-group">
+              <label>Notes</label>
+              <textarea class="form-control" name="notes" placeholder="Notes" [(ngModel)]="contact.notes" required></textarea>
+            </div>
+            <button class="button-icon red" (click)="removeContact(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <a href="/" class="button blue"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</a>
+  <div class="flex-row">
+    <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
+    <button class="button blue" (click)="submitRestaurant()" [disabled]="submitted">Submit</button>
   </div>
 </div>

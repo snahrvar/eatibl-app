@@ -2,6 +2,7 @@
 @import "~nouislider/distribute/nouislider.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
 @import "~primeng/resources/primeng.min.css";
+@import "eatibl-theme";
 
 //Fonts
 @font-face {
@@ -22,6 +23,7 @@
 body{
   background-color: $light-grey;
   margin: 0;
+  overflow: hidden;
 }
 
 a{
@@ -57,6 +59,18 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 //Elements
+.dialog{
+  h3{
+    color: $eatibl-red;
+  }
+  .dialog-actions{
+    display: flex;
+    justify-content: flex-end;
+    .button{
+      margin-left: 12px;
+    }
+  }
+}
 .separator{
   margin: 12px 0;
   border-top: 1px solid darken($light-grey, 5%);
@@ -110,11 +124,26 @@ nouislider{
     .noUi-handle{
       left: -7px !important;
       top: -16px !important;
+      .noUi-tooltip{
+        top: -80%;
+        right: -7px;
+      }
     }
+  }
+  &.no-tooltip{
+    .noUi-vertical{
+      .noUi-handle{
+        .noUi-tooltip{
+          display: none;
+        }
+      }
+    }
+
   }
 }
 
 .loading-content{
+  padding-top: 100px;
   width: 100%;
   height: 200px;
   display: flex;
@@ -236,7 +265,7 @@ p-progressspinner{
   }
   &.white{
     background-color: #fff;
-    color: $eatibl-red;
+    color: #4d4d4d;
   }
   &:disabled, &[disabled]{
     box-shadow: none;
@@ -281,9 +310,19 @@ form{
 }
 
 //Layout
+.scroll-wrapper{
+  overflow-y: auto;
+  margin-top: 80px;
+  height: calc(100vh - 80px);
+  &.has-footer{
+    height: calc(100vh - 140px);
+    -webkit-box-shadow: inset 0px 0px 10px 2px rgba(173,173,173,1);
+    -moz-box-shadow: inset 0px 0px 10px 2px rgba(173,173,173,1);
+    box-shadow: inset 0px 0px 10px 2px rgba(173,173,173,1);
+  }
+}
 .frame{
   width: 1400px;
-  height: 100%;
   padding: 0 30px;
   margin: 0 auto;
   @media (max-width: 1599px) {
@@ -297,6 +336,25 @@ form{
   }
   @media(max-width: 599px) {
     width: 100%;
+  }
+  &.overflow-scroll{
+    width: auto;
+    padding: 0 16px;
+    display: flex;
+    margin-top: 80px;
+    text-align: center;
+    min-width: 100vw;
+    overflow: auto;
+  }
+  &.has-footer{
+     height: calc(100vh - 140px);
+    -webkit-box-shadow: inset 0px 0px 10px 2px rgba(173,173,173,1);
+    -moz-box-shadow: inset 0px 0px 10px 2px rgba(173,173,173,1);
+    box-shadow: inset 0px 0px 10px 2px rgba(173,173,173,1);
+   }
+  .overflow-card-wrapper{
+    padding-right: 16px;
+    margin: 0 auto;
   }
 }
 
@@ -325,5 +383,44 @@ form{
     button{
       margin-left: 12px;
     }
+  }
+}
+
+//Header
+#header{
+  position: fixed;
+  top: 0;
+  z-index: 5;
+  width: 100%;
+  height: 80px;
+  background-color: $eatibl-red;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  -webkit-box-shadow: 0px 0px 10px 2px rgba(173,173,173,1);
+  -moz-box-shadow: 0px 0px 10px 2px rgba(173,173,173,1);
+  box-shadow: 0px 0px 10px 2px rgba(173,173,173,1);
+  img{
+    height: 60px;
+  }
+}
+
+//Footer
+#footer{
+  position: fixed;
+  bottom: 0;
+  z-index: 5;
+  width: 100%;
+  height: 60px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  img{
+    height: 60px;
   }
 }

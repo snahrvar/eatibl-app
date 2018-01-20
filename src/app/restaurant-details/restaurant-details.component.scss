@@ -15,3 +15,17 @@ form{
     }
   }
 }
+.contact-list{
+  form{
+    .form-cluster{
+      width: 33%;
+      &.textarea-group{
+        flex-direction: row;
+        button{
+          margin-top: 35px;
+          margin-left: 12px;
+        }
+      }
+    }
+  }
+}

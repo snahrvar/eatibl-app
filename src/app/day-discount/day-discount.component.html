@@ -1,43 +1,48 @@
 <div class="loading-content" *ngIf="!contentLoaded">
   <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
 </div>
-<div class="frame" *ngIf="contentLoaded">
-  <div class="card">
-    <div class="card-header">
-      <h2>{{day}}</h2>
-      <a href="{{restaurantId}}/discount/week" class="button blue"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</a>
-    </div>
-    <div class="separator"></div>
-    <div class="card-content flex-row">
-      <div class="row-titles">
-        <div class="title">
-          <h4>Discount</h4>
-        </div>
-        <div class="title">
-          <h4>Timeslot</h4>
-        </div>
-        <div class="title">
-          <h4>Capacity</h4>
-        </div>
+<div class="frame overflow-scroll has-footer" *ngIf="contentLoaded">
+  <div class="overflow-card-wrapper">
+    <div class="card">
+      <div class="card-header">
+        <h2>{{day}}</h2>
       </div>
-      <div class="discount-group">
-        <div class="scroll-wrapper">
-          <div class="discount-slider" *ngFor="let timeslot of discounts; let i = index">
-            <nouislider [config]="i < discounts.length  - 1 ? rangeConfig[0] : rangeConfig[1]" [(ngModel)]="timeslot.discount"></nouislider>
-            <div class="time">
-              <p>{{timeslot.time}}</p>
+      <div class="separator"></div>
+      <div class="card-content flex-row">
+        <div class="row-titles">
+          <div class="title">
+            <h4>Pricing</h4>
+          </div>
+          <div class="title">
+            <h4>Timeslot</h4>
+          </div>
+          <div class="title">
+            <h4>Capacity</h4>
+          </div>
+        </div>
+        <div class="discount-group">
+          <div class="discount-scroll-wrapper">
+            <div class="discount-slider" *ngFor="let timeslot of discounts; let i = index">
+              <nouislider [config]="rangeConfig" [ngClass]="{'no-tooltip' : (timeslot.discount == 0)}" [(ngModel)]="timeslot.discount"></nouislider>
+              <div class="time">
+                <p>{{(i%2 == 0) ? formatTime(timeslot.time) : '-'}}</p>
+              </div>
+              <button class="button-mini blue" (click)="changeQuantity(timeslot.time, 1)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+              <input type="number" min="0" [(ngModel)]="timeslot.quantity">
+              <button class="button-mini blue" (click)="changeQuantity(timeslot.time, -1)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
             </div>
-            <button class="button-mini blue" (click)="changeQuantity(timeslot.time, 1)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-            <input type="number" min="0" [(ngModel)]="timeslot.quantity">
-            <button class="button-mini blue" (click)="changeQuantity(timeslot.time, -1)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
     </div>
-    <div class="separator"></div>
-    <div class="card-footer">
-      <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-      <button class="button blue" (click)="submitDiscounts()" [disabled]="submitted">Update</button>
-    </div>
+  </div>
+
+</div>
+<div id="footer">
+  <a href="{{restaurantId}}/pricing/week" class="button blue"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</a>
+  <div class="flex-row">
+    <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
+    <button class="button blue" (click)="submitDiscounts()" [disabled]="submitted">Update</button>
   </div>
 </div>
+

@@ -47,7 +47,7 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
   }
 
   //Configurations for all sliders. Second range config adds pips to last slider
-  rangeConfig= [{
+  rangeConfig = {
       connect: [true, false],
       range: {
         min: 0,
@@ -55,19 +55,32 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
       },
       step: 10,
       direction: 'rtl',
-      orientation: 'vertical'
-    },
-      {
-      connect: [true, false],
-      range: {
-        min: 0,
-        max: 50
-      },
-      step: 10,
-      direction: 'rtl',
-      orientation: 'vertical'
+      orientation: 'vertical',
+      tooltips: true,
+      format: {
+        to: function (value) {
+          return value + '%';
+        },
+        from: function (value) {
+          return value.replace('%', '');
+        }
+      }
+    }; //End of rangeconfig
+
+  //Used to display the raw time data as a clocktime on the frontend
+  formatTime(value){
+    var hour = Math.floor(value);
+    if(hour < 13)
+      return hour + ' AM';
+    else if(hour >= 13 && hour < 24){
+      hour = hour - 12;
+      return hour + ' PM';
     }
-  ]; //End of rangeconfig
+    else if(hour >= 24){
+      hour = hour - 24;
+      return hour + ' AM';
+    }
+  }
 
   //To build the daily discount bars cards on front end
   buildDiscountArray(discounts, businessHours){

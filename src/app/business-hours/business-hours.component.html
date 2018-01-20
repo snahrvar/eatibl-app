@@ -1,21 +1,28 @@
 <div class="loading-content" *ngIf="!contentLoaded">
   <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
 </div>
-<div class="frame" *ngIf="contentLoaded">
-  <div class="card">
-    <h2>Business Hours</h2>
-    <div class="separator"></div>
-    <div class="slider-group">
-      <div class="hour-slider" *ngFor="let day of businessHours; let i = index">
-        <p>{{day.day}}</p>
-        <nouislider [config]="rangeConfig" [(ngModel)]="businessHoursArray[i]"></nouislider>
+<div class="scroll-wrapper has-footer" *ngIf="contentLoaded">
+  <div class="frame">
+    <div class="card">
+      <div class="card-header">
+        <h2>Business Hours</h2>
+        <button class="button blue" (click)="open24hrs()">Open 24Hrs</button>
       </div>
-
       <div class="separator"></div>
-      <div class="card-footer">
-        <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-        <button class="button blue" (click)="submitHours()"  [disabled]="submitted">Submit</button>
+      <div class="slider-group">
+        <div class="hour-slider" *ngFor="let day of businessHours; let i = index">
+          <p>{{day.day}}</p>
+          <nouislider [config]="rangeConfig" [(ngModel)]="businessHoursArray[i]"></nouislider>
+          <button class="button" [ngClass]="[businessHoursArray[i][0] == businessHoursArray[i][1] ? 'red' : 'blue']" (click)="closedToday(i)" [disabled]="submitted">{{businessHoursArray[i][0] == businessHoursArray[i][1] ? 'Closed' : 'Open'}}</button>
+        </div>
       </div>
     </div>
+  </div>
+</div>
+<div id="footer">
+  <a href="{{restaurantId}}/Edit" class="button blue"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</a>
+  <div class="flex-row">
+    <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
+    <button class="button blue" (click)="submitHours()" [disabled]="submitted">Submit</button>
   </div>
 </div>

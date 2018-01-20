@@ -13,7 +13,9 @@ export class RestaurantDetailsComponent implements OnInit {
   private sub: any;
   action: any;
   restaurantId: number;
-  restaurant: Object = {};
+  restaurant: Object = {
+    contacts: []
+  };
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
@@ -41,8 +43,24 @@ export class RestaurantDetailsComponent implements OnInit {
     });
   }
 
+  addContact(){
+    var contact = {
+      name: '',
+      position: '',
+      email: '',
+      phone: '',
+      notes: ''
+    };
+    this.restaurant['contacts'].push(contact);
+  }
+
+  removeContact(index){
+    this.restaurant['contacts'].splice(index, 1);
+  }
+
   submitRestaurant(){
     this.submitted = true;
+    console.log(this.restaurant);
     this.http.post(this.apiUrl + '/restaurant/create', this.restaurant)
       .subscribe(
         res => { //Returns restaurant ID

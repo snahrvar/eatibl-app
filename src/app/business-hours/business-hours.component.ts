@@ -31,6 +31,61 @@ export class BusinessHoursComponent implements OnInit {
   ];
   newHours = [];
 
+  rangeConfig: any = {
+    connect: true,
+    range: {
+      min: 6,
+      max: 30
+    },
+    step: 0.5,
+    tooltips: [{
+      to: function (value) {
+        var clockTime;
+        var hour = Math.floor(value);
+        var minutes = (value - hour) == 0.5 ? ':30' : ':00';
+        if(hour < 12)
+          clockTime = hour + minutes + ' AM';
+        else if(hour < 13 && hour >= 12)
+          clockTime = hour + minutes + ' PM';
+        else if(hour >= 13 && hour < 24){
+          hour = hour - 12;
+          clockTime = hour + minutes + ' PM';
+        }
+        else if(hour >= 24){
+          hour = hour - 24;
+          clockTime = hour + minutes + ' AM';
+        }
+        return clockTime;
+      }
+    },
+      {
+        to: function (value) {
+          var clockTime;
+          var hour = Math.floor(value);
+          var minutes = (value - hour) == 0.5 ? ':30' : ':00';
+          if(hour < 12)
+            clockTime = hour + minutes + ' AM';
+          else if(hour < 13 && hour >= 12)
+            clockTime = hour + minutes + ' PM';
+          else if(hour >= 13 && hour < 24){
+            hour = hour - 12;
+            clockTime = hour + minutes + ' PM';
+          }
+          else if(hour >= 24){
+            hour = hour - 24;
+            clockTime = hour + minutes + ' AM';
+          }
+          return clockTime;
+        }
+      }],
+    pips: { // Show a scale with the slider
+      mode: 'values',
+      values: [],
+      density: 100/24,
+      stepped: true
+    }
+  };
+
   constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router  ){
 
     //Subscribe to the route parameters
@@ -44,13 +99,20 @@ export class BusinessHoursComponent implements OnInit {
             if (this.result.length)
               this.businessHours = this.result;
             this.buildBusinessHoursArray(this.businessHours);
-            console.log(this.businessHours);
           },
           err => {
             console.log("Error occurred");
           }
         );
     });
+  }
+
+  open24hrs(){
+    this.businessHoursArray = [[6,30],[6,30],[6,30],[6,30],[6,30],[6,30],[6,30]];
+  }
+
+  closedToday(index){
+    this.businessHoursArray[index] = [9,9];
   }
 
   buildBusinessHoursArray(businessHours){
@@ -62,27 +124,13 @@ export class BusinessHoursComponent implements OnInit {
 
   processHours(businessHoursArray){
     for( var i = 0; i < businessHoursArray.length; i++){
+      var openHour = businessHoursArray[i][0],
+          closeHour = businessHoursArray[i][1];
       this.newHours.push({
         day: this.businessHours[i]['day'],
-        open: businessHoursArray[i][0],
-        close: businessHoursArray[i][1]
+        open: openHour,
+        close: closeHour
       })
-    }
-  }
-
-  rangeConfig: any = {
-    connect: true,
-    range: {
-      min: 0,
-      max: 24
-    },
-    step: 0.5,
-    tooltips: [true, true],
-    pips: { // Show a scale with the slider
-      mode: 'values',
-      values: [],
-      density: 100/24,
-      stepped: true
     }
   }
 
