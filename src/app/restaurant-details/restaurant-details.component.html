@@ -53,6 +53,20 @@
             <label for="discountDetails">Discount Details</label>
             <textarea class="form-control" id="discountDetails" name="discountDetails" placeholder="Discount Details" [(ngModel)]="restaurant.discountDetails" required></textarea>
           </div>
+          <div class="flex-row">
+            <div class="form-group">
+              <label>
+                <input type="checkbox" name="dineIn" [(ngModel)]="restaurant.dineIn">
+                Dine In
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" name="takeOut" [(ngModel)]="restaurant.takeOut">
+                Take Out
+              </label>
+            </div>
+          </div>
         </div>
       </form>
     </div>
