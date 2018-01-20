@@ -17,7 +17,7 @@ import { RestaurantDetailsComponent } from './restaurant-details/restaurant-deta
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { SampleService } from './sample.service';
-import { AuthGuard } from './_guards/auth.guard.ts'; //login permissions
+import { AuthGuard } from './_guards/auth.guard'; //login permissions
 import { AppMaterialModule } from './app-material/app-material.module';
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component'; //Angular Material components
 
