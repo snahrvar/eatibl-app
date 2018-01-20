@@ -71,7 +71,7 @@ export class RestaurantListComponent implements OnInit {
     var index = _.findIndex(this.restaurants, function(restaurant){
       return restaurant['_id'] == restaurantId
     });
-    this.restaurants.splice(index);
+    this.restaurants.splice(index, 1);
   }
 
   checkDiscounts(){
