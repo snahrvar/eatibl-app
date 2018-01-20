@@ -17,9 +17,11 @@ import { RestaurantDetailsComponent } from './restaurant-details/restaurant-deta
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material';
 import { RegisterLoginComponent } from './register-login/register-login.component';
+import { SampleService } from './sample.service';
+import { AuthGuard } from './_guards/auth.guard.ts'; //login permissions
 
 const routes: Routes = [
-  { path: '', component: RestaurantListComponent },
+  { path: '', component: RestaurantListComponent, canActivate: [AuthGuard] },
   { path: 'login', component: RegisterLoginComponent },
   { path: ':restaurantId/hours', component: BusinessHoursComponent },
   { path: ':restaurantId/keyHours', component: KeyHoursComponent },
@@ -53,7 +55,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [RestaurantListDeleteDialog],
-  providers: [],
+  providers: [SampleService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
