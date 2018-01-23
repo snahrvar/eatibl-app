@@ -2,11 +2,11 @@ import { Component, OnInit, AfterViewChecked, Renderer2 } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-key-hours',
-  templateUrl: './key-hours.component.html',
+  templateUrl: 'key-hours.component.html',
   styleUrls: ['key-hours.component.scss']
 })
 export class KeyHoursComponent implements OnInit {

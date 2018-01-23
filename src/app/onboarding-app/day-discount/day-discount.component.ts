@@ -2,12 +2,12 @@ import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'underscore';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-day-discount',
-  templateUrl: './day-discount.component.html',
-  styleUrls: ['./day-discount.component.scss']
+  templateUrl: 'day-discount.component.html',
+  styleUrls: ['day-discount.component.scss']
 })
 export class DayDiscountComponent implements OnInit, OnDestroy {
 

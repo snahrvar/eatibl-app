@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-week-discount',
-  templateUrl: './week-discount.component.html',
-  styleUrls: ['./week-discount.component.scss']
+  templateUrl: 'week-discount.component.html',
+  styleUrls: ['week-discount.component.scss']
 })
 export class WeekDiscountComponent implements OnInit {
   private sub: any;

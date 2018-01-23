@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-restaurant-details',
-  templateUrl: './restaurant-details.component.html',
-  styleUrls: ['./restaurant-details.component.scss']
+  templateUrl: 'restaurant-details.component.html',
+  styleUrls: ['restaurant-details.component.scss']
 })
 export class RestaurantDetailsComponent implements OnInit {
   private sub: any;

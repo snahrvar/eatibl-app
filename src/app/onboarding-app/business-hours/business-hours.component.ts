@@ -2,12 +2,12 @@ import { Component,OnInit  } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
   selector: 'app-business-hours',
-  templateUrl: './business-hours.component.html',
+  templateUrl: 'business-hours.component.html',
   styleUrls: ['business-hours.component.scss']
 })
 export class BusinessHoursComponent implements OnInit {

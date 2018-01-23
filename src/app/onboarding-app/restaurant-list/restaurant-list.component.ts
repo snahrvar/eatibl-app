@@ -1,15 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import * as _ from 'underscore';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 
 
 @Component({
   selector: 'app-restaurant-list',
-  templateUrl: './restaurant-list.component.html',
-  styleUrls: ['./restaurant-list.component.scss']
+  templateUrl: 'restaurant-list.component.html',
+  styleUrls: ['restaurant-list.component.scss']
 })
 export class RestaurantListComponent implements OnInit {
   restaurants: any;
