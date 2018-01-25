@@ -1,5 +1,7 @@
-import { Component,OnInit  } from '@angular/core';
+import { Component,OnInit, OnChanges  } from '@angular/core';
 import { SampleService } from './sample.service';
+import { LoginService } from './_services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +12,7 @@ export class AppComponent implements OnInit{
 
   importedData = [];
 
-  constructor(private sampleService: SampleService){  }
+  constructor(private loginService: LoginService, private sampleService: SampleService, private router: Router){}
 
   ngOnInit(): void {
     this.importedData = this.sampleService.numbers;
@@ -20,5 +22,10 @@ export class AppComponent implements OnInit{
     console.log(this.importedData);
   }
 
-  title = 'app';
+  logout(){
+    if(localStorage.getItem('user')) {
+      localStorage.removeItem('user'); //log out
+      this.router.navigate(['/login']);
+    }
+  }
 }

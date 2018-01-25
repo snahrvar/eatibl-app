@@ -418,6 +418,12 @@ form{
   img{
     height: 60px;
   }
+  .button{
+    &.white{
+      color: $eatibl-red;
+      font-weight: 700;
+    }
+  }
 }
 
 //Footer
