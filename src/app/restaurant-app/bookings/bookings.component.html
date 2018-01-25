@@ -92,12 +92,12 @@
             <p mat-line class="count">{{i + 1}}</p>
             <p mat-line class="name">{{booking.name}}</p>
             <p mat-line class="phone">{{booking.phone}}</p>
-            <p mat-line class="time">{{booking.time}}</p>
+            <p mat-line class="time">{{functions.formatTime(booking.time, true)}}</p>
             <p mat-line class="pricing">{{booking.discount}}</p>
             <p mat-line class="party">{{booking.party}}</p>
             <p mat-line class="id">{{booking.bookingId}}</p>
             <div mat-line class="status">
-              <p>{{booking.status}}</p>
+              <p class="{{booking.status.replace(' ', '-').toLowerCase()}}">{{booking.status}}</p>
               <button class="button-icon orange" (click)="reportNoShow(booking)" [disabled]="booking.status == 'Cancelled' || booking.status == 'No Show'"><i class="fa fa-flag" aria-hidden="true"></i></button>
             </div>
           </mat-list-item>

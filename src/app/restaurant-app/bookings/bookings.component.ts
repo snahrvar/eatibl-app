@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
+import { FunctionsService } from '../../_services/functions.service'
 
 @Component({
   selector: 'app-bookings',
@@ -42,7 +43,7 @@ export class BookingsComponent implements OnInit {
     party: '',
   };
 
-  constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router, public dialog: MatDialog) {
+  constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router, public dialog: MatDialog, private functions: FunctionsService) {
   }
 
   //Report no show

@@ -151,6 +151,19 @@
       justify-content: space-between;
       p{
         margin: 0;
+        font-weight: 700;
+        &.no-show{
+          color: $eatibl-red;
+        }
+        &.cancelled{
+          color: $eatibl-orange;
+        }
+        &.completed{
+          color: $eatibl-green;
+        }
+        &.upcoming{
+          color: $eatibl-blue;
+        }
       }
     }
   }
