@@ -36,7 +36,7 @@ button{
   cursor: pointer;
 }
 
-p, h2, h4, a, button{
+p, h2, h3, h4, a, button{
   font-family: "Quicksand Regular";
   color: $dark-grey;
 }
@@ -152,6 +152,16 @@ nouislider{
   align-items: center;
 }
 
+mat-list{
+  mat-list-item{
+    .mat-list-item-content{
+      .mat-list-text{
+        flex-direction: row !important;
+      }
+    }
+  }
+}
+
 p-progressspinner{
   max-height: 40px;
   .ui-progress-spinner{
@@ -262,6 +272,9 @@ p-progressspinner{
   }
   &.blue{
     background-color: $eatibl-blue;
+  }
+  &.green{
+    background-color: $eatibl-green;
   }
   &.white{
     background-color: #fff;

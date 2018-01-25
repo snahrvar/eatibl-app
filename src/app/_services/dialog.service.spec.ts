@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { DialogsServiceService } from './dialog.service';
+import { DialogsService } from './dialog.service.ts';
 
 describe('DialogsServiceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DialogsServiceService]
+      providers: [DialogsService]
     });
   });
 
-  it('should be created', inject([DialogsServiceService], (service: DialogsServiceService) => {
+  it('should be created', inject([DialogsService], (service: DialogsService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -1,0 +1,103 @@
+<div class="loading-content" *ngIf="!contentLoaded">
+  <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
+</div>
+<div class="scroll-wrapper" *ngIf="contentLoaded">
+  <div class="frame">
+    <div class="card">
+      <input type="text" name="fullName" placeholder="Name" [(ngModel)]="details.name">
+      <input type="text" name="phone" placeholder="Phone" [(ngModel)]="details.phone">
+      <input type="text" name="time" placeholder="Time" [(ngModel)]="details.time">
+      <input type="text" name="discount" placeholder="Discount" [(ngModel)]="details.discount">
+      <input type="text" name="party" placeholder="Party Size" [(ngModel)]="details.party">
+      <button class="button-icon green" (click)="submitBooking()"><i class="fa fa-cutlery" aria-hidden="true"></i></button>
+    </div>
+    <div id="overview" class="card">
+      <div class="metadata">
+        <div class="date">
+          <p class="day">{{date.day}}</p>
+          <p class="dateNumber">{{date.date}}</p>
+          <p class="month">{{date.month}}</p>
+        </div>
+        <!--<p-calendar [(ngModel)]="" [showIcon]="true"></p-calendar> <span style="margin-left:35px">{{date3|date}}</span>-->
+        <div class="totals">
+          <div class="separator-v"></div>
+          <div class="bookings">
+            <div class="count">
+              <i class="fa fa-cutlery" aria-hidden="true"></i>
+              <p>{{total.bookings}}</p>
+            </div>
+            <p>Bookings</p>
+          </div>
+          <div class="people">
+            <div class="count">
+              <i class="fa fa-users" aria-hidden="true"></i>
+              <p>{{total.people}}</p>
+            </div>
+            <p>People</p>
+          </div>
+          <div class="separator-v"></div>
+          <div class="upcoming breakdown">
+            <p>{{total.upcoming}}</p>
+            <p>Upcoming</p>
+          </div>
+          <div class="completed breakdown">
+            <p>{{total.completed}}</p>
+            <p>Completed</p>
+          </div>
+          <div class="cancelled breakdown">
+            <p>{{total.cancelled}}</p>
+            <p>Cancelled</p>
+          </div>
+          <div class="no-show breakdown">
+            <p>{{total.noShow}}</p>
+            <p>No Show</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="bookingList" class="card">
+      <div class="card-header">
+        <h2>Bookings</h2>
+        <div class="filters">
+          <div class="separator-v"></div>
+          <h3>Filters: </h3>
+          <button class="button white" (click)="filterBookings($event, 'Upcoming')">Upcoming</button>
+          <button class="button white" (click)="filterBookings($event, 'Completed')">Completed</button>
+          <button class="button white" (click)="filterBookings($event, 'Cancelled')">Cancelled</button>
+          <button class="button white" (click)="filterBookings($event, 'No Show')">No Show</button>
+          <div class="separator-v"></div>
+        </div>
+        <div class="refresh">
+          <p-progressSpinner strokeWidth="8" *ngIf="refreshing"></p-progressSpinner>
+          <button class="button blue" (click)="refreshBookings()" [disabled]="refreshing"><i class="fa fa-refresh icon-padding" aria-hidden="true"></i>Refresh</button>
+        </div>
+      </div>
+      <div class="separator"></div>
+      <div class="card-content">
+        <mat-list>
+          <mat-list-item class="booking-titles">
+            <h3 mat-line class="count">#</h3>
+            <h3 mat-line class="name">Name</h3>
+            <h3 mat-line class="phone">Phone Number</h3>
+            <h3 mat-line class="time">Time</h3>
+            <h3 mat-line class="pricing">Pricing</h3>
+            <h3 mat-line class="party">Party Size</h3>
+            <h3 mat-line class="id">Booking Id</h3>
+            <h3 mat-line class="status">Status</h3>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item class="booking-items" *ngFor="let booking of filteredBookings; let i = index">
+            <p mat-line class="count">{{i + 1}}</p>
+            <p mat-line class="name">{{booking.name}}</p>
+            <p mat-line class="phone">{{booking.phone}}</p>
+            <p mat-line class="time">{{booking.time}}</p>
+            <p mat-line class="pricing">{{booking.discount}}</p>
+            <p mat-line class="party">{{booking.party}}</p>
+            <p mat-line class="id">{{booking.bookingId}}</p>
+            <p mat-line class="status">{{booking.status}}</p>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</div>

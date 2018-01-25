@@ -7,6 +7,7 @@ import 'hammerjs';
 
 //Modules
 import { OnboardingAppModule, onboardingComponents } from './onboarding-app/onboarding-app.module';
+import { RestaurantAppModule, restaurantComponents } from './restaurant-app/restaurant-app.module';
 import { AppMaterialModule } from './app-material/app-material.module'; //Angular Material components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -34,6 +35,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     AppMaterialModule,
     OnboardingAppModule,
+    RestaurantAppModule,
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent],
