@@ -57,14 +57,16 @@
     </div>
     <div id="bookingList" class="card">
       <div class="card-header">
-        <h2>Bookings</h2>
+        <div class="title">
+          <h2>Bookings</h2>
+        </div>
         <div class="filters">
           <div class="separator-v"></div>
           <h3>Filters: </h3>
-          <button class="button white" (click)="filterBookings($event, 'Upcoming')">Upcoming</button>
-          <button class="button white" (click)="filterBookings($event, 'Completed')">Completed</button>
-          <button class="button white" (click)="filterBookings($event, 'Cancelled')">Cancelled</button>
-          <button class="button white" (click)="filterBookings($event, 'No Show')">No Show</button>
+          <button class="button white" (click)="toggleFilter($event, 'Upcoming')">Upcoming</button>
+          <button class="button white" (click)="toggleFilter($event, 'Completed')">Completed</button>
+          <button class="button white" (click)="toggleFilter($event, 'Cancelled')">Cancelled</button>
+          <button class="button white" (click)="toggleFilter($event, 'No Show')">No Show</button>
           <div class="separator-v"></div>
         </div>
         <div class="refresh">
@@ -94,7 +96,10 @@
             <p mat-line class="pricing">{{booking.discount}}</p>
             <p mat-line class="party">{{booking.party}}</p>
             <p mat-line class="id">{{booking.bookingId}}</p>
-            <p mat-line class="status">{{booking.status}}</p>
+            <div mat-line class="status">
+              <p>{{booking.status}}</p>
+              <button class="button-icon orange" (click)="reportNoShow(booking)" [disabled]="booking.status == 'Cancelled' || booking.status == 'No Show'"><i class="fa fa-flag" aria-hidden="true"></i></button>
+            </div>
           </mat-list-item>
         </mat-list>
       </div>

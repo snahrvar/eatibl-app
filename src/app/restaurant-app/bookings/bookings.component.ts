@@ -3,6 +3,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-bookings',
@@ -26,6 +28,7 @@ export class BookingsComponent implements OnInit {
     cancelled: 0,
     noShow: 0
   }
+  confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   refreshing = false; //Prevent users from making multiple refresh requests until one has completed
   apiUrl = environment.apiURL;
@@ -39,7 +42,30 @@ export class BookingsComponent implements OnInit {
     party: '',
   };
 
-  constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router) {
+  constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router, public dialog: MatDialog) {
+  }
+
+  //Report no show
+  reportNoShow(booking){
+    console.log(booking);
+    this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+      data: {
+        title: "Report No Show",
+        message: "Would you like to report " + booking.name + " as a no show?"
+      }
+    });
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if(result)
+        this.http.get(this.apiUrl + '/booking/' + this.restaurantId + '/' + booking._id + '/update/noshow',)
+          .subscribe(
+            res => {
+              this.refreshBookings();
+            },
+            err => {
+              console.log(err);
+            }
+          );
+    })
   }
 
   //Build the date object for the front end
@@ -104,6 +130,9 @@ export class BookingsComponent implements OnInit {
       return dayBooking == dateNow;
     });
 
+    //Filter bookings by filter set
+    this.filterBookings();
+
     //Set booking totals for a specific day
     this.setTotals();
 
@@ -113,17 +142,8 @@ export class BookingsComponent implements OnInit {
   }
 
   //Filter the booking data
-  filterBookings(event, filter){
+  filterBookings(){
     var filters = this.filters; //Stage filters so we can ignore 'this' conflicts
-
-    if(this.filters.indexOf(filter) > -1){
-      this.renderer.removeClass(event.target,"active");
-      this.filters.splice(this.filters.indexOf(filter), 1);
-    }
-    else {
-      this.renderer.addClass(event.target,"active");
-      this.filters.push(filter);
-    }
 
     if(filters.length)
       this.filteredBookings = _.filter(this.dayBookings, function(booking){
@@ -138,14 +158,28 @@ export class BookingsComponent implements OnInit {
       this.filteredBookings = this.dayBookings;
   }
 
+  //Add/remove filters
+  toggleFilter(event, filter){
+    if(this.filters.indexOf(filter) > -1){
+      this.renderer.removeClass(event.target,"active");
+      this.filters.splice(this.filters.indexOf(filter), 1);
+    }
+    else {
+      this.renderer.addClass(event.target,"active");
+      this.filters.push(filter);
+    }
+
+    this.filterBookings();
+  }
+
   //Set the bookings aggregate data
   setTotals(){
-    this.total.bookings = this.filteredBookings.length;
-    this.total.people = this.sum(this.filteredBookings, 'party');
-    this.total['upcoming'] = _.filter(this.filteredBookings, function(booking){return booking['status'] == 'Upcoming';}).length;
-    this.total['completed'] = _.filter(this.filteredBookings, function(booking){return booking['status'] == 'Completed';}).length;
-    this.total['cancelled'] = _.filter(this.filteredBookings, function(booking){return booking['status'] == 'Cancelled';}).length;
-    this.total['noShow'] = _.filter(this.filteredBookings, function(booking){return booking['status'] == 'No Show';}).length;
+    this.total.bookings = this.dayBookings.length;
+    this.total.people = this.sum(this.dayBookings, 'party');
+    this.total['upcoming'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Upcoming';}).length;
+    this.total['completed'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Completed';}).length;
+    this.total['cancelled'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Cancelled';}).length;
+    this.total['noShow'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'No Show';}).length;
   }
 
   //Refresh the current list of bookings with a new get request

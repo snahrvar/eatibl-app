@@ -4,7 +4,7 @@
 
 #overview{
   display: inline-block;
-  margin: 0 16px;
+  margin: 16px 16px 0 16px;
   .metadata{
     display: flex;
     .date{
@@ -90,6 +90,9 @@
 #bookingList{
   .card-header{
     align-items: center;
+    .title, .refresh{
+      width: 20%;
+    }
     .filters{
       display: flex;
       flex-direction: row;
@@ -111,12 +114,16 @@
     }
     .refresh{
       display: flex;
+      justify-content: flex-end;
       button{
         margin-left: 12px;
       }
     }
   }
   .booking-items, .booking-titles{
+    p{
+      line-height: 40px;
+    }
     .count{
       width: 5%;
     }
@@ -140,6 +147,11 @@
     }
     .status{
       width: 15%;
+      display: flex;
+      justify-content: space-between;
+      p{
+        margin: 0;
+      }
     }
   }
   .booking-titles{
@@ -149,6 +161,10 @@
   }
   .booking-items{
     border-bottom: 1px solid darken($light-grey, 5%);
+    ::ng-deep .mat-list-item-content{
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
     &:nth-of-type(odd){
       background-color: $light-grey;
     }
