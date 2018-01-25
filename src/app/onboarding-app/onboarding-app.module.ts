@@ -14,12 +14,12 @@ import { RestaurantDetailsComponent } from '../onboarding-app/restaurant-details
 
 const routes: Routes = [
   { path: '', component: RestaurantListComponent, canActivate: [AuthGuard] },
-  { path: ':restaurantId/hours', component: BusinessHoursComponent },
-  { path: ':restaurantId/keyHours', component: KeyHoursComponent },
-  { path: ':restaurantId/pricing/week', component: WeekDiscountComponent },
-  { path: ':restaurantId/pricing/:day', component: DayDiscountComponent },
-  { path: 'restaurant/:action', component: RestaurantDetailsComponent },
-  { path: ':restaurantId/:action', component: RestaurantDetailsComponent },
+  { path: ':restaurantId/hours', component: BusinessHoursComponent, canActivate: [AuthGuard]  },
+  { path: ':restaurantId/keyHours', component: KeyHoursComponent, canActivate: [AuthGuard]  },
+  { path: ':restaurantId/pricing/week', component: WeekDiscountComponent, canActivate: [AuthGuard]  },
+  { path: ':restaurantId/pricing/:day', component: DayDiscountComponent, canActivate: [AuthGuard]  },
+  { path: 'restaurant/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  },
+  { path: ':restaurantId/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  },
 ];
 
 @NgModule({

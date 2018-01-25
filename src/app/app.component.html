@@ -3,6 +3,7 @@
   <a href="/">
     <img src="/assets/images/white-logo.png" alt="">
   </a>
+  <button *ngIf = "loginService.checkUser()" class="button white" (click)="logout()">Logout</button>
 </div>
 
 <!--app component view-->

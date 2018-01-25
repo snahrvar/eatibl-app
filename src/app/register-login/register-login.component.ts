@@ -32,7 +32,8 @@ export class RegisterLoginComponent implements OnInit {
     this.http.post(this.apiUrl + '/user/login', this.user)
       .subscribe(
         res => {
-          console.log(res);
+          localStorage.setItem('user',JSON.stringify(res)); //add user to localStorage so we can detect logged in user
+          this.router.navigate(['/']);
         },
         err => {
           console.log(err);
@@ -44,7 +45,8 @@ export class RegisterLoginComponent implements OnInit {
     this.http.post(this.apiUrl + '/user/create', this.newUser)
       .subscribe(
         res => { //Returns restaurant ID
-          console.log(res);
+          localStorage.setItem('user',JSON.stringify(res)); //add user to localStorage so we can detect logged in user
+          this.router.navigate(['/']);
         },
         err => {
           console.log(err);
