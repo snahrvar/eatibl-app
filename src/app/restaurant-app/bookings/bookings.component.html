@@ -3,14 +3,6 @@
 </div>
 <div class="scroll-wrapper" *ngIf="contentLoaded">
   <div class="frame">
-    <div class="card">
-      <input type="text" name="fullName" placeholder="Name" [(ngModel)]="details.name">
-      <input type="text" name="phone" placeholder="Phone" [(ngModel)]="details.phone">
-      <input type="text" name="time" placeholder="Time" [(ngModel)]="details.time">
-      <input type="text" name="discount" placeholder="Discount" [(ngModel)]="details.discount">
-      <input type="text" name="party" placeholder="Party Size" [(ngModel)]="details.party">
-      <button class="button-icon green" (click)="submitBooking()"><i class="fa fa-cutlery" aria-hidden="true"></i></button>
-    </div>
     <div id="overview" class="card">
       <div class="metadata">
         <div class="date">
@@ -72,6 +64,7 @@
         <div class="refresh">
           <p-progressSpinner strokeWidth="8" *ngIf="refreshing"></p-progressSpinner>
           <button class="button blue" (click)="refreshBookings()" [disabled]="refreshing"><i class="fa fa-refresh icon-padding" aria-hidden="true"></i>Refresh</button>
+          <button class="button-icon green" (click)="generateBooking()"><i class="fa fa-cutlery" aria-hidden="true"></i></button>
         </div>
       </div>
       <div class="separator"></div>
@@ -94,8 +87,8 @@
             <p mat-line class="phone">{{booking.phone}}</p>
             <p mat-line class="time">{{functions.formatTime(booking.time, true)}}</p>
             <p mat-line class="pricing">{{booking.discount}}</p>
-            <p mat-line class="party">{{booking.party}}</p>
-            <p mat-line class="id">{{booking.bookingId}}</p>
+            <p mat-line class="party">{{booking.people}}</p>
+            <p mat-line class="id">{{booking.code}}</p>
             <div mat-line class="status">
               <p class="{{booking.status.replace(' ', '-').toLowerCase()}}">{{booking.status}}</p>
               <button class="button-icon orange" (click)="reportNoShow(booking)" [disabled]="booking.status == 'Cancelled' || booking.status == 'No Show'"><i class="fa fa-flag" aria-hidden="true"></i></button>

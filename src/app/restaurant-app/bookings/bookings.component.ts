@@ -40,7 +40,7 @@ export class BookingsComponent implements OnInit {
     phone: '',
     time: '',
     discount: '',
-    party: '',
+    people: '',
   };
 
   constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router, public dialog: MatDialog, private functions: FunctionsService) {
@@ -48,7 +48,7 @@ export class BookingsComponent implements OnInit {
 
   //Report no show
   reportNoShow(booking){
-    console.log(booking);
+    //console.log(booking._id);
     this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
       data: {
         title: "Report No Show",
@@ -56,8 +56,9 @@ export class BookingsComponent implements OnInit {
       }
     });
     this.confirmDialogRef.afterClosed().subscribe(result => {
+      console.log(booking._id);
       if(result)
-        this.http.get(this.apiUrl + '/booking/' + this.restaurantId + '/' + booking._id + '/update/noshow',)
+        this.http.get(this.apiUrl + '/booking/' + booking._id + '/update/noshow',)
           .subscribe(
             res => {
               this.refreshBookings();
@@ -104,8 +105,8 @@ export class BookingsComponent implements OnInit {
   }
 
   //Build the metadata for the frontend to use
-  createBookingData(restaurant, callback){
-    var bookings = _.sortBy(restaurant.bookings, 'time');
+  createBookingData(callback){
+    var bookings = _.sortBy(this.allBookings, 'time');
 
     //Collect date info for setting statuses and filtering bookings
     var todayDate = new Date(Date.now()),
@@ -176,7 +177,7 @@ export class BookingsComponent implements OnInit {
   //Set the bookings aggregate data
   setTotals(){
     this.total.bookings = this.dayBookings.length;
-    this.total.people = this.sum(this.dayBookings, 'party');
+    this.total.people = this.sum(this.dayBookings, 'people');
     this.total['upcoming'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Upcoming';}).length;
     this.total['completed'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Completed';}).length;
     this.total['cancelled'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Cancelled';}).length;
@@ -187,11 +188,11 @@ export class BookingsComponent implements OnInit {
   refreshBookings(){
     this.refreshing = true;
 
-    this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
+    this.http.get(this.apiUrl + '/booking/' + this.restaurantId)
       .subscribe(
         res => {
-          this.restaurant = res;
-          this.createBookingData(this.restaurant, function(self){
+          this.allBookings = res;
+          this.createBookingData(function(self){
             self.refreshing = false;
           });
         },
@@ -202,16 +203,12 @@ export class BookingsComponent implements OnInit {
   }
 
   //FOR TESTING ONLY
-  submitBooking() {
-    var booking = {
-      restaurantId: this.restaurantId,
-      details: this.details
-    }
-
-    this.http.post(this.apiUrl + '/booking/create', booking)
+  generateBooking() {
+    this.http.get(this.apiUrl + '/booking/'+this.restaurantId+'/generate')
       .subscribe(
         res => { //Returns restaurant ID
           console.log(res);
+          this.refreshBookings(); //refresh bookings
         },
         err => {
           console.log(err);
@@ -232,14 +229,21 @@ export class BookingsComponent implements OnInit {
         .subscribe(
           res => {
             this.restaurant = res;
-            this.createBookingData(this.restaurant, function(self){
-              self.contentLoaded = true;
-            });
-            console.log(this.restaurant);
+
+            //make API call for bookings
+            this.http.get(this.apiUrl + '/booking/' + this.restaurantId)
+              .subscribe(
+                res => {
+                  //save all bookings for this restaurant
+                  this.allBookings = res;
+                  this.createBookingData(function(self){
+                    self.contentLoaded = true;
+                  });
+                },
+                err => {console.log(err)}
+              );
           },
-          err => {
-            console.log("Error occurred");
-          }
+          err => {console.log(err)}
         );
     });
   }
