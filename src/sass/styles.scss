@@ -162,21 +162,6 @@ mat-list{
   }
 }
 
-p-progressspinner{
-  max-height: 40px;
-  .ui-progress-spinner{
-    width: 40px;
-    height: 40px;
-  }
-  &.content-loading{
-    max-height: 100px;
-    .ui-progress-spinner{
-      width: 100px;
-      height: 100px;
-    }
-  }
-}
-
 @keyframes ui-progress-spinner-color {
   100%,
   0% {
@@ -190,6 +175,84 @@ p-progressspinner{
   }
   70% {
     stroke: $eatibl-blue;
+  }
+}
+
+//Prime NG component styling
+p-calendar{
+  font-family: "Quicksand Regular";
+  .ui-calendar{
+    .ui-inputtext{
+      height: 40px;
+      padding-left: 10px;
+      font-size: 16px;
+      font-family: "Quicksand Regular";
+    }
+    .ui-calendar-button{
+      width: 40px;
+      background-color: $eatibl-blue;
+      color: #fff;
+      border-radius: 0 3px 3px 0;
+      -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    }
+    .ui-datepicker{
+      background-color: #fff;
+      padding: 0;
+      top: 45px !important;
+      .ui-datepicker-header{
+        background-color: $eatibl-blue;
+        color: #fff;
+        padding: 3px;
+        .ui-corner-all{
+          span{
+            color: #fff;
+          }
+        }
+      }
+      .ui-datepicker-calendar{
+        tbody{
+          tr{
+            td{
+              padding: 0;
+              border-bottom: 1px solid rgba(213, 213, 213, 0.5);
+              .ui-state-default{
+                border: 0 none;
+                text-align: center;
+                padding: 8px;
+                &:hover{
+                  background-color: darken($light-grey, 10%);
+                }
+              }
+              &.ui-datepicker-other-month{
+                .ui-state-default{
+                  color: lighten($grey, 10%);
+                  &:hover{
+                    background-color: #fff;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+p-progressspinner{
+  max-height: 40px;
+  .ui-progress-spinner{
+    width: 40px;
+    height: 40px;
+  }
+  &.content-loading{
+    max-height: 100px;
+    .ui-progress-spinner{
+      width: 100px;
+      height: 100px;
+    }
   }
 }
 

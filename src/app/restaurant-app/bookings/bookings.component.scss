@@ -2,92 +2,140 @@
 @import '../../../sass/variables';
 @import '../../../sass/mixins';
 
-#overview{
-  display: inline-block;
-  margin: 16px 16px 0 16px;
-  .metadata{
-    display: flex;
-    .date{
-      margin-right: 12px;
-      text-align: center;
-      p{
-        margin: 0;
-        font-size: 18px;
-        font-weight: 700;
-        &.dateNumber{
-          font-size: 42px;
-          line-height: 42px;
+.card-row{
+  display: flex;
+  #overview{
+    margin-right: 0;
+    .metadata{
+      display: flex;
+      .date{
+        min-width: 100px;
+        margin-right: 12px;
+        text-align: center;
+        p{
+          margin: 0;
+          font-size: 18px;
+          font-weight: 700;
+          &.dateNumber{
+            font-size: 42px;
+            line-height: 42px;
+          }
+          &.day{
+            color: $eatibl-red;
+          }
         }
-        &.day{
-          color: $eatibl-red;
+      }
+      .totals{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .bookings, .people{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 0 12px;
+          i{
+            color: $grey;
+            font-size: 28px;
+            margin-right: 6px;
+            height: 100%;
+          }
+          p{
+            margin: 0;
+            font-weight: 700;
+          }
+          .count{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            p {
+              font-size: 38px;
+              color: $eatibl-red;
+              font-weight: 700;
+            }
+          }
+        }
+        .breakdown{
+          text-align: center;
+          margin: 0 12px;
+          p{
+            font-weight: 700;
+            margin: 0;
+            &:first-of-type{
+              font-size: 38px;
+            }
+          }
+          &.upcoming{
+            p:first-of-type{
+              color: $eatibl-blue;
+            }
+          }
+          &.completed{
+            p:first-of-type{
+              color: $eatibl-green;
+            }
+          }
+          &.cancelled{
+            p:first-of-type{
+              color: $eatibl-orange;
+            }
+          }
+          &.no-show{
+            p:first-of-type{
+              color: $eatibl-red;
+            }
+          }
         }
       }
     }
-    .totals{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      .bookings, .people{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0 12px;
-        i{
-          color: $grey;
-          font-size: 28px;
-          margin-right: 6px;
-          height: 100%;
-        }
-        p{
-          margin: 0;
-          font-weight: 700;
-        }
-        .count{
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          p {
-            font-size: 38px;
-            color: $eatibl-red;
-            font-weight: 700;
+  }
+  #editData{
+    flex-grow: 1;
+    display: flex;
+    .date-picker{
+      width: 70%;
+      ::ng-deep p-calendar{
+        width: 100%;
+        .ui-calendar{
+          width: 100%;
+          .ui-inputtext{
+            width: calc(100% - 40px);
           }
         }
       }
-      .breakdown{
-        text-align: center;
-        margin: 0 12px;
-        p{
-          font-weight: 700;
-          margin: 0;
-          &:first-of-type{
-            font-size: 38px;
-          }
+      .date-buttons{
+        margin-top: 12px;
+        width: 100%;
+        display: flex;
+        .button-full{
+          flex-grow: 1;
+          width: auto;
+          margin: 0 6px;
         }
-        &.upcoming{
-          p:first-of-type{
-            color: $eatibl-blue;
-          }
+      }
+    }
+    .pricing{
+      width: 30%;
+      display: flex;
+      a{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        i{
+          font-size: 22px;
         }
-        &.completed{
-          p:first-of-type{
-            color: $eatibl-green;
-          }
-        }
-        &.cancelled{
-          p:first-of-type{
-            color: $eatibl-orange;
-          }
-        }
-        &.no-show{
-          p:first-of-type{
-            color: $eatibl-red;
-          }
+        span{
+          margin-top: 6px;
+          line-height: 16px;
         }
       }
     }
   }
 }
 #bookingList{
+  margin-top: 0;
   .card-header{
     align-items: center;
     .title, .refresh{

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
-import { FunctionsService } from '../../_services/functions.service'
+import { FunctionsService } from '../../_services/functions.service';
 
 @Component({
   selector: 'app-bookings',
@@ -21,6 +21,7 @@ export class BookingsComponent implements OnInit {
   filteredBookings: any;
   filters = [];
   date: any;
+  datePicked: any;
   total = {
     bookings: 0,
     people: 0,
@@ -95,6 +96,24 @@ export class BookingsComponent implements OnInit {
     }
   }
 
+  //Change day by one day in either diredction
+  changeDay(direction){
+    var date = new Date(this.datePicked);
+
+    if(direction == 'prev')
+      date.setDate(date.getDate() - 1);
+    else if(direction == 'next')
+      date.setDate(date.getDate() + 1);
+
+    this.datePicked = date;
+  }
+
+  //Set the current day to the selected day
+  setDay(){
+    this.buildDate(this.datePicked);
+    this.refreshBookings();
+  }
+
   //Sum all of one property in a series of objects
   sum(array, property){
     var total = 0;
@@ -109,7 +128,7 @@ export class BookingsComponent implements OnInit {
     var bookings = _.sortBy(this.allBookings, 'time');
 
     //Collect date info for setting statuses and filtering bookings
-    var todayDate = new Date(Date.now()),
+    var todayDate = new Date(this.date['raw']),
       timeNow: any = +todayDate.getHours() + (+todayDate.getMinutes() / 60),
       dateNow = todayDate.getDate();
 
@@ -219,6 +238,7 @@ export class BookingsComponent implements OnInit {
 
   ngOnInit() {
     this.buildDate(Date.now());
+    this.datePicked = new Date(Date.now());
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {

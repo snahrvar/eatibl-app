@@ -3,47 +3,63 @@
 </div>
 <div class="scroll-wrapper" *ngIf="contentLoaded">
   <div class="frame">
-    <div id="overview" class="card">
-      <div class="metadata">
-        <div class="date">
-          <p class="day">{{date.day}}</p>
-          <p class="dateNumber">{{date.date}}</p>
-          <p class="month">{{date.month}}</p>
+    <div class="card-row">
+      <div id="overview" class="card">
+        <div class="metadata">
+          <div class="date">
+            <p class="day">{{date.day}}</p>
+            <p class="dateNumber">{{date.date}}</p>
+            <p class="month">{{date.month}}</p>
+          </div>
+          <!--<p-calendar [(ngModel)]="" [showIcon]="true"></p-calendar> <span style="margin-left:35px">{{date3|date}}</span>-->
+          <div class="totals">
+            <div class="separator-v"></div>
+            <div class="bookings">
+              <div class="count">
+                <i class="fa fa-cutlery" aria-hidden="true"></i>
+                <p>{{total.bookings}}</p>
+              </div>
+              <p>Bookings</p>
+            </div>
+            <div class="people">
+              <div class="count">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <p>{{total.people}}</p>
+              </div>
+              <p>People</p>
+            </div>
+            <div class="separator-v"></div>
+            <div class="upcoming breakdown">
+              <p>{{total.upcoming}}</p>
+              <p>Upcoming</p>
+            </div>
+            <div class="completed breakdown">
+              <p>{{total.completed}}</p>
+              <p>Completed</p>
+            </div>
+            <div class="cancelled breakdown">
+              <p>{{total.cancelled}}</p>
+              <p>Cancelled</p>
+            </div>
+            <div class="no-show breakdown">
+              <p>{{total.noShow}}</p>
+              <p>No Show</p>
+            </div>
+          </div>
         </div>
-        <!--<p-calendar [(ngModel)]="" [showIcon]="true"></p-calendar> <span style="margin-left:35px">{{date3|date}}</span>-->
-        <div class="totals">
-          <div class="separator-v"></div>
-          <div class="bookings">
-            <div class="count">
-              <i class="fa fa-cutlery" aria-hidden="true"></i>
-              <p>{{total.bookings}}</p>
-            </div>
-            <p>Bookings</p>
+      </div>
+      <div id="editData" class="card">
+        <div class="date-picker">
+          <p-calendar [(ngModel)]="datePicked" [showIcon]="true"></p-calendar>
+          <div class="date-buttons">
+            <button class="button-icon blue" (click)="changeDay('prev')"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+            <button class="button-full blue" (click)="setDay()">Set Day</button>
+            <button class="button-icon blue" (click)="changeDay('next')"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
           </div>
-          <div class="people">
-            <div class="count">
-              <i class="fa fa-users" aria-hidden="true"></i>
-              <p>{{total.people}}</p>
-            </div>
-            <p>People</p>
-          </div>
-          <div class="separator-v"></div>
-          <div class="upcoming breakdown">
-            <p>{{total.upcoming}}</p>
-            <p>Upcoming</p>
-          </div>
-          <div class="completed breakdown">
-            <p>{{total.completed}}</p>
-            <p>Completed</p>
-          </div>
-          <div class="cancelled breakdown">
-            <p>{{total.cancelled}}</p>
-            <p>Cancelled</p>
-          </div>
-          <div class="no-show breakdown">
-            <p>{{total.noShow}}</p>
-            <p>No Show</p>
-          </div>
+        </div>
+        <div class="separator-v"></div>
+        <div class="pricing">
+          <a routerLink="../../../{{restaurantId}}/pricing/week" class="button-full blue" (click)="navigateTo()"><i class="fa fa-bar-chart" aria-hidden="true"></i><span>Pricing</span></a>
         </div>
       </div>
     </div>

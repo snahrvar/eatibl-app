@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { AuthGuard } from '../_guards/auth.guard'; //login permissions
 import {Routes, RouterModule} from "@angular/router";
 import { NouisliderModule } from 'ng2-nouislider';
-import { ChartModule, ProgressSpinnerModule } from 'primeng/primeng';
 
 import { BusinessHoursComponent } from '../onboarding-app/business-hours/business-hours.component';
 import { KeyHoursComponent } from '../onboarding-app/key-hours/key-hours.component';
@@ -26,11 +25,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     NouisliderModule,
-    ChartModule,
-    ProgressSpinnerModule,
     RouterModule.forRoot(routes)
   ],
-  exports: [ProgressSpinnerModule, NouisliderModule, ChartModule],
+  exports: [NouisliderModule],
   providers: [AuthGuard],
 })
 export class OnboardingAppModule { }

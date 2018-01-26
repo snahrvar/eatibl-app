@@ -9,6 +9,7 @@ import 'hammerjs';
 import { OnboardingAppModule, onboardingComponents } from './onboarding-app/onboarding-app.module';
 import { RestaurantAppModule, restaurantComponents } from './restaurant-app/restaurant-app.module';
 import { AppMaterialModule } from './app-material/app-material.module'; //Angular Material components
+import { PrimeNgModule } from './prime-ng/prime-ng.module'; //PrimeNG components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -36,6 +37,7 @@ const routes: Routes = [
     FormsModule,
     BrowserAnimationsModule,
     AppMaterialModule,
+    PrimeNgModule,
     OnboardingAppModule,
     RestaurantAppModule,
     RouterModule.forRoot(routes)
