@@ -243,6 +243,10 @@ export class BookingsComponent implements OnInit {
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
       this.restaurantId = params['restaurantId'];
+
+      //set navigation url for weekly pricing page (so we can set link for back button)
+      this.functions.setNavigation('restaurant/'+this.restaurantId + '/bookings');
+
       console.log(this.restaurantId);
       //Only get restaurant information if we are editing an existing one
       this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)

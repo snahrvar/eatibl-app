@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import {Location} from '@angular/common';
+import { FunctionsService } from '../../_services/functions.service';
 
 @Component({
   selector: 'app-week-discount',
@@ -106,7 +108,7 @@ export class WeekDiscountComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, private route:ActivatedRoute) {
+  constructor(private http: HttpClient, private route:ActivatedRoute, private _location: Location, private functions: FunctionsService) {
     //Initialize router
     this.router = Router;
 

@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class FunctionsService {
 
+  link: any;
+
   constructor() {}
 
   //Format a raw time to clocktime. Full is true if we want minutes
@@ -23,5 +25,14 @@ export class FunctionsService {
       clockTime = hour + minutes + ' AM';
     }
     return clockTime;
+  }
+
+  setNavigation(value){
+    console.log(value);
+    this.link = value;
+  }
+  getNavigation(){
+    console.log('get');
+    return this.link;
   }
 }

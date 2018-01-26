@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
 import { environment } from '../../../environments/environment';
+import { FunctionsService } from '../../_services/functions.service';
 
 @Component({
   selector: 'app-key-hours',
@@ -60,7 +61,7 @@ export class KeyHoursComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router  ) {
+  constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router, private functions: FunctionsService  ) {
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -137,6 +138,10 @@ export class KeyHoursComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    //set navigation url for weekly pricing page (so we can set link for back button)
+    this.functions.setNavigation(this.restaurantId + '/keyHours');
+
   }
 
 }
