@@ -28,11 +28,6 @@ export class FunctionsService {
   }
 
   setNavigation(value){
-    console.log(value);
     this.link = value;
-  }
-  getNavigation(){
-    console.log('get');
-    return this.link;
   }
 }
