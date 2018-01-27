@@ -108,7 +108,7 @@ export class WeekDiscountComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, private route:ActivatedRoute, private _location: Location, private functions: FunctionsService) {
+  constructor(private http: HttpClient, private route:ActivatedRoute, private _location: Location, public functions: FunctionsService) {
     //Initialize router
     this.router = Router;
 
