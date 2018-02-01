@@ -222,8 +222,6 @@ export class BookingsComponent implements OnInit {
     this.total['completed'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Completed';}).length;
     this.total['cancelled'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Cancelled';}).length;
     this.total['noShow'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'No Show';}).length;
-    console.log(this.total)
-    console.log(this.dayBookings)
   }
 
   //Refresh the current list of bookings with a new get request
@@ -246,7 +244,8 @@ export class BookingsComponent implements OnInit {
 
   //FOR TESTING ONLY
   generateBooking() {
-    this.http.get(this.apiUrl + '/booking/'+this.restaurantId+'/generate')
+    var date = this.date.raw;
+    this.http.post(this.apiUrl + '/booking/'+this.restaurantId+'/generate', this.date)
       .subscribe(
         res => { //Returns restaurant ID
           console.log(res);
