@@ -27,7 +27,10 @@ export class BookingsComponent implements OnInit {
   clock: any;
   datePicked: any;
   total = {
-    bookings: 0,
+    bookings: {
+      count: 0,
+      recent: 0
+    },
     people: 0,
     upcoming: 0,
     completed: 0,
@@ -122,9 +125,6 @@ export class BookingsComponent implements OnInit {
     this.datePicked = date;
   }
 
-  //Refresh table every 10 minutes
-
-
   //Set the current day to the selected day
   setDay(){
     this.buildDate(this.datePicked);
@@ -156,6 +156,13 @@ export class BookingsComponent implements OnInit {
       //Don't set statuses if status is already cancelled
       if(!bookings[i]['status'])
         bookings[i]['status'] = timeBooking > timeNow ? 'Upcoming' : 'Completed';
+
+      //Added new tag to booking if created within last 15 minutes
+      var createdDate = new Date(bookings[i]['created_at']);
+      var fifteenMin = 15000 * 60;
+      if((new Date - createdDate) <= fifteenMin){
+        bookings[i]['statusNotify'] = 'new';
+      }
     }
 
     //Set allBookings before bookings list has been filtered
@@ -208,12 +215,15 @@ export class BookingsComponent implements OnInit {
 
   //Set the bookings aggregate data
   setTotals(){
-    this.total.bookings = this.dayBookings.length;
+    this.total.bookings.count = this.dayBookings.length;
+    this.total.bookings.recent = _.filter(this.dayBookings, function(booking){return booking['statusNotify'] == 'new';}).length;
     this.total.people = this.sum(this.dayBookings, 'people');
     this.total['upcoming'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Upcoming';}).length;
     this.total['completed'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Completed';}).length;
     this.total['cancelled'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'Cancelled';}).length;
     this.total['noShow'] = _.filter(this.dayBookings, function(booking){return booking['status'] == 'No Show';}).length;
+    console.log(this.total)
+    console.log(this.dayBookings)
   }
 
   //Refresh the current list of bookings with a new get request

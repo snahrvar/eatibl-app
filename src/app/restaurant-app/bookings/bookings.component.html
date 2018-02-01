@@ -17,7 +17,8 @@
             <div class="bookings">
               <div class="count">
                 <i class="fa fa-cutlery" aria-hidden="true"></i>
-                <p>{{total.bookings}}</p>
+                <p>{{total.bookings.count}}</p>
+                <div *ngIf="total.bookings.recent > 0" [matTooltip]="total.bookings.recent == 1 ? (total.bookings.recent + ' new booking') : (total.bookings.recent + ' new bookings')" matTooltipPosition="above" class="new"></div>
               </div>
               <p>Bookings</p>
             </div>
@@ -98,6 +99,9 @@
           </mat-list-item>
           <mat-divider></mat-divider>
           <mat-list-item class="booking-items" *ngFor="let booking of filteredBookings; let i = index">
+            <div *ngIf="booking.statusNotify" class="status-notify">
+              <p *ngIf="booking.statusNotify == 'new'">new</p>
+            </div>
             <p mat-line class="count">{{i + 1}}</p>
             <p mat-line class="name">{{booking.name}}</p>
             <p mat-line class="phone">{{booking.phone}}</p>

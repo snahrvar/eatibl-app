@@ -4,7 +4,7 @@ import { BookingsComponent } from './bookings/bookings.component';
 import {Routes, RouterModule} from "@angular/router";
 import { ProgressSpinnerModule, CalendarModule } from 'primeng/primeng';
 import { FormsModule } from '@angular/forms';
-import {MatListModule} from '@angular/material';
+import {MatListModule, MatTooltipModule} from '@angular/material';
 
 const routes: Routes = [
   { path: 'restaurant/:restaurantId/bookings', component: BookingsComponent }
@@ -17,6 +17,7 @@ const routes: Routes = [
     CalendarModule,
     FormsModule,
     MatListModule,
+    MatTooltipModule,
     RouterModule.forRoot(routes)
   ],
   declarations: [BookingsComponent]
