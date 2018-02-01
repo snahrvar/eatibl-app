@@ -3,12 +3,7 @@
 @import "~font-awesome/css/font-awesome.min.css";
 @import "~primeng/resources/primeng.min.css";
 @import "eatibl-theme";
-
-//Fonts
-@font-face {
-  font-family: "Quicksand Regular";
-  src: url("/assets/fonts/Quicksand-Regular.ttf") format("ttf");
-}
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
 
 //Internal scss imports
 @import './variables';
@@ -37,7 +32,7 @@ button{
 }
 
 p, h2, h3, h4, a, button{
-  font-family: "Quicksand Regular";
+  font-family: "Quicksand";
   color: $dark-grey;
 }
 
@@ -101,7 +96,7 @@ nouislider{
             content: none;
           }
           .noUi-tooltip{
-            font-family: "Quicksand Regular";
+            font-family: "Quicksand";
             outline: none;
           }
         }
@@ -115,7 +110,7 @@ nouislider{
     }
     .noUi-pips-vertical{
       .noUi-value{
-        font-family: "Quicksand Regular";
+        font-family: "Quicksand";
       }
     }
   }
@@ -180,13 +175,13 @@ mat-list{
 
 //Prime NG component styling
 p-calendar{
-  font-family: "Quicksand Regular";
+  font-family: "Quicksand";
   .ui-calendar{
     .ui-inputtext{
       height: 40px;
       padding-left: 10px;
       font-size: 16px;
-      font-family: "Quicksand Regular";
+      font-family: "Quicksand";
     }
     .ui-calendar-button{
       width: 40px;
@@ -365,21 +360,21 @@ form{
     margin: 8px 0;
     label{
       color: $eatibl-red;
-      font-family: "Quicksand Regular";
+      font-family: "Quicksand";
       margin-bottom: 6px;
     }
     input, textarea{
-      font-family: "Quicksand Regular";
+      font-family: "Quicksand";
       padding: 6px;
     }
     .radio-group{
-      font-family: "Quicksand Regular";
+      font-family: "Quicksand";
       height: 32px;
       display: flex;
       flex-direction: row;
       align-items: center;
       input[type=radio]{
-        font-family: "Quicksand Regular";
+        font-family: "Quicksand";
         &:not(:first-of-type){
           margin-left: 12px;
         }

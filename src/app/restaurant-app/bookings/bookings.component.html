@@ -10,8 +10,8 @@
             <p class="day">{{date.day}}</p>
             <p class="dateNumber">{{date.date}}</p>
             <p class="month">{{date.month}}</p>
+            <p class="clock">{{clock | date:'h:mm a' }}</p>
           </div>
-          <!--<p-calendar [(ngModel)]="" [showIcon]="true"></p-calendar> <span style="margin-left:35px">{{date3|date}}</span>-->
           <div class="totals">
             <div class="separator-v"></div>
             <div class="bookings">
@@ -71,10 +71,10 @@
         <div class="filters">
           <div class="separator-v"></div>
           <h3>Filters: </h3>
-          <button class="button white" (click)="toggleFilter($event, 'Upcoming')">Upcoming</button>
-          <button class="button white" (click)="toggleFilter($event, 'Completed')">Completed</button>
-          <button class="button white" (click)="toggleFilter($event, 'Cancelled')">Cancelled</button>
-          <button class="button white" (click)="toggleFilter($event, 'No Show')">No Show</button>
+          <button class="button white" [ngClass]="{'active' : (filters.indexOf('Upcoming') > -1)}" (click)="toggleFilter($event, 'Upcoming')">Upcoming</button>
+          <button class="button white" [ngClass]="{'active' : (filters.indexOf('Completed') > -1)}" (click)="toggleFilter($event, 'Completed')">Completed</button>
+          <button class="button white" [ngClass]="{'active' : (filters.indexOf('Cancelled') > -1)}" (click)="toggleFilter($event, 'Cancelled')">Cancelled</button>
+          <button class="button white" [ngClass]="{'active' : (filters.indexOf('No Show') > -1)}" (click)="toggleFilter($event, 'No Show')">No Show</button>
           <div class="separator-v"></div>
         </div>
         <div class="refresh">

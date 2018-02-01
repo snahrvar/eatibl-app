@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +6,9 @@ import * as _ from 'underscore';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 import { FunctionsService } from '../../_services/functions.service';
+import {ClockService} from "../../_services/clock.service";
+import {Observable} from 'rxjs/Rx';
+
 
 @Component({
   selector: 'app-bookings',
@@ -19,8 +22,9 @@ export class BookingsComponent implements OnInit {
   allBookings: any;
   dayBookings: any;
   filteredBookings: any;
-  filters = [];
+  filters = ['Upcoming'];
   date: any;
+  clock: any;
   datePicked: any;
   total = {
     bookings: 0,
@@ -34,6 +38,9 @@ export class BookingsComponent implements OnInit {
   contentLoaded = false; //Prevent content from loading until api calls are returned
   refreshing = false; //Prevent users from making multiple refresh requests until one has completed
   apiUrl = environment.apiURL;
+  subTime = Observable.interval(10000 * 60).subscribe(x => { //Refresh booking table every 10 minutes
+    this.refreshBookings();
+  });
 
   //For testing purposes
   details = {
@@ -44,8 +51,15 @@ export class BookingsComponent implements OnInit {
     people: '',
   };
 
-  constructor(private http: HttpClient, private renderer: Renderer2, private route:ActivatedRoute, private router: Router, public dialog: MatDialog, private functions: FunctionsService) {
-  }
+  constructor(
+    private http: HttpClient,
+    private renderer: Renderer2,
+    private route:ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog,
+    private functions: FunctionsService,
+    private clockService: ClockService
+  ) {}
 
   //Report no show
   reportNoShow(booking){
@@ -107,6 +121,9 @@ export class BookingsComponent implements OnInit {
 
     this.datePicked = date;
   }
+
+  //Refresh table every 10 minutes
+
 
   //Set the current day to the selected day
   setDay(){
@@ -181,14 +198,10 @@ export class BookingsComponent implements OnInit {
 
   //Add/remove filters
   toggleFilter(event, filter){
-    if(this.filters.indexOf(filter) > -1){
-      this.renderer.removeClass(event.target,"active");
+    if(this.filters.indexOf(filter) > -1)
       this.filters.splice(this.filters.indexOf(filter), 1);
-    }
-    else {
-      this.renderer.addClass(event.target,"active");
+    else
       this.filters.push(filter);
-    }
 
     this.filterBookings();
   }
@@ -239,6 +252,7 @@ export class BookingsComponent implements OnInit {
   ngOnInit() {
     this.buildDate(Date.now());
     this.datePicked = new Date(Date.now());
+    this.clockService.getClock().subscribe(time => this.clock = time);
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -270,6 +284,10 @@ export class BookingsComponent implements OnInit {
           err => {console.log(err)}
         );
     });
+  }
+
+  ngOnDestroy(){
+    this.subTime.unsubscribe();
   }
 
 }
