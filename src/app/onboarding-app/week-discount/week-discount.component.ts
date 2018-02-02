@@ -108,13 +108,18 @@ export class WeekDiscountComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, private route:ActivatedRoute, private _location: Location, private functions: FunctionsService) {
+  constructor(private http: HttpClient, private route:ActivatedRoute, private _location: Location, public functions: FunctionsService) {
     //Initialize router
     this.router = Router;
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
       this.restaurantId = params['restaurantId'];
+
+      //Since the service is not able to recall the value from the booking module, we'll HACK IT.
+      if(!this.functions.link) //no value means we're coming from restaurant app
+        this.functions.link = 'restaurant/'+this.restaurantId + '/bookings';  //restaurant back link
+
       this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/week')
         .subscribe(
           res => {

@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
 
   importedData = [];
 
-  constructor(private loginService: LoginService, private sampleService: SampleService, private router: Router){}
+  constructor(public loginService: LoginService, private sampleService: SampleService, private router: Router){}
 
   ngOnInit(): void {
     this.importedData = this.sampleService.numbers;
