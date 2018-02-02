@@ -6,7 +6,6 @@ import * as _ from 'underscore';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 import { FunctionsService } from '../../_services/functions.service';
-import {ClockService} from "../../_services/clock.service";
 import {Observable} from 'rxjs/Rx';
 
 
@@ -24,8 +23,7 @@ export class BookingsComponent implements OnInit {
   filteredBookings: any;
   filters = ['Upcoming'];
   date: any;
-  clock: any;
-  datePicked: any;
+  dateToday: any;
   total = {
     bookings: {
       count: 0,
@@ -36,7 +34,7 @@ export class BookingsComponent implements OnInit {
     completed: 0,
     cancelled: 0,
     noShow: 0
-  }
+  };
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   refreshing = false; //Prevent users from making multiple refresh requests until one has completed
@@ -60,8 +58,7 @@ export class BookingsComponent implements OnInit {
     private route:ActivatedRoute,
     private router: Router,
     public dialog: MatDialog,
-    private functions: FunctionsService,
-    private clockService: ClockService
+    private functions: FunctionsService
   ) {}
 
   //Report no show
@@ -105,29 +102,38 @@ export class BookingsComponent implements OnInit {
     var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-    this.date = {
+    date = {
       raw: date,
       day: (today.getDate() == dateNumber && today.getMonth() == month) ? 'Today' : days[day],
       month: months[month],
       date: dateNumber
-    }
+    };
+
+    return date;
   }
 
-  //Change day by one day in either diredction
+  //Change day by one day in either direction
   changeDay(direction){
-    var date = new Date(this.datePicked);
+    var date = new Date(this.date.raw);
 
     if(direction == 'prev')
       date.setDate(date.getDate() - 1);
     else if(direction == 'next')
       date.setDate(date.getDate() + 1);
 
-    this.datePicked = date;
+    this.date = this.buildDate(date);
+    this.setDay();
   }
 
   //Set the current day to the selected day
   setDay(){
-    this.buildDate(this.datePicked);
+    var date = this.date.raw;
+    var today = new Date();
+    //If date is today, use exact time
+    if(date.getFullYear() == today.getFullYear() && date.getMonth() == today.getMonth() && date.getDate() == today.getDate())
+      this.buildDate(this.date.raw);
+    else
+      this.buildDate(this.dateToday.raw);
     this.refreshBookings();
   }
 
@@ -145,22 +151,30 @@ export class BookingsComponent implements OnInit {
     var bookings = _.sortBy(this.allBookings, 'time');
 
     //Collect date info for setting statuses and filtering bookings
+    var dateToday = new Date(this.dateToday['raw']);
+
     var todayDate = new Date(this.date['raw']),
-      timeNow: any = +todayDate.getHours() + (+todayDate.getMinutes() / 60),
       dateNow = todayDate.getDate();
 
     //Set statuses of bookings
     for(var i = 0; i < bookings.length; i++){
-      var timeBooking = bookings[i]['time'];
+      //Set date of booking to full javascript date format
+      var dateBookingRaw = new Date(bookings[i]['date']),
+          hour = Math.floor(bookings[i]['time']),
+          minute = (bookings[i]['time'] - hour) * 60,
+          year = dateBookingRaw.getFullYear(),
+          month = dateBookingRaw.getMonth(),
+          day = dateBookingRaw.getDate(),
+          dateBooking = new Date(year, month, day, hour, minute);
 
       //Don't set statuses if status is already cancelled
       if(!bookings[i]['status'])
-        bookings[i]['status'] = timeBooking > timeNow ? 'Upcoming' : 'Completed';
+        bookings[i]['status'] = dateBooking.getTime() > dateToday.getTime() ? 'Upcoming' : 'Completed';
 
       //Added new tag to booking if created within last 15 minutes
-      var createdDate = new Date(bookings[i]['created_at']);
+      var createdDate = +new Date(bookings[i]['created_at']);
       var fifteenMin = 15000 * 60;
-      if((new Date - createdDate) <= fifteenMin){
+      if((+new Date() - createdDate) <= fifteenMin){
         bookings[i]['statusNotify'] = 'new';
       }
     }
@@ -259,9 +273,7 @@ export class BookingsComponent implements OnInit {
   //FOR TESTING ONLY
 
   ngOnInit() {
-    this.buildDate(Date.now());
-    this.datePicked = new Date(Date.now());
-    this.clockService.getClock().subscribe(time => this.clock = time);
+    this.dateToday = this.date = this.buildDate(Date.now());
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {

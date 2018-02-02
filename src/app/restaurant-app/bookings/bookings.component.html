@@ -10,7 +10,6 @@
             <p class="day">{{date.day}}</p>
             <p class="dateNumber">{{date.date}}</p>
             <p class="month">{{date.month}}</p>
-            <p class="clock">{{clock | date:'h:mm a' }}</p>
           </div>
           <div class="totals">
             <div class="separator-v"></div>
@@ -51,10 +50,9 @@
       </div>
       <div id="editData" class="card">
         <div class="date-picker">
-          <p-calendar [(ngModel)]="datePicked" [showIcon]="true"></p-calendar>
+          <p-calendar [(ngModel)]="date.raw" (onSelect)="setDay()" [showIcon]="true"></p-calendar>
           <div class="date-buttons">
             <button class="button-icon blue" (click)="changeDay('prev')"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-            <button class="button-full blue" (click)="setDay()">Set Day</button>
             <button class="button-icon blue" (click)="changeDay('next')"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
           </div>
         </div>

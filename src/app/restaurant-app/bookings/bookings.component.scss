@@ -124,10 +124,12 @@
         margin-top: 12px;
         width: 100%;
         display: flex;
-        .button-full{
+        .button-icon{
           flex-grow: 1;
           width: auto;
-          margin: 0 6px;
+          &:first-of-type{
+            margin-right: 6px;
+          }
         }
       }
     }
