@@ -2,113 +2,146 @@
   <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
 </div>
 <div class="scroll-wrapper has-footer" *ngIf="contentLoaded">
-  <div class="frame">
-    <div class="card">
-      <div class="card-header">
-        <h2>{{action}} Restaurant</h2>
-      </div>
-      <div class="separator"></div>
-      <form>
-        <div class="form-cluster">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Name" [(ngModel)]="restaurant.name" required>
-          </div>
-          <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Address" [(ngModel)]="restaurant.address" required>
-          </div>
-          <div class="form-group">
-            <label>Price</label>
-            <div class="radio-group">
-              <input type="radio" name="price" [value]="1" [(ngModel)]="restaurant.price"> $
-              <input type="radio" name="price" [value]="2" [(ngModel)]="restaurant.price"> $$
-              <input type="radio" name="price" [value]="3" [(ngModel)]="restaurant.price"> $$$
-              <input type="radio" name="price" [value]="4" [(ngModel)]="restaurant.price"> $$$$
-            </div>
-          </div>
+  <mat-tab-group>
+    <mat-tab label="Details">
+      <div class="frame">
+        <div class="card">
+        <div class="card-header">
+          <h2>{{action}} Restaurant</h2>
         </div>
-        <div class="form-cluster">
-          <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" class="form-control" id="city" name="city" placeholder="City" [(ngModel)]="restaurant.city" required>
-          </div>
-          <div class="form-group">
-            <label for="state">Province</label>
-            <input type="text" class="form-control" id="state" name="state" placeholder="Province" [(ngModel)]="restaurant.state" required>
-          </div>
-          <div class="form-group">
-            <label for="country">Country</label>
-            <input type="text" class="form-control" id="country" name="country" placeholder="Country" [(ngModel)]="restaurant.country" required>
-          </div>
-        </div>
-        <div class="form-cluster">
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" name="description" placeholder="Description" [(ngModel)]="restaurant.description" required></textarea>
-          </div>
-        </div>
-        <div class="form-cluster">
-          <div class="form-group">
-            <label for="discountDetails">Discount Details</label>
-            <textarea class="form-control" id="discountDetails" name="discountDetails" placeholder="Discount Details" [(ngModel)]="restaurant.discountDetails" required></textarea>
-          </div>
-          <div class="flex-row">
-            <div class="form-group">
-              <label>
-                <input type="checkbox" name="dineIn" [(ngModel)]="restaurant.dineIn">
-                Dine In
-              </label>
-            </div>
-            <div class="form-group">
-              <label>
-                <input type="checkbox" name="takeOut" [(ngModel)]="restaurant.takeOut">
-                Take Out
-              </label>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <h2>Contacts</h2>
-        <button class="button blue" (click)="addContact()"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>Add</button>
-      </div>
-      <div class="contact-list" *ngFor="let contact of restaurant.contacts; let i = index">
         <div class="separator"></div>
         <form>
           <div class="form-cluster">
             <div class="form-group">
-              <label>Name</label>
-              <input type="text" class="form-control" name="name" placeholder="Name" [(ngModel)]="contact.name" required>
+              <label for="name">Name</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Name" [(ngModel)]="restaurant.name" required>
             </div>
             <div class="form-group">
-              <label>Email</label>
-              <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="contact.email" required>
+              <label for="address">Address</label>
+              <input type="text" class="form-control" id="address" name="address" placeholder="Address" [(ngModel)]="restaurant.address" required>
+            </div>
+            <div class="form-group">
+              <label>Price</label>
+              <div class="radio-group">
+                <input type="radio" name="price" [value]="1" [(ngModel)]="restaurant.price"> $
+                <input type="radio" name="price" [value]="2" [(ngModel)]="restaurant.price"> $$
+                <input type="radio" name="price" [value]="3" [(ngModel)]="restaurant.price"> $$$
+                <input type="radio" name="price" [value]="4" [(ngModel)]="restaurant.price"> $$$$
+              </div>
             </div>
           </div>
           <div class="form-cluster">
             <div class="form-group">
-              <label>Position</label>
-              <input type="text" class="form-control" name="position" placeholder="Position" [(ngModel)]="contact.position" required>
+              <label for="city">City</label>
+              <input type="text" class="form-control" id="city" name="city" placeholder="City" [(ngModel)]="restaurant.city" required>
             </div>
             <div class="form-group">
-              <label>Phone</label>
-              <input type="text" class="form-control" name="phone" placeholder="Phone Number" [(ngModel)]="contact.phone" required>
+              <label for="state">Province</label>
+              <input type="text" class="form-control" id="state" name="state" placeholder="Province" [(ngModel)]="restaurant.state" required>
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" class="form-control" id="country" name="country" placeholder="Country" [(ngModel)]="restaurant.country" required>
             </div>
           </div>
-          <div class="form-cluster textarea-group">
+          <div class="form-cluster">
             <div class="form-group">
-              <label>Notes</label>
-              <textarea class="form-control" name="notes" placeholder="Notes" [(ngModel)]="contact.notes" required></textarea>
+              <label for="description">Description</label>
+              <textarea class="form-control" id="description" name="description" placeholder="Description" [(ngModel)]="restaurant.description" required></textarea>
             </div>
-            <button class="button-icon red" (click)="removeContact(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+          </div>
+          <div class="form-cluster">
+            <div class="form-group">
+              <label for="discountDetails">Discount Details</label>
+              <textarea class="form-control" id="discountDetails" name="discountDetails" placeholder="Discount Details" [(ngModel)]="restaurant.discountDetails" required></textarea>
+            </div>
+            <div class="flex-row">
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" name="dineIn" [(ngModel)]="restaurant.dineIn">
+                  Dine In
+                </label>
+              </div>
+              <div class="form-group">
+                <label>
+                  <input type="checkbox" name="takeOut" [(ngModel)]="restaurant.takeOut">
+                  Take Out
+                </label>
+              </div>
+            </div>
           </div>
         </form>
       </div>
     </div>
-  </div>
+    </mat-tab>
+    <mat-tab label="Contacts">
+      <div class="frame">
+        <div class="card">
+          <div class="card-header">
+            <h2>Contacts</h2>
+            <button class="button blue" (click)="addContact()"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>Add</button>
+          </div>
+          <div class="contact-list" *ngFor="let contact of restaurant.contacts; let i = index">
+            <div class="separator"></div>
+            <form>
+              <div class="form-cluster">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" name="name" placeholder="Name" [(ngModel)]="contact.name" required>
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="text" class="form-control" name="email" placeholder="Email" [(ngModel)]="contact.email" required>
+                </div>
+              </div>
+              <div class="form-cluster">
+                <div class="form-group">
+                  <label>Position</label>
+                  <input type="text" class="form-control" name="position" placeholder="Position" [(ngModel)]="contact.position" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input type="text" class="form-control" name="phone" placeholder="Phone Number" [(ngModel)]="contact.phone" required>
+                </div>
+              </div>
+              <div class="form-cluster textarea-group">
+                <div class="form-group">
+                  <label>Notes</label>
+                  <textarea class="form-control" name="notes" placeholder="Notes" [(ngModel)]="contact.notes" required></textarea>
+                </div>
+                <button class="button-icon red" (click)="removeContact(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Recommended Items">
+      <div class="frame flex">
+        <div class="card">
+          <div class="card-header">
+            <h2>Recommended Items</h2>
+            <button class="button blue" (click)="addMenuItem()"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>Add</button>
+          </div>
+          <div class="menu-item-list" *ngFor="let item of restaurant.recommendedItems; let i = index">
+            <div class="separator"></div>
+            <form>
+              <div class="form-group">
+                <label>Menu Item</label>
+                <input type="text" class="form-control" name="item" placeholder="Menu Item" [(ngModel)]="item.item" required>
+              </div>
+              <div class="form-group price">
+                <label>Price</label>
+                <input type="number" class="form-control" name="price" placeholder="Price" [(ngModel)]="item.price" required>
+                <i class="fa fa-usd" aria-hidden="true"></i>
+              </div>
+              <button class="button-icon red" (click)="removeMenuItem(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 <div id="footer">
   <a href="/" class="button blue"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</a>

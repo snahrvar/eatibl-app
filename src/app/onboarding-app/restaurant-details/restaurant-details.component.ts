@@ -15,6 +15,7 @@ export class RestaurantDetailsComponent implements OnInit {
   restaurantId: number;
   restaurant: Object = {
     contacts: [],
+    recommendedItems: [],
     dineIn: true,
     takeOut: false
   };
@@ -58,6 +59,18 @@ export class RestaurantDetailsComponent implements OnInit {
 
   removeContact(index){
     this.restaurant['contacts'].splice(index, 1);
+  }
+
+  addMenuItem(){
+    var recommendedItem = {
+      item: '',
+      price: ''
+    };
+    this.restaurant['recommendedItems'].push(recommendedItem);
+  }
+
+  removeMenuItem(index){
+    this.restaurant['recommendedItems'].splice(index, 1);
   }
 
   submitRestaurant(){
