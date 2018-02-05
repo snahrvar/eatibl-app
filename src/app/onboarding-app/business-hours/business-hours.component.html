@@ -13,6 +13,9 @@
         <div class="hour-slider" *ngFor="let day of businessHours; let i = index">
           <p>{{day.day}}</p>
           <nouislider [config]="rangeConfig" [(ngModel)]="businessHoursArray[i]"></nouislider>
+          <div class="copy-hours">
+            <button class="button-icon blue copy-hours" (click)="copyHours(i)" [disabled]="i == 0" matTooltip="Same hours as previous day." matTooltipPosition="above" matTooltipShowDelay="500"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+          </div>
           <button class="button" [ngClass]="[businessHoursArray[i][0] == businessHoursArray[i][1] ? 'red' : 'blue']" (click)="closedToday(i)" [disabled]="submitted">{{businessHoursArray[i][0] == businessHoursArray[i][1] ? 'Closed' : 'Open'}}</button>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthGuard } from '../_guards/auth.guard'; //login permissions
 import {Routes, RouterModule} from "@angular/router";
 import { NouisliderModule } from 'ng2-nouislider';
+import {MatListModule, MatTooltipModule} from '@angular/material';
 
 import { BusinessHoursComponent } from '../onboarding-app/business-hours/business-hours.component';
 import { KeyHoursComponent } from '../onboarding-app/key-hours/key-hours.component';
@@ -25,6 +26,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     NouisliderModule,
+    MatTooltipModule,
     RouterModule.forRoot(routes)
   ],
   exports: [NouisliderModule],

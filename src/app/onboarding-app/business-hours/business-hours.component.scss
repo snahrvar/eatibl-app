@@ -18,5 +18,10 @@
     button{
       margin-left: 36px;
     }
+    .copy-hours{
+      button:disabled{
+        opacity: 0;
+      }
+    }
   }
 }
