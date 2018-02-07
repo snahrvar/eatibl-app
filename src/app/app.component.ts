@@ -1,6 +1,7 @@
 import { Component,OnInit, OnChanges  } from '@angular/core';
 import { SampleService } from './sample.service';
 import { LoginService } from './_services/login.service';
+import { FunctionsService } from './_services/functions.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,15 +12,20 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit{
 
   importedData = [];
+  restaurantName:string;
 
-  constructor(public loginService: LoginService, private sampleService: SampleService, private router: Router){}
+  constructor(public loginService: LoginService, private sampleService: SampleService, private router: Router, private functions: FunctionsService){}
 
   ngOnInit(): void {
     this.importedData = this.sampleService.numbers;
     this.sampleService.sayHello();
-    console.log(this.importedData);
     this.sampleService.addNumber(25);
-    console.log(this.importedData);
+
+    //Get restaurant name from local storage on load
+    this.functions.getRestaurantName();
+
+    //Subscribe to the restaurant name observable
+    this.functions.restaurantName.subscribe(restaurantName => this.restaurantName = restaurantName);
   }
 
   logout(){

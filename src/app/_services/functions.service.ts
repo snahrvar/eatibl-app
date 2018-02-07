@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class FunctionsService {
 
   link: any;
+
+  //Set and get restaurant name for the header
+  private restaurantNameSource = new BehaviorSubject<string>("");
+
+  restaurantName = this.restaurantNameSource.asObservable();
 
   constructor() {}
 
@@ -29,5 +35,16 @@ export class FunctionsService {
 
   setNavigation(value){
     this.link = value;
+  }
+
+  changeRestaurantName(name: string) {
+    localStorage.setItem('restaurantName', name);
+    this.restaurantNameSource.next(name);
+  }
+
+  getRestaurantName() {
+    var name = localStorage.getItem('restaurantName');
+    if(name != null)
+      this.restaurantNameSource.next(name);
   }
 }

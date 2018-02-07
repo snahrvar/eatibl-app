@@ -74,6 +74,31 @@
       </div>
     </div>
     </mat-tab>
+    <mat-tab label="Recommended Items">
+      <div class="frame flex">
+        <div class="card">
+          <div class="card-header">
+            <h2>Recommended Items</h2>
+            <button class="button blue" (click)="addMenuItem()"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>Add</button>
+          </div>
+          <div class="menu-item-list" *ngFor="let item of restaurant.recommendedItems; let i = index">
+            <div class="separator"></div>
+            <form>
+              <div class="form-group">
+                <label>Menu Item</label>
+                <input type="text" class="form-control" name="item" placeholder="Menu Item" [(ngModel)]="item.item" required>
+              </div>
+              <div class="form-group price">
+                <label>Price</label>
+                <input type="number" class="form-control" name="price" placeholder="Price" [(ngModel)]="item.price" required>
+                <i class="fa fa-usd" aria-hidden="true"></i>
+              </div>
+              <button class="button-icon red" (click)="removeMenuItem(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
     <mat-tab label="Contacts">
       <div class="frame">
         <div class="card">
@@ -111,31 +136,6 @@
                 </div>
                 <button class="button-icon red" (click)="removeContact(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
               </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </mat-tab>
-    <mat-tab label="Recommended Items">
-      <div class="frame flex">
-        <div class="card">
-          <div class="card-header">
-            <h2>Recommended Items</h2>
-            <button class="button blue" (click)="addMenuItem()"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>Add</button>
-          </div>
-          <div class="menu-item-list" *ngFor="let item of restaurant.recommendedItems; let i = index">
-            <div class="separator"></div>
-            <form>
-              <div class="form-group">
-                <label>Menu Item</label>
-                <input type="text" class="form-control" name="item" placeholder="Menu Item" [(ngModel)]="item.item" required>
-              </div>
-              <div class="form-group price">
-                <label>Price</label>
-                <input type="number" class="form-control" name="price" placeholder="Price" [(ngModel)]="item.price" required>
-                <i class="fa fa-usd" aria-hidden="true"></i>
-              </div>
-              <button class="button-icon red" (click)="removeMenuItem(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
             </form>
           </div>
         </div>

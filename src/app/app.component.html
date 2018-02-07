@@ -1,8 +1,11 @@
 <!--header-->
 <div id="header">
-  <a href="/">
-    <img src="/assets/images/white-logo.png" alt="">
-  </a>
+  <div class="header-left">
+    <a href="/">
+      <img src="/assets/images/white-logo.png" alt="">
+    </a>
+    <p *ngIf="restaurantName != ''">{{restaurantName}}</p>
+  </div>
   <button *ngIf = "loginService.checkUser()" class="button white" (click)="logout()">Logout</button>
 </div>
 

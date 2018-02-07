@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { FunctionsService } from './../../_services/functions.service';
 
 @Component({
   selector: 'app-restaurant-details',
@@ -23,7 +24,7 @@ export class RestaurantDetailsComponent implements OnInit {
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
 
-  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router ) {
+  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService ) {
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -35,6 +36,7 @@ export class RestaurantDetailsComponent implements OnInit {
           .subscribe(
             res => {
               this.restaurant = res;
+              this.setRestaurantName(this.restaurant['name']);
               this.contentLoaded = true;
             },
             err => {
@@ -44,6 +46,10 @@ export class RestaurantDetailsComponent implements OnInit {
       else
         this.contentLoaded = true;
     });
+  }
+
+  setRestaurantName(name){
+    this.functions.changeRestaurantName(name);
   }
 
   addContact(){
@@ -79,6 +85,7 @@ export class RestaurantDetailsComponent implements OnInit {
       .subscribe(
         res => { //Returns restaurant ID
           console.log(res);
+          this.setRestaurantName(this.restaurant['name']);
           this.router.navigateByUrl('/' + res + '/hours');
         },
         err => {

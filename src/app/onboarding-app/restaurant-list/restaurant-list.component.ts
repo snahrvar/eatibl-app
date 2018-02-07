@@ -4,6 +4,8 @@ import * as _ from 'underscore';
 import { environment } from '../../../environments/environment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
+import { FunctionsService } from './../../_services/functions.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +21,7 @@ export class RestaurantListComponent implements OnInit {
 
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
 
-  constructor(private http: HttpClient, public dialog: MatDialog) {
+  constructor(private http: HttpClient, public dialog: MatDialog, private functions: FunctionsService, private router: Router) {
     this.http.get(this.apiUrl + '/restaurant/all')
       .subscribe(
         res => {
@@ -42,6 +44,11 @@ export class RestaurantListComponent implements OnInit {
           console.log("Error occurred");
         }
       );
+  }
+
+  navigateTo(link, name){
+    this.functions.changeRestaurantName(name);
+    this.router.navigate([link])
   }
 
   deleteRestaurant(restaurant){
@@ -74,6 +81,10 @@ export class RestaurantListComponent implements OnInit {
     this.restaurants.splice(index, 1);
   }
 
+  unsetRestaurantName(){
+    this.functions.changeRestaurantName('');
+  }
+
   checkDiscounts(){
     for(var i = 0; i < this.restaurants.length; i++){
       var restaurant = this.restaurants[i];
@@ -85,5 +96,6 @@ export class RestaurantListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.unsetRestaurantName();
   }
 }
