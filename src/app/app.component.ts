@@ -23,8 +23,8 @@ export class AppComponent implements OnInit{
   }
 
   logout(){
-    if(localStorage.getItem('user')) {
-      localStorage.removeItem('user'); //log out
+    if(localStorage.getItem('token')) {
+      localStorage.removeItem('token'); //log out
       this.router.navigate(['/login']);
     }
   }

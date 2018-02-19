@@ -29,10 +29,11 @@ export class RegisterLoginComponent implements OnInit {
   ngOnInit() {}
 
   submitLogin(){
-    this.http.post(this.apiUrl + '/user/login', this.user)
+    this.http.post(this.apiUrl + '/token', this.user)
       .subscribe(
         res => {
-          localStorage.setItem('user',JSON.stringify(res)); //add user to localStorage so we can detect logged in user
+          console.log(res);
+          localStorage.setItem('token',JSON.stringify(res).replace(/['"]+/g, '')); //add token to localStorage so we can detect verified user
           this.router.navigate(['/']);
         },
         err => {
@@ -45,7 +46,7 @@ export class RegisterLoginComponent implements OnInit {
     this.http.post(this.apiUrl + '/user/create', this.newUser)
       .subscribe(
         res => { //Returns restaurant ID
-          localStorage.setItem('user',JSON.stringify(res)); //add user to localStorage so we can detect logged in user
+          localStorage.setItem('user',JSON.stringify(res).replace(/['"]+/g, '')); //add user to localStorage so we can detect logged in user
           this.router.navigate(['/']);
         },
         err => {

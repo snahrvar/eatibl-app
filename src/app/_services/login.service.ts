@@ -7,7 +7,7 @@ export class LoginService {
 
   //check if a user is logged in
   checkUser(){
-    return localStorage.getItem('user');
+    return localStorage.getItem('token');
   }
 
 }
