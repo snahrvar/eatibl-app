@@ -1,6 +1,6 @@
 import { Component,OnInit, OnChanges  } from '@angular/core';
 import { SampleService } from './sample.service';
-import { UserService } from './_services/user.service.ts';
+import { UserService } from './_services/user.service';
 import { Router } from '@angular/router';
 
 @Component({

@@ -15,12 +15,6 @@ export class RegisterLoginComponent implements OnInit {
     email: '',
     password: ''
   };
-  newUser = {
-    name: '',
-    email: '',
-    phone: '',
-    password: ''
-  };
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     this.contentLoaded = true;
@@ -34,19 +28,6 @@ export class RegisterLoginComponent implements OnInit {
         res => {
           console.log(res);
           localStorage.setItem('token',JSON.stringify(res).replace(/['"]+/g, '')); //add token to localStorage so we can detect verified user
-          this.router.navigate(['/']);
-        },
-        err => {
-          console.log(err);
-        }
-      );
-  }
-
-  submitRegister(){
-    this.http.post(this.apiUrl + '/user/create', this.newUser)
-      .subscribe(
-        res => { //Returns restaurant ID
-          localStorage.setItem('user',JSON.stringify(res).replace(/['"]+/g, '')); //add user to localStorage so we can detect logged in user
           this.router.navigate(['/']);
         },
         err => {

@@ -15,10 +15,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //Services
 import {ClockService} from "./_services/clock.service";
 import { SampleService } from './sample.service';
-import { UserService } from './_services/user.service.ts';
+import { UserService } from './_services/user.service';
 
 import { AppComponent } from './app.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
+import { RegisterComponent } from './onboarding-app/register/register.component';
 import { FunctionsService } from './_services/functions.service';
 import { AuthGuard } from './_guards/auth.guard'; //login permissions
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
@@ -35,7 +36,8 @@ const routes: Routes = [
     AppComponent,
     RegisterLoginComponent,
     DialogConfirmComponent,
-    onboardingComponents
+    onboardingComponents,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

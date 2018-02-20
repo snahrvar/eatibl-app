@@ -14,7 +14,7 @@ export class UserService {
   //decode JWT payload object and send back for use
   getUserData(){
     if(localStorage.getItem('token'))
-      return decode(localStorage.getItem('token');
+      return decode(localStorage.getItem('token'));
     else
       return null;
   }

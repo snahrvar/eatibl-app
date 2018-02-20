@@ -10,6 +10,7 @@ import { WeekDiscountComponent } from '../onboarding-app/week-discount/week-disc
 import { DayDiscountComponent } from '../onboarding-app/day-discount/day-discount.component';
 import { RestaurantListComponent } from '../onboarding-app/restaurant-list/restaurant-list.component';
 import { RestaurantDetailsComponent } from '../onboarding-app/restaurant-details/restaurant-details.component'
+import { RegisterComponent } from '../onboarding-app/register/register.component'
 
 const routes: Routes = [
   { path: '', component: RestaurantListComponent, canActivate: [AuthGuard] },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: ':restaurantId/pricing/week', component: WeekDiscountComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/pricing/:day', component: DayDiscountComponent, canActivate: [AuthGuard]  },
   { path: 'restaurant/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  },
-  { path: ':restaurantId/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  },
+  { path: ':restaurantId/register', component: RegisterComponent, canActivate: [AuthGuard]  },
+  { path: ':restaurantId/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  }
 ];
 
 @NgModule({
@@ -32,4 +34,4 @@ const routes: Routes = [
 })
 export class OnboardingAppModule { }
 
-export const onboardingComponents = [RestaurantDetailsComponent, RestaurantListComponent, DayDiscountComponent, WeekDiscountComponent, KeyHoursComponent, BusinessHoursComponent];
+export const onboardingComponents = [RestaurantDetailsComponent, RestaurantListComponent, DayDiscountComponent, WeekDiscountComponent, KeyHoursComponent, BusinessHoursComponent, RegisterComponent];

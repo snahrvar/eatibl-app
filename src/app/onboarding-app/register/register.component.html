@@ -1,0 +1,35 @@
+<div class="loading-content" *ngIf="!contentLoaded">
+  <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
+</div>
+<div class="scroll-wrapper" *ngIf="contentLoaded">
+  <div class="frame">
+    <div class="card register-form">
+      <div class="card-header">
+        <h2>{{restaurant.name}}</h2>
+      </div>
+      <div class="separator"></div>
+      <div class="card-content">
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" class="form-control" id="fullName" name="full_name" placeholder="Full Name" [(ngModel)]="newUser.name" required>
+          </div>
+          <div class="form-group">
+            <label for="newEmail">Email</label>
+            <input type="text" class="form-control" id="newEmail" name="email" placeholder="Email" [(ngModel)]="newUser.email" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" [(ngModel)]="newUser.phone">
+          </div>
+          <div class="form-group">
+            <label for="newPassword">Password</label>
+            <input type="text" class="form-control" id="newPassword" name="password" placeholder="Password" [(ngModel)]="newUser.password" required>
+          </div>
+
+          <button class="button-full blue" (click)="submitRegister()" [disabled]="submitted">Register</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
