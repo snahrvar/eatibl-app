@@ -1,6 +1,6 @@
 import { Component,OnInit, OnChanges  } from '@angular/core';
 import { SampleService } from './sample.service';
-import { LoginService } from './_services/login.service';
+import { UserService } from './_services/user.service.ts';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
 
   importedData = [];
 
-  constructor(public loginService: LoginService, private sampleService: SampleService, private router: Router){}
+  constructor(public userService: UserService, private sampleService: SampleService, private router: Router){}
 
   ngOnInit(): void {
     this.importedData = this.sampleService.numbers;

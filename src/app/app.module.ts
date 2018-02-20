@@ -15,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //Services
 import {ClockService} from "./_services/clock.service";
 import { SampleService } from './sample.service';
-import { LoginService } from './_services/login.service';
+import { UserService } from './_services/user.service.ts';
 
 import { AppComponent } from './app.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
@@ -49,7 +49,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent],
-  providers: [SampleService, ClockService, FunctionsService, LoginService, AuthGuard, {
+  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
