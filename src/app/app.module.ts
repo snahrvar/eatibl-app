@@ -18,7 +18,7 @@ import { SampleService } from './sample.service';
 import { UserService } from './_services/user.service';
 
 import { AppComponent } from './app.component';
-import { RegisterLoginComponent } from './register-login/register-login.component';
+import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './onboarding-app/register/register.component';
 import { FunctionsService } from './_services/functions.service';
 import { AuthGuard } from './_guards/auth.guard'; //login permissions
@@ -28,13 +28,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './http-interceptor';
 
 const routes: Routes = [
-  { path: 'login', component: RegisterLoginComponent }
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterLoginComponent,
+    LoginComponent,
     DialogConfirmComponent,
     onboardingComponents,
     RegisterComponent

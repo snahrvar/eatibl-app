@@ -5,10 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register-login',
-  templateUrl: './register-login.component.html',
-  styleUrls: ['./register-login.component.scss']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class RegisterLoginComponent implements OnInit {
+export class LoginComponent implements OnInit {
   contentLoaded = false; //Prevent content from loading until api calls are returned
   apiUrl = environment.apiURL;
   user = {
@@ -18,6 +18,7 @@ export class RegisterLoginComponent implements OnInit {
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     this.contentLoaded = true;
+
   }
 
   ngOnInit() {}
