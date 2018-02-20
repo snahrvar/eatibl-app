@@ -15,24 +15,29 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //Services
 import {ClockService} from "./_services/clock.service";
 import { SampleService } from './sample.service';
-import { LoginService } from './_services/login.service';
+import { UserService } from './_services/user.service';
 
 import { AppComponent } from './app.component';
-import { RegisterLoginComponent } from './register-login/register-login.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './onboarding-app/register/register.component';
 import { FunctionsService } from './_services/functions.service';
 import { AuthGuard } from './_guards/auth.guard'; //login permissions
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './http-interceptor';
+
 const routes: Routes = [
-  { path: 'login', component: RegisterLoginComponent }
+  { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegisterLoginComponent,
+    LoginComponent,
     DialogConfirmComponent,
-    onboardingComponents
+    onboardingComponents,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent],
-  providers: [SampleService, ClockService, FunctionsService, LoginService, AuthGuard],
+  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,7 +6,8 @@
     </a>
     <p *ngIf="restaurantName != ''">{{restaurantName}}</p>
   </div>
-  <button *ngIf = "loginService.checkUser()" class="button white" (click)="logout()">Logout</button>
+  <p *ngIf = "userService.checkUser()">{{userService.getUserData().name}} - {{userService.getUserData().type}}</p>
+  <button *ngIf = "userService.checkUser()" class="button white" (click)="logout()">Logout</button>
 </div>
 
 <!--app component view-->

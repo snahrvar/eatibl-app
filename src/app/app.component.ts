@@ -1,6 +1,6 @@
 import { Component,OnInit, OnChanges  } from '@angular/core';
 import { SampleService } from './sample.service';
-import { LoginService } from './_services/login.service';
+import { UserService } from './_services/user.service';
 import { FunctionsService } from './_services/functions.service';
 import { Router } from '@angular/router';
 
@@ -14,11 +14,12 @@ export class AppComponent implements OnInit{
   importedData = [];
   restaurantName:string;
 
-  constructor(public loginService: LoginService, private sampleService: SampleService, private router: Router, private functions: FunctionsService){}
+  constructor(public userService: UserService, private sampleService: SampleService, private router: Router, private functions: FunctionsService){}
 
   ngOnInit(): void {
     this.importedData = this.sampleService.numbers;
     this.sampleService.sayHello();
+    console.log(this.importedData);
     this.sampleService.addNumber(25);
 
     //Get restaurant name from local storage on load
@@ -29,9 +30,7 @@ export class AppComponent implements OnInit{
   }
 
   logout(){
-    if(localStorage.getItem('user')) {
-      localStorage.removeItem('user'); //log out
-      this.router.navigate(['/login']);
-    }
+    this.userService.logout();
+    this.router.navigate(['/login']);
   }
 }

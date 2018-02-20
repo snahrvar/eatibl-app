@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+
 import * as _ from 'underscore';
 import { environment } from '../../../environments/environment';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -21,29 +22,7 @@ export class RestaurantListComponent implements OnInit {
 
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
 
-  constructor(private http: HttpClient, public dialog: MatDialog, private functions: FunctionsService, private router: Router) {
-    this.http.get(this.apiUrl + '/restaurant/all')
-      .subscribe(
-        res => {
-          this.restaurants = res;
-          console.log(this.restaurants);
-          this.http.get(this.apiUrl + '/discount/all')
-            .subscribe(
-              res => {
-                this.discounts = res;
-                this.checkDiscounts();
-                // this.contentLoaded = true;
-                console.log(this.restaurants);
-              },
-              err => {
-                console.log("Error occurred");
-              }
-            );
-        },
-        err => {
-          console.log("Error occurred");
-        }
-      );
+  constructor(private http: HttpClient, public dialog: MatDialog, public functions: FunctionsService, public router: Router) {
   }
 
   navigateTo(link, name){
@@ -95,7 +74,29 @@ export class RestaurantListComponent implements OnInit {
     this.contentLoaded = true;
   }
 
-  ngOnInit() {
+  ngOnInit() : void {
     this.unsetRestaurantName();
+    this.http.get(this.apiUrl + '/restaurant/all')
+      .subscribe(
+        res => {
+          this.restaurants = res;
+          console.log(this.restaurants);
+          this.http.get(this.apiUrl + '/discount/all')
+            .subscribe(
+              res => {
+                this.discounts = res;
+                this.checkDiscounts();
+                // this.contentLoaded = true;
+                console.log(this.restaurants);
+              },
+              err => {
+                console.log(err);
+              }
+            );
+        },
+        err => {
+          console.log(err);
+        }
+      );
   }
 }
