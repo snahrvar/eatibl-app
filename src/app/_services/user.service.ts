@@ -11,8 +11,15 @@ export class UserService {
     return localStorage.getItem('token');
   }
 
+  logout(){
+    if(localStorage.getItem('token')) {
+      localStorage.removeItem('token'); //log out
+    }
+  }
+
   //decode JWT payload object and send back for use
   getUserData(){
+    console.log('called');
     if(localStorage.getItem('token'))
       return decode(localStorage.getItem('token'));
     else

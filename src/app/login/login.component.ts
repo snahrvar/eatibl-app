@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from '../_services/user.service';
+import * as decode from 'jwt-decode';
 
 @Component({
   selector: 'app-register-login',
@@ -16,9 +18,8 @@ export class LoginComponent implements OnInit {
     password: ''
   };
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, public userService: UserService) {
     this.contentLoaded = true;
-
   }
 
   ngOnInit() {}
@@ -29,7 +30,13 @@ export class LoginComponent implements OnInit {
         res => {
           console.log(res);
           localStorage.setItem('token',JSON.stringify(res).replace(/['"]+/g, '')); //add token to localStorage so we can detect verified user
-          this.router.navigate(['/']);
+          var userData = decode(localStorage.getItem('token'));
+          console.log(userData);
+
+          if(userData.type == "Restaurant") // for restaurants
+            this.router.navigate(['/restaurant/' + userData.restaurant_fid + '/bookings']);
+          if(userData.type == "Admin") // for admins
+            this.router.navigate(['/'])
         },
         err => {
           console.log(err);
