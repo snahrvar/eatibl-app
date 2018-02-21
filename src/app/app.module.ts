@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import {Routes, RouterModule} from "@angular/router";
 import { FormsModule } from '@angular/forms';
+import { FileUploadModule } from 'ng2-file-upload';
 import 'hammerjs';
 
 //Modules
@@ -46,6 +47,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     AppMaterialModule,
     PrimeNgModule,
+    FileUploadModule,
     OnboardingAppModule,
     RestaurantAppModule,
     RouterModule.forRoot(routes)

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FileUploader } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
 
@@ -24,12 +25,27 @@ export class RestaurantDetailsComponent implements OnInit {
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
 
-  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService ) {
+  //initialize file Uploader stuff
+  fileURL:string;
+  public uploader:FileUploader;
+
+  //turn off credentials, because it conflicts with CORS setting on backend
+  ngAfterViewInit() {
+    this.uploader.onAfterAddingFile = (item => {
+      item.withCredentials = false;
+    });
+  }
+
+  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService) {
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
       this.action = params['action'];
       this.restaurantId = params['restaurantId'];
+
+      this.fileURL = this.apiUrl + '/restaurant/' +this.restaurantId + '/uploadImages'; //for file upload route
+      this.uploader = new FileUploader({url: this.fileURL, authToken: 'Bearer '+ localStorage.getItem('token')});
+
       //Only get restaurant information if we are editing an existing one
       if(this.action == 'Edit')
         this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
