@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 export class RestaurantListComponent implements OnInit {
   restaurants: any;
   discounts: any;
+  users: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   apiUrl = environment.apiURL;
 
@@ -80,14 +81,21 @@ export class RestaurantListComponent implements OnInit {
       .subscribe(
         res => {
           this.restaurants = res;
-          console.log(this.restaurants);
-          this.http.get(this.apiUrl + '/discount/all')
+          this.http.get(this.apiUrl + '/restaurant/users')
             .subscribe(
               res => {
-                this.discounts = res;
-                this.checkDiscounts();
-                // this.contentLoaded = true;
-                console.log(this.restaurants);
+                this.users = res;
+                this.http.get(this.apiUrl + '/discount/all')
+                  .subscribe(
+                    res => {
+                      this.discounts = res;
+                      this.checkDiscounts();
+                      console.log(this.restaurants);
+                    },
+                    err => {
+                      console.log(err);
+                    }
+                  );
               },
               err => {
                 console.log(err);

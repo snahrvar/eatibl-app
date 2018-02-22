@@ -13,20 +13,24 @@
         <div class="table-header">
           <div class="column-name">Name</div>
           <div class="column-name">Address</div>
-          <div class="column-name">City</div>
-          <div class="column-name">Province</div>
-          <div class="column-name icon">Onboarded</div>
+          <div class="column-name icon">Pricing</div>
+          <div class="column-name icon">Images</div>
+          <div class="column-name icon">Account</div>
+          <div class="column-name icon">Active</div>
         </div>
         <div class="table-content">
           <div class="list-item" *ngFor="let restaurant of restaurants; let i = index">
-            <div class="list-field">{{restaurant.name}}</div>
+            <div class="list-field">
+              <button (click)="navigateTo('restaurant/' + restaurant._id + '/bookings', restaurant.name)" class="button-icon blue"><i class="fa fa-cutlery" aria-hidden="true"></i></button>
+              {{restaurant.name}}
+            </div>
             <div class="list-field">{{restaurant.address}}</div>
-            <div class="list-field">{{restaurant.city}}</div>
-            <div class="list-field">{{restaurant.state}}</div>
             <div class="list-field icon"><i *ngIf="restaurant.discounts" class="fa fa-check" aria-hidden="true"></i></div>
+            <div class="list-field icon"><i *ngIf="restaurant.images.length" class="fa fa-check" aria-hidden="true"></i></div>
+            <div class="list-field icon"><i *ngIf="users.indexOf(restaurant._id) >= 0" class="fa fa-check" aria-hidden="true"></i></div>
+            <div class="list-field icon"><i *ngIf="restaurant.active" class="fa fa-check" aria-hidden="true"></i></div>
             <div class="list-buttons">
-              <a class="button-icon green" routerLink = '{{restaurant._id}}/register'><i class="fa fa-plus" aria-hidden="true"></i></a>
-              <button (click)="navigateTo('restaurant/' + restaurant._id + '/bookings', restaurant.name)" class="button-icon green"><i class="fa fa-cutlery" aria-hidden="true"></i></button>
+              <a class="button-icon green" routerLink = '{{restaurant._id}}/register'><i class="fa fa-user" aria-hidden="true"></i></a>
               <a href="{{restaurant._id}}/Edit" class="button-icon blue"><i class="fa fa-pencil" aria-hidden="true"></i></a>
               <button class="button-icon red" (click)="deleteRestaurant(restaurant)"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
