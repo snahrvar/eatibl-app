@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer2 } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -34,9 +34,20 @@ export class RestaurantDetailsComponent implements OnInit {
     this.uploader.onAfterAddingFile = (item => {
       item.withCredentials = false;
     });
+    this.uploader.onCompleteItem = () => {
+      this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
+        .subscribe(
+          res => {
+            this.restaurant = res;
+          },
+          err => {
+            console.log("Error occurred");
+          }
+        );
+    };
   }
 
-  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService) {
+  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, private renderer: Renderer2) {
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -106,6 +117,29 @@ export class RestaurantDetailsComponent implements OnInit {
         },
         err => {
           console.log(err);
+        }
+      );
+  }
+
+  toggleActive(event){
+    if(event.target.classList.value.indexOf("active") >= 0){
+      this.renderer.removeClass(event.target,"active");
+    }
+    else{
+      this.renderer.addClass(event.target,"active");
+    }
+  }
+
+  deleteImage(index){
+    var filename = this.restaurant['images'][index];
+    this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId + '/' + filename + '/remove')
+      .subscribe(
+        res => {
+          this.restaurant['images'].splice(index, 1);
+          console.log(res);
+        },
+        err => {
+          console.log("Error occurred");
         }
       );
   }

@@ -100,7 +100,7 @@
       </div>
     </mat-tab>
     <mat-tab label="Images">
-      <div class="frame flex">
+      <div class="frame flex column">
         <div class="card">
           <div class="card-header">
           </div>
@@ -147,6 +147,19 @@
             <button type="button" class="button red" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
               <i class="fa fa-times icon-padding" aria-hidden="true"></i> Remove all
             </button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h2>Images</h2>
+          </div>
+          <div class="separator"></div>
+          <div class="card-content image-list">
+            <div class="image-box" *ngFor="let image of restaurant.images; let i = index">
+              <div class="image" [ngStyle]="{'background-image': 'url(' + apiUrl + '/files/' + image + ')'}" (click)="toggleActive($event)">
+                <button class="button-icon white"><i class="fa fa-times" aria-hidden="true" (click)="deleteImage(i)"></i></button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
