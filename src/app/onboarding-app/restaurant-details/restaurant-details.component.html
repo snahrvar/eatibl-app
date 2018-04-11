@@ -99,7 +99,7 @@
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Images" *ngIf="action == 'Edit'">
+    <mat-tab label="Images">
       <div class="frame flex column">
         <div class="card">
           <div class="card-header">
@@ -122,14 +122,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr *ngFor="let item of uploader.queue">
-                  <td>{{ item?.file?.name }}</td>
-                  <td nowrap>
-                    <button type="button" class="button-icon red" (click)="item.remove()">
-                      <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                  </td>
-                </tr>
+                  <tr *ngFor="let item of uploader.queue">
+                    <td>{{ item?.file?.name }}</td>
+                    <td nowrap>
+                      <button type="button" class="button-icon red" (click)="item.remove()">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -141,7 +141,7 @@
               <p class="uploading" *ngIf="uploader.progress < 100 && uploader.progress != 0">{{uploader.progress}} %</p>
               <p class="uploaded" *ngIf="uploader.progress == 100">Uploaded</p>
             </div>
-            <button type="button" class="button blue" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+            <button type="button" class="button blue" (click)="uploadImages()" [disabled]="!uploader.getNotUploadedItems().length">
               <i class="fa fa-check icon-padding" aria-hidden="true"></i> Upload all
             </button>
             <button type="button" class="button red" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
@@ -154,13 +154,14 @@
             <h2>Images</h2>
           </div>
           <div class="separator"></div>
-          <div class="card-content image-list">
+          <form class="card-content image-list">
             <div class="image-box" *ngFor="let image of restaurant.images; let i = index">
               <div class="image" [ngStyle]="{'background-image': 'url(' + apiUrl + '/files/' + image + ')'}" (click)="toggleActive($event)">
+                <input type="radio" name="featured" [value]="image" (click)="setFeaturedImage(image)" [checked]="restaurant.featuredImage == image">
                 <button class="button-icon white"><i class="fa fa-times" aria-hidden="true" (click)="deleteImage(i)"></i></button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </mat-tab>

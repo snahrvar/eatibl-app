@@ -19,7 +19,9 @@ export class RestaurantDetailsComponent implements OnInit {
     contacts: [],
     recommendedItems: [],
     dineIn: true,
-    takeOut: false
+    takeOut: false,
+    featuredImage: String,
+    images: []
   };
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
@@ -54,7 +56,7 @@ export class RestaurantDetailsComponent implements OnInit {
       this.action = params['action'];
       this.restaurantId = params['restaurantId'];
 
-      this.fileURL = this.apiUrl + '/restaurant/' +this.restaurantId + '/uploadImages'; //for file upload route
+      this.fileURL = this.apiUrl + '/restaurant/uploadImages'; //for file upload route
       this.uploader = new FileUploader({url: this.fileURL, authToken: 'Bearer '+ localStorage.getItem('token')});
 
       //Only get restaurant information if we are editing an existing one
@@ -65,6 +67,7 @@ export class RestaurantDetailsComponent implements OnInit {
               this.restaurant = res;
               this.setRestaurantName(this.restaurant['name']);
               this.contentLoaded = true;
+              console.log(this.restaurant)
             },
             err => {
               console.log("Error occurred");
@@ -73,6 +76,30 @@ export class RestaurantDetailsComponent implements OnInit {
       else
         this.contentLoaded = true;
     });
+  }
+
+  //Upload all images in the queue
+  uploadImages(){
+
+    for(var i = 0; i < this.uploader.queue.length; i++){
+
+      var currentName = this.uploader.queue[i].file.name,
+          temp = currentName.split("."),
+          extension = temp[temp.length-1]; //the last piece is the extension
+
+      this.uploader.queue[i].file.name = "file-"+Date.now()+i+'.'+extension; //rename to a unique file for backend
+    }
+
+    //upload them bad boys
+    this.uploader.uploadAll();
+
+    this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+      var currentName = item.file.name;
+      if(this.restaurant['images'].length == 0)
+        this.restaurant['featuredImage'] = currentName;
+      this.restaurant['images'].push(currentName); //add these files to the restaurant entry so that when we submit, they will be linked
+    };
+    console.log(this.restaurant)
   }
 
   setRestaurantName(name){
@@ -107,6 +134,7 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   submitRestaurant(){
+    console.log(this.restaurant);
     this.submitted = true;
     this.http.post(this.apiUrl + '/restaurant/create', this.restaurant)
       .subscribe(
@@ -136,12 +164,20 @@ export class RestaurantDetailsComponent implements OnInit {
       .subscribe(
         res => {
           this.restaurant['images'].splice(index, 1);
-          console.log(res);
+
+          //if featured image is deleted, update it
+          if(filename == this.restaurant['featuredImage'])
+            this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
         },
         err => {
           console.log("Error occurred");
         }
       );
+  }
+
+  setFeaturedImage(image){
+    this.restaurant['featuredImage'] = image;
+    console.log(this.restaurant)
   }
 
   ngOnInit() {
