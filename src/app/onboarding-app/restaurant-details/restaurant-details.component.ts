@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
@@ -13,8 +15,6 @@ import { FunctionsService } from './../../_services/functions.service';
 })
 export class RestaurantDetailsComponent implements OnInit {
   private sub: any;
-  action: any;
-  restaurantId: number;
   restaurant: Object = {
     contacts: [],
     recommendedItems: [],
@@ -23,9 +23,14 @@ export class RestaurantDetailsComponent implements OnInit {
     featuredImage: String,
     images: []
   };
+  restaurantId: number;
+  action: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
+  restaurantSaved = true; //Used to toggle disabled on the save button
+  restaurantCached = {} as any; //To compare to edits
+  confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
 
   //initialize file Uploader stuff
   fileURL:string;
@@ -49,7 +54,7 @@ export class RestaurantDetailsComponent implements OnInit {
     };
   }
 
-  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, private renderer: Renderer2) {
+  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, private renderer: Renderer2, public dialog: MatDialog,) {
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -65,6 +70,7 @@ export class RestaurantDetailsComponent implements OnInit {
           .subscribe(
             res => {
               this.restaurant = res;
+              this.restaurantCached = JSON.parse(JSON.stringify(res)); //Cache restaurant object in a way that wont be bound to this.restaurant
               this.setRestaurantName(this.restaurant['name']);
               this.contentLoaded = true;
               console.log(this.restaurant)
@@ -98,8 +104,26 @@ export class RestaurantDetailsComponent implements OnInit {
       if(this.restaurant['images'].length == 0)
         this.restaurant['featuredImage'] = currentName;
       this.restaurant['images'].push(currentName); //add these files to the restaurant entry so that when we submit, they will be linked
+      this.onChanges();
     };
-    console.log(this.restaurant)
+  }
+
+  deleteImage(index){
+    var filename = this.restaurant['images'][index];
+    this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId + '/' + filename + '/remove')
+      .subscribe(
+        res => {
+          this.restaurant['images'].splice(index, 1);
+
+          //if featured image is deleted, update it
+          if(filename == this.restaurant['featuredImage'])
+            this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
+          this.onChanges();
+        },
+        err => {
+          console.log("Error occurred");
+        }
+      );
   }
 
   setRestaurantName(name){
@@ -115,10 +139,12 @@ export class RestaurantDetailsComponent implements OnInit {
       notes: ''
     };
     this.restaurant['contacts'].push(contact);
+    this.onChanges();
   }
 
   removeContact(index){
     this.restaurant['contacts'].splice(index, 1);
+    this.onChanges();
   }
 
   addMenuItem(){
@@ -127,26 +153,46 @@ export class RestaurantDetailsComponent implements OnInit {
       price: ''
     };
     this.restaurant['recommendedItems'].push(recommendedItem);
+    this.onChanges();
   }
 
   removeMenuItem(index){
     this.restaurant['recommendedItems'].splice(index, 1);
+    this.onChanges();
   }
 
   submitRestaurant(){
-    console.log(this.restaurant);
     this.submitted = true;
+    console.log(this.restaurant)
     this.http.post(this.apiUrl + '/restaurant/create', this.restaurant)
       .subscribe(
         res => { //Returns restaurant ID
-          console.log(res);
           this.setRestaurantName(this.restaurant['name']);
-          this.router.navigateByUrl('/' + res + '/hours');
+          this.restaurantSaved = true;
+          this.submitted = false;
+          this.restaurantCached = JSON.parse(JSON.stringify(this.restaurant)); //Cache restaurant object in a way that wont be bound to this.restaurant
         },
         err => {
           console.log(err);
         }
       );
+  }
+
+  nextPage(){
+    if(!this.restaurantSaved){
+      this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: "Unsaved Data",
+          message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
+        }
+      });
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if(result)
+          this.router.navigateByUrl('/' + this.restaurantId + '/hours');
+      })
+    }
+    else
+      this.router.navigateByUrl('/' + this.restaurantId + '/hours');
   }
 
   toggleActive(event){
@@ -158,26 +204,20 @@ export class RestaurantDetailsComponent implements OnInit {
     }
   }
 
-  deleteImage(index){
-    var filename = this.restaurant['images'][index];
-    this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId + '/' + filename + '/remove')
-      .subscribe(
-        res => {
-          this.restaurant['images'].splice(index, 1);
-
-          //if featured image is deleted, update it
-          if(filename == this.restaurant['featuredImage'])
-            this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
-        },
-        err => {
-          console.log("Error occurred");
-        }
-      );
-  }
-
   setFeaturedImage(image){
     this.restaurant['featuredImage'] = image;
-    console.log(this.restaurant)
+    this.onChanges();
+  }
+
+  onChanges(){
+    console.log(this.restaurantCached.featuredImage)
+    console.log(this.restaurant['featuredImage'])
+    var isEqual = this.functions.compareObjects(this.restaurantCached, this.restaurant);
+    console.log(isEqual)
+    if(isEqual)
+      this.restaurantSaved = true;
+    else
+      this.restaurantSaved = false;
   }
 
   ngOnInit() {

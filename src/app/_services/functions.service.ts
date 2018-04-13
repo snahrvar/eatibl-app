@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import * as _ from 'underscore';
 
 @Injectable()
 export class FunctionsService {
@@ -46,5 +47,12 @@ export class FunctionsService {
     var name = localStorage.getItem('restaurantName');
     if(name != null)
       this.restaurantNameSource.next(name);
+  }
+
+  compareObjects(object1, object2){
+    return _.every(_.keys(object1), function(currentKey) {
+      return _.has(object2, currentKey) &&
+        _.isEqual(object1[currentKey], object2[currentKey]);
+    });
   }
 }
