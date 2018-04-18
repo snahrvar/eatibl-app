@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChartModule, ProgressSpinnerModule, CalendarModule } from 'primeng/primeng';
+import { ChartModule, ProgressSpinnerModule, CalendarModule, AutoCompleteModule } from 'primeng/primeng';
 
 @NgModule({
   imports: [
     CommonModule,
     ChartModule,
     ProgressSpinnerModule,
-    CalendarModule
+    CalendarModule,
+    AutoCompleteModule
   ],
-  exports: [CalendarModule, ProgressSpinnerModule, ChartModule],
+  exports: [CalendarModule, ProgressSpinnerModule, ChartModule, AutoCompleteModule],
   declarations: []
 })
 export class PrimeNgModule { }

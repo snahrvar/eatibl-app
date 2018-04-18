@@ -7,6 +7,7 @@ import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.comp
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-restaurant-details',
@@ -21,7 +22,8 @@ export class RestaurantDetailsComponent implements OnInit {
     dineIn: true,
     takeOut: false,
     featuredImage: String,
-    images: []
+    images: [],
+    categories: []
   };
   restaurantId: number;
   action: any;
@@ -35,6 +37,21 @@ export class RestaurantDetailsComponent implements OnInit {
   //initialize file Uploader stuff
   fileURL:string;
   public uploader:FileUploader;
+
+  //TESTING FOR AUTOCOMPLETE
+  categories: string[] = [];
+  filteredCategories: any[];
+  resObject = {} as any; //Need to cache res object when requesting all categories to use .length
+
+  filterCategories(event) {
+    this.filteredCategories = [];
+    for(let i = 0; i < this.categories.length; i++) {
+      let category = this.categories[i];
+      if(category.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+        this.filteredCategories.push(category);
+      }
+    }
+  }
 
   //turn off credentials, because it conflicts with CORS setting on backend
   ngAfterViewInit() {
@@ -66,6 +83,7 @@ export class RestaurantDetailsComponent implements OnInit {
 
       //Only get restaurant information if we are editing an existing one
       if(this.action == 'Edit')
+
         this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
           .subscribe(
             res => {
@@ -81,6 +99,21 @@ export class RestaurantDetailsComponent implements OnInit {
           );
       else
         this.contentLoaded = true;
+
+      //Import entire list of categories
+      this.http.get(this.apiUrl + '/category/all')
+        .subscribe(
+          res => {
+            //Store res in variable to be able to use length
+            this.resObject = res;
+            for(var i = 0; i < this.resObject.length; i++){
+              this.categories.push(this.resObject[i]['name']);
+            }
+            this.categories = _.sortBy(this.categories, function(name){
+              return name;
+            })
+          }
+        )
     });
   }
 

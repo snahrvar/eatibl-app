@@ -236,7 +236,7 @@ p-calendar{
   }
 }
 
-p-progressspinner{
+p-progressSpinner{
   max-height: 40px;
   .ui-progress-spinner{
     width: 40px;
@@ -247,6 +247,47 @@ p-progressspinner{
     .ui-progress-spinner{
       width: 100px;
       height: 100px;
+    }
+  }
+}
+
+p-autoComplete{
+  .ui-autocomplete{
+    width: 100% !important;
+    .ui-autocomplete-multiple-container{
+      width: 95% !important;
+      border: 1px solid #9e9e9e;
+      input{
+        padding: 0 !important;
+      }
+      .ui-autocomplete-token{
+        background-color: $eatibl-red;
+        color: #fff;
+        border-radius: 3px;
+      }
+    }
+    button{
+      width: 5% !important;
+      background-color: $eatibl-red;
+      color: #fff;
+      span{
+        margin-left: 0 !important;
+        left: 18% !important;
+        height: 30px !important;
+      }
+    }
+    .ui-autocomplete-panel{
+      background-color: #fff;
+      .ui-autocomplete-items{
+        margin-right: 0;
+        .ui-autocomplete-list-item{
+          color: $dark-grey;
+          transition: all 0.2s;
+          &:hover{
+            background-color: $light-grey;
+          }
+        }
+      }
     }
   }
 }
