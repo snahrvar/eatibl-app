@@ -17,6 +17,7 @@ import * as _ from 'underscore';
 export class RestaurantDetailsComponent implements OnInit {
   private sub: any;
   restaurant: Object = {
+    name: '',
     contacts: [],
     recommendedItems: [],
     dineIn: true,
@@ -25,7 +26,7 @@ export class RestaurantDetailsComponent implements OnInit {
     images: [],
     categories: []
   };
-  restaurantId: number;
+  restaurantId: any;
   action: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
@@ -91,14 +92,15 @@ export class RestaurantDetailsComponent implements OnInit {
               this.restaurantCached = JSON.parse(JSON.stringify(res)); //Cache restaurant object in a way that wont be bound to this.restaurant
               this.setRestaurantName(this.restaurant['name']);
               this.contentLoaded = true;
-              console.log(this.restaurant)
             },
             err => {
               console.log("Error occurred");
             }
           );
-      else
+      else{
+        this.restaurantSaved = false;
         this.contentLoaded = true;
+      }
 
       //Import entire list of categories
       this.http.get(this.apiUrl + '/category/all')
@@ -196,10 +198,10 @@ export class RestaurantDetailsComponent implements OnInit {
 
   submitRestaurant(){
     this.submitted = true;
-    console.log(this.restaurant)
     this.http.post(this.apiUrl + '/restaurant/create', this.restaurant)
       .subscribe(
         res => { //Returns restaurant ID
+          this.restaurantId = res;
           this.setRestaurantName(this.restaurant['name']);
           this.restaurantSaved = true;
           this.submitted = false;
@@ -243,10 +245,7 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   onChanges(){
-    console.log(this.restaurantCached.featuredImage)
-    console.log(this.restaurant['featuredImage'])
     var isEqual = this.functions.compareObjects(this.restaurantCached, this.restaurant);
-    console.log(isEqual)
     if(isEqual)
       this.restaurantSaved = true;
     else

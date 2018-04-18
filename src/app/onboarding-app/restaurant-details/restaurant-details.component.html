@@ -225,7 +225,7 @@
   <a href="/" class="button blue"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</a>
   <div class="flex-row">
     <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-    <button class="button blue margin-right margin-left" (click)="submitRestaurant()" [disabled]="restaurantSaved">Save</button>
+    <button class="button blue margin-right margin-left" (click)="submitRestaurant()" [disabled]="restaurantSaved || restaurant.name == ''">Save</button>
     <button class="button blue" (click)="nextPage()" [disabled]="!restaurantId">Next<i class="fa fa-arrow-right icon-padding-left" aria-hidden="true"></i></button>
   </div>
 </div>

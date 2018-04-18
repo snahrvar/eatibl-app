@@ -50,8 +50,8 @@ export class FunctionsService {
   }
 
   compareObjects(object1, object2){
-    return _.every(_.keys(object1), function(currentKey) {
-      return _.has(object2, currentKey) &&
+    return _.every(_.keys(object2), function(currentKey) {
+      return _.has(object1, currentKey) &&
         _.isEqual(object1[currentKey], object2[currentKey]);
     });
   }
