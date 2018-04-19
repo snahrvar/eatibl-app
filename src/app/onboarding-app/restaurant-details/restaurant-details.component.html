@@ -48,7 +48,7 @@
             <div class="form-cluster full">
               <div class="form-group">
                 <label>Categories</label>
-                <p-autoComplete [(ngModel)]="restaurant.categories" name="category" [suggestions]="filteredCategories" (completeMethod)="filterCategories($event)" [size]="30"
+                <p-autoComplete [(ngModel)]="restaurant.categories" name="category" [suggestions]="filteredCategories" (onSelect)="onChanges()" (onUnselect)="onChanges()" (completeMethod)="filterCategories($event)" [size]="30"
                                 [minLength]="1" placeholder="Categories" [dropdown]="true" [multiple]="true">
                 </p-autoComplete>
               </div>

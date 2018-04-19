@@ -245,6 +245,7 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   onChanges(){
+    console.log(this.restaurant)
     var isEqual = this.functions.compareObjects(this.restaurantCached, this.restaurant);
     if(isEqual)
       this.restaurantSaved = true;
