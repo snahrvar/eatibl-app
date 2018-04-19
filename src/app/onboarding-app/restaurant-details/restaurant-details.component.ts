@@ -17,8 +17,6 @@ import * as _ from 'underscore';
 export class RestaurantDetailsComponent implements OnInit {
   //Initialize variables
   private sub: any;
-  action: any;
-  restaurantId: number;
   restaurant: Object = {
     name: '',
     contacts: [],
