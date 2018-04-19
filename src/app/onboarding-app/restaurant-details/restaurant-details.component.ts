@@ -17,6 +17,8 @@ import * as _ from 'underscore';
 export class RestaurantDetailsComponent implements OnInit {
   //Initialize variables
   private sub: any;
+  action: any;
+  restaurantId: number;
   restaurant: Object = {
     name: '',
     contacts: [],
@@ -142,24 +144,7 @@ export class RestaurantDetailsComponent implements OnInit {
       this.restaurant['images'].push(currentName); //add these files to the restaurant entry so that when we submit, they will be linked
       this.onChanges();
     };
-  }
-
-  deleteImage(index){
-    var filename = this.restaurant['images'][index];
-    this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId + '/' + filename + '/remove')
-      .subscribe(
-        res => {
-          this.restaurant['images'].splice(index, 1);
-
-          //if featured image is deleted, update it
-          if(filename == this.restaurant['featuredImage'])
-            this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
-          this.onChanges();
-        },
-        err => {
-          console.log("Error occurred");
-        }
-      );
+    console.log(this.restaurant)
   }
 
   setRestaurantName(name){
@@ -257,6 +242,31 @@ export class RestaurantDetailsComponent implements OnInit {
     }
     else{
       this.renderer.addClass(event.target,"active");
+    }
+  }
+
+  deleteImage(index){
+    var filename = this.restaurant['images'][index];
+    if(this.restaurantId)
+      this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId + '/' + filename + '/remove')
+        .subscribe(
+          res => {
+            this.restaurant['images'].splice(index, 1);
+
+            //if featured image is deleted, update it
+            if(filename == this.restaurant['featuredImage'])
+              this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
+          },
+          err => {
+            console.log("Error occurred");
+          }
+        );
+    else{
+      this.restaurant['images'].splice(index, 1);
+
+      //if featured image is deleted, update it
+      if(filename == this.restaurant['featuredImage'])
+        this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
     }
   }
 
