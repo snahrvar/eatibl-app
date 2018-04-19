@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
 import { environment } from '../../../environments/environment';
+import { FunctionsService } from './../../_services/functions.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-day-discount',
@@ -13,14 +16,17 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
 
   day: any;
   discounts: any;
+  discountsCached: any;
   hours: any;
   restaurantId: any;
   private sub: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
+  timeslotsSaved = false;
+  confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
 
-  constructor( private http: HttpClient, private route:ActivatedRoute ) {
+  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, public dialog: MatDialog ) {
     this.sub = this.route.params.subscribe(params => {
       this.day = params['day'];
       this.restaurantId = params['restaurantId'];
@@ -108,8 +114,9 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
     this.discounts = _.sortBy(discounts, function(discount){
       return discount['time'];
     })
+    this.discountsCached = JSON.parse(JSON.stringify(this.discounts));
+    this.timeslotsSaved = true;
     this.contentLoaded = true;
-    console.log(this.discounts);
   }
 
   //Fired when change quatity buttons are pressed
@@ -120,6 +127,7 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
     discountEntry['quantity'] += amount;
     if(discountEntry['quantity'] < 0)
       discountEntry['quantity'] = 0;
+    this.onChanges();
   }
 
   submitDiscounts(){
@@ -127,7 +135,7 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
     this.http.post(this.apiUrl + '/discount/' + this.restaurantId + '/update', this.discounts)
       .subscribe(
         res => {
-          console.log(res);
+          this.timeslotsSaved = true;
           this.submitted = false; //After completion enable submit button
         },
         err => {
@@ -137,11 +145,37 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
       );
   }
 
+  //Navigate to main restaurant list
+  prevPage(){
+    if(!this.timeslotsSaved){
+      this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: "Unsaved Data",
+          message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
+        }
+      });
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if(result)
+          this.router.navigateByUrl('/' + this.restaurantId + '/pricing/week');
+      })
+    }
+    else
+      this.router.navigateByUrl('/' + this.restaurantId + '/pricing/week');
+  }
+
   ngOnInit() {
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  onChanges(){
+    var isEqual = this.functions.compareObjects(this.discountsCached, this.discounts);
+    if(isEqual)
+      this.timeslotsSaved = true;
+    else
+      this.timeslotsSaved = false;
   }
 
 }

@@ -15,6 +15,7 @@ import * as _ from 'underscore';
   styleUrls: ['restaurant-details.component.scss']
 })
 export class RestaurantDetailsComponent implements OnInit {
+  //Initialize variables
   private sub: any;
   restaurant: Object = {
     name: '',
@@ -27,7 +28,7 @@ export class RestaurantDetailsComponent implements OnInit {
     categories: []
   };
   restaurantId: any;
-  action: any;
+  action: any; //Either edit restaurant or add restaurant
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
@@ -39,7 +40,7 @@ export class RestaurantDetailsComponent implements OnInit {
   fileURL:string;
   public uploader:FileUploader;
 
-  //TESTING FOR AUTOCOMPLETE
+  //Initializations for autocomplete
   categories: string[] = [];
   filteredCategories: any[];
   resObject = {} as any; //Need to cache res object when requesting all categories to use .length
@@ -72,7 +73,7 @@ export class RestaurantDetailsComponent implements OnInit {
     };
   }
 
-  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, private renderer: Renderer2, public dialog: MatDialog,) {
+  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, private renderer: Renderer2, public dialog: MatDialog) {
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -213,6 +214,25 @@ export class RestaurantDetailsComponent implements OnInit {
       );
   }
 
+  //Navigate to main restaurant list
+  prevPage(){
+    if(!this.restaurantSaved){
+      this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: "Unsaved Data",
+          message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
+        }
+      });
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if(result)
+          this.router.navigateByUrl('/');
+      })
+    }
+    else
+      this.router.navigateByUrl('/');
+  }
+
+  //Navigate to business hours page
   nextPage(){
     if(!this.restaurantSaved){
       this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
@@ -230,6 +250,7 @@ export class RestaurantDetailsComponent implements OnInit {
       this.router.navigateByUrl('/' + this.restaurantId + '/hours');
   }
 
+  //Select image to show delete button
   toggleActive(event){
     if(event.target.classList.value.indexOf("active") >= 0){
       this.renderer.removeClass(event.target,"active");
@@ -244,8 +265,8 @@ export class RestaurantDetailsComponent implements OnInit {
     this.onChanges();
   }
 
+  //When an input is changed, find if the restaurant info is updated to enable the save button
   onChanges(){
-    console.log(this.restaurant)
     var isEqual = this.functions.compareObjects(this.restaurantCached, this.restaurant);
     if(isEqual)
       this.restaurantSaved = true;

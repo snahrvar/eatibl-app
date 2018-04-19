@@ -108,9 +108,7 @@ export class WeekDiscountComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, private route:ActivatedRoute, private _location: Location, public functions: FunctionsService) {
-    //Initialize router
-    this.router = Router;
+  constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router, private _location: Location, public functions: FunctionsService) {
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -143,6 +141,21 @@ export class WeekDiscountComponent implements OnInit {
           }
         );
     })
+  }
+
+  //Navigate to business hours
+  editTimeslots(day){
+      this.router.navigateByUrl('/' + this.restaurantId + '/pricing/' + day);
+  }
+
+  //Navigate to business hours
+  prevPage(){
+      this.router.navigateByUrl('/' + this.restaurantId + '/hours');
+  }
+
+  //Navigate to main restaurant list
+  goHome(){
+    this.router.navigateByUrl('/');
   }
 
   ngOnInit() {

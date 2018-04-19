@@ -3,6 +3,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { environment } from '../../../environments/environment';
+import { FunctionsService } from './../../_services/functions.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 
 
 @Component({
@@ -17,9 +20,11 @@ export class BusinessHoursComponent implements OnInit {
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
+  confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
 
   //Default business hours
   businessHoursArray = [];
+  businessHoursArrayCached = [];
   businessHours = [
     {day: "Monday", open: 9, close: 21},
     {day: "Tuesday", open: 9, close: 21},
@@ -30,6 +35,8 @@ export class BusinessHoursComponent implements OnInit {
     {day: "Sunday", open: 9, close: 21}
   ];
   newHours = [];
+  hoursSaved = false; //Used to toggle disabled on the save button
+  hasHours = false; //Set to true if editing a businesses hours or if a new restaurants hours have been saved. Disables next button if false
 
   rangeConfig: any = {
     connect: true,
@@ -86,7 +93,7 @@ export class BusinessHoursComponent implements OnInit {
     }
   };
 
-  constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router  ){
+  constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, public dialog: MatDialog){
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -96,8 +103,11 @@ export class BusinessHoursComponent implements OnInit {
         .subscribe(
           res => {
             this.result = res; //res alone will not accept a .length check
-            if (this.result.length)
+            if (this.result.length){
+              this.hoursSaved = true;
+              this.hasHours = true;
               this.businessHours = this.result;
+            }
             this.buildBusinessHoursArray(this.businessHours);
           },
           err => {
@@ -123,6 +133,7 @@ export class BusinessHoursComponent implements OnInit {
     for (var i = 0; i < businessHours.length; i++){
       this.businessHoursArray.push([businessHours[i].open, businessHours[i].close]);
     }
+    this.businessHoursArrayCached = JSON.parse(JSON.stringify(this.businessHoursArray));
     this.contentLoaded = true;
   }
 
@@ -144,16 +155,63 @@ export class BusinessHoursComponent implements OnInit {
     this.http.post(this.apiUrl + '/hours/' + this.restaurantId + '/create', this.newHours)
       .subscribe(
         res => {
-          console.log(res);
-          this.router.navigateByUrl('/' + this.restaurantId + '/keyHours');
+          this.hasHours = true;
+          this.hoursSaved = true;
+          this.submitted = false;
+          console.log("Hours saved");
         },
         err => {
           console.log("Error occurred");
+          this.submitted = false;
         }
       );
   }
 
+  //Navigate to main restaurant list
+  prevPage(){
+    if(!this.hoursSaved){
+      this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: "Unsaved Data",
+          message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
+        }
+      });
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if(result)
+          this.router.navigateByUrl('/');
+      })
+    }
+    else
+      this.router.navigateByUrl('/' + this.restaurantId + '/Edit');
+  }
+
+  //Navigate to business hours page
+  nextPage(){
+    if(!this.hoursSaved){
+      this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+        data: {
+          title: "Unsaved Data",
+          message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
+        }
+      });
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if(result)
+          this.router.navigateByUrl('/' + this.restaurantId + '/pricing/week');
+      })
+    }
+    else
+      this.router.navigateByUrl('/' + this.restaurantId + '/pricing/week');
+  }
+
   ngOnInit() {
+  }
+
+  onChanges(){
+    var isEqual = this.functions.compareObjects(this.businessHoursArrayCached, this.businessHoursArray);
+    if(isEqual)
+      this.hoursSaved = true;
+    else
+      this.hoursSaved = false;
   }
 
 }

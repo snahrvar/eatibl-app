@@ -1,9 +1,9 @@
 <!--header-->
 <div id="header">
   <div class="header-left">
-    <a href="/">
+    <button (click)="goHome()" class="home-button">
       <img src="/assets/images/white-logo.png" alt="">
-    </a>
+    </button>
     <p *ngIf="restaurantName != ''">{{restaurantName}}</p>
   </div>
   <div class="header-right">

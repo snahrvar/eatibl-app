@@ -6,7 +6,7 @@
     <div class="card">
       <div class="card-header">
         <h2>Restaurant List</h2>
-        <a href="/restaurant/Add" class="button blue"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>New</a>
+        <button (click)="addRestaurant()" class="button blue"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>New</button>
       </div>
       <div class="separator"></div>
       <div class="restaurant-table">
@@ -31,7 +31,7 @@
             <div class="list-field icon"><i *ngIf="restaurant.active" class="fa fa-check" aria-hidden="true"></i></div>
             <div class="list-buttons">
               <a class="button-icon green" routerLink = '{{restaurant._id}}/register'><i class="fa fa-user" aria-hidden="true"></i></a>
-              <a href="{{restaurant._id}}/Edit" class="button-icon blue"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+              <button (click)="editRestaurant(restaurant._id)" class="button-icon blue"><i class="fa fa-pencil" aria-hidden="true"></i></button>
               <button class="button-icon red" (click)="deleteRestaurant(restaurant)"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
           </div>

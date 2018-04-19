@@ -29,6 +29,11 @@ export class AppComponent implements OnInit{
     this.functions.restaurantName.subscribe(restaurantName => this.restaurantName = restaurantName);
   }
 
+  //Navigate to home page
+  goHome(){
+    this.router.navigateByUrl('/');
+  }
+
   logout(){
     this.userService.logout();
     this.router.navigate(['/login']);

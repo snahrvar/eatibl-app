@@ -75,6 +75,16 @@ export class RestaurantListComponent implements OnInit {
     this.contentLoaded = true;
   }
 
+  //Navigate to restaurant edit page
+  editRestaurant(restaurantId){
+      this.router.navigateByUrl('/' + restaurantId + '/Edit');
+  }
+
+  //Navigate to business hours page
+  addRestaurant(){
+    this.router.navigateByUrl('/restaurant/Add');
+  }
+
   ngOnInit() : void {
     this.unsetRestaurantName();
     this.http.get(this.apiUrl + '/restaurant/all')
