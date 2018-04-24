@@ -7,6 +7,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 import { FunctionsService } from '../../_services/functions.service';
 import {Observable} from 'rxjs/Rx';
+import * as decode from 'jwt-decode';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class BookingsComponent implements OnInit {
     cancelled: 0,
     noShow: 0
   };
+  userData: any;
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
   contentLoaded = false; //Prevent content from loading until api calls are returned
   refreshing = false; //Prevent users from making multiple refresh requests until one has completed
@@ -273,6 +275,7 @@ export class BookingsComponent implements OnInit {
   //FOR TESTING ONLY
 
   ngOnInit() {
+    this.userData = decode(localStorage.getItem('token'));
     this.dateToday = this.date = this.buildDate(Date.now());
 
     //Subscribe to the route parameters
@@ -305,6 +308,10 @@ export class BookingsComponent implements OnInit {
           err => {console.log(err)}
         );
     });
+  }
+
+  navPricing(){
+    this.router.navigateByUrl(this.restaurantId+'/pricing/week');
   }
 
   ngOnDestroy(){

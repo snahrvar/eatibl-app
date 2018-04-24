@@ -84,7 +84,7 @@ export class RegisterComponent implements OnInit {
       this.submitAttempt = true;
     }
     else
-      this.http.post(this.apiUrl + '/restaurant/register', this.registerForm.value)
+      this.http.post(this.apiUrl + '/restaurant/'+this.newUser.restaurant_fid+'/register', this.registerForm.value)
         .subscribe(
           res => { //Returns restaurant ID
             this.response = res;

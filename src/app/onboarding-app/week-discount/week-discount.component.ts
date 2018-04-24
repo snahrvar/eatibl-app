@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import {Location} from '@angular/common';
 import { FunctionsService } from '../../_services/functions.service';
+import * as decode from 'jwt-decode';
 
 @Component({
   selector: 'app-week-discount',
@@ -20,6 +21,7 @@ export class WeekDiscountComponent implements OnInit {
   graph = [];
   discountArray = [];
   apiUrl = environment.apiURL;
+  userData: any;
 
   //To build the daily discount bars cards on front end
   buildDiscountArray(discounts, businessHours){
@@ -149,7 +151,10 @@ export class WeekDiscountComponent implements OnInit {
 
   //Navigate to business hours
   prevPage(){
+    if(this.userData.type != 'Restaurant') //for admin
       this.router.navigateByUrl('/' + this.restaurantId + '/hours');
+    else //for restaurants
+      this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/bookings']);
   }
 
   //Navigate to main restaurant list
@@ -158,6 +163,7 @@ export class WeekDiscountComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userData = decode(localStorage.getItem('token'));
   }
 
 }

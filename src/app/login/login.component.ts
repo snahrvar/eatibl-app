@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
               var userData = decode(localStorage.getItem('token'));
 
               if(userData.type == "Restaurant") // for restaurants
+                console.log(userData)
                 this.router.navigate(['/restaurant/' + userData.restaurant_fid + '/bookings']);
               if(userData.type == "Admin") // for admins
                 this.router.navigate(['/'])
