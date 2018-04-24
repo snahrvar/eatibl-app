@@ -67,6 +67,8 @@ export class BusinessHoursComponent implements OnInit {
     },
       {
         to: function (value) {
+          console.log(value)
+          value = Math.round( value * 10) / 10; //Strip out erroneous extra decimals that nouislider sometimes adds
           var clockTime;
           var hour = Math.floor(value);
           var minutes = (value - hour) == 0.5 ? ':30' : ':00';
@@ -207,6 +209,7 @@ export class BusinessHoursComponent implements OnInit {
   }
 
   onChanges(){
+    console.log(this.businessHoursArray)
     var isEqual = this.functions.compareObjects(this.businessHoursArrayCached, this.businessHoursArray);
     if(isEqual)
       this.hoursSaved = true;
