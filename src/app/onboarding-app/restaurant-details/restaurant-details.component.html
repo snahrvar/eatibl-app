@@ -168,7 +168,7 @@
           <div class="separator"></div>
           <form class="card-content image-list">
             <div class="image-box" *ngFor="let image of restaurant.images; let i = index">
-              <div class="image" [ngStyle]="{'background-image': 'url(' + apiUrl + '/files/' + image + ')'}" (click)="toggleActive($event)">
+              <div class="image" [ngStyle]="{'background-image': 'url(/api/files/' + image + ')'}" (click)="toggleActive($event)">
                 <input type="radio" name="featured" [value]="image" (click)="setFeaturedImage(image)" [checked]="restaurant.featuredImage == image">
                 <button class="button-icon white"><i class="fa fa-times" aria-hidden="true" (click)="deleteImage(i)"></i></button>
               </div>
@@ -225,7 +225,7 @@
   <button class="button blue" (click)="prevPage()"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</button>
   <div class="flex-row">
     <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-    <button class="button blue margin-right margin-left" (click)="submitRestaurant()" [disabled]="restaurantSaved || restaurant.name == ''">Save</button>
+    <button class="button blue margin-right margin-left" (click)="submitRestaurant()" [disabled]="restaurantSaved || restaurant['name'] == ''">Save</button>
     <button class="button blue" (click)="nextPage()" [disabled]="!restaurantId">Next<i class="fa fa-arrow-right icon-padding-left" aria-hidden="true"></i></button>
   </div>
 </div>

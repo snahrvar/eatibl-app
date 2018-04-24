@@ -32,6 +32,7 @@ export class RestaurantDetailsComponent implements OnInit {
   contentLoaded = false; //Prevent content from loading until api calls are returned
   submitted = false; //Used to disable submit button once pressed
   apiUrl = environment.apiURL;
+  imageApiUrl = environment.imageApiURL;
   restaurantSaved = true; //Used to toggle disabled on the save button
   restaurantCached = {} as any; //To compare to edits
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;

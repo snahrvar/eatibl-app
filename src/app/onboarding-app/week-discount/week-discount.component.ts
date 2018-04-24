@@ -12,7 +12,6 @@ import { FunctionsService } from '../../_services/functions.service';
 })
 export class WeekDiscountComponent implements OnInit {
   private sub: any;
-  private router: any;
   restaurantId: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
 
