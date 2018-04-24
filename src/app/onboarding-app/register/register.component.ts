@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
     this.contentLoaded = false;
     //Form controls and validation
     this.registerForm = this.formBuilder.group({
-      fullName: ['',  Validators.required],
+      name: ['',  Validators.required],
       phone: ['',  Validators.compose([
           Validators.required,
           Validators.pattern('[0-9 ()-]*')
