@@ -29,14 +29,20 @@
           <div class="form-error" *ngIf="((registerForm.controls.name.hasError('required') && registerForm.controls.name.touched) || (registerForm.controls.phone.hasError('required') && registerForm.controls.phone.touched) || (registerForm.controls.email.hasError('required') && registerForm.controls.email.touched) || (registerForm.controls.password.hasError('required') && registerForm.controls.password.touched)) && submitAttempt">
             <span>Please fill in all the fields.</span>
           </div>
-          <div class="form-error" *ngIf="(registerForm.controls.phone.hasError('pattern') && submitAttempt)">
+          <div class="form-error" *ngIf="(registerForm.controls.phone.hasError('pattern') && (registerForm.controls.phone.dirty || submitAttempt))">
             <span>Please enter a valid phone number.</span>
           </div>
-          <div class="form-error" *ngIf="(registerForm.controls.email.hasError('pattern') && submitAttempt)">
+          <div class="form-error" *ngIf="(registerForm.controls.email.hasError('pattern') && (registerForm.controls.email.dirty || submitAttempt))">
             <span>Please enter a valid email.</span>
           </div>
-          <div class="form-error" *ngIf="(registerForm.controls.password.hasError('minLength') && ((registerForm.controls.password.dirty || registerForm.controls.password.touched) || submitAttempt))">
+          <div class="form-error" *ngIf="(!registerForm.controls.password.valid && (registerForm.controls.password.dirty && submitAttempt))">
             <span>Your password is too short.</span>
+          </div>
+          <div class="form-error" *ngIf="emailTaken && submitAttempt">
+            <span>That email is taken.</span>
+          </div>
+          <div class="form-error" *ngIf="registerError && submitAttempt">
+            <span>There was an error creating this account. Please try again.</span>
           </div>
           <button class="button-full blue" type="submit" [disabled]="submitted">Register</button>
         </form>

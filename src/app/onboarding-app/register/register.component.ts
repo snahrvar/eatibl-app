@@ -28,6 +28,8 @@ export class RegisterComponent implements OnInit {
   submitAttempt = false;
   response: any;
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
+  registerError = false; //For unhandled errors in the registration process
+  emailTaken = false;
 
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, public dialog: MatDialog) {
@@ -51,10 +53,11 @@ export class RegisterComponent implements OnInit {
         ])
       ]
     });
-    //Watch for changes to the form
+    //Watch for changes to the form and reset form errors
     this.registerForm.valueChanges.subscribe(data => {
       this.submitAttempt = false;
-      console.log('changed')
+      this.emailTaken = false;
+      this.registerError = false;
     })
   }
 
@@ -66,7 +69,7 @@ export class RegisterComponent implements OnInit {
         .subscribe(
           res => {
             this.restaurant = res;
-            this.contentLoaded = true;
+            this.contentLoaded = true; //Only show view when all the data has loaded
           },
           err => {
             console.log("Error occurred");
@@ -76,22 +79,23 @@ export class RegisterComponent implements OnInit {
   }
 
   submitRegister(){
+    this.submitAttempt = true;
     if(!this.registerForm.valid){
       Object.keys(this.registerForm.controls).forEach(field => { // {1}
         const control = this.registerForm.get(field);            // {2}
         control.markAsTouched({ onlySelf: true });       // {3}
       });
-      this.submitAttempt = true;
     }
     else
       this.http.post(this.apiUrl + '/restaurant/'+this.newUser.restaurant_fid+'/register', this.registerForm.value)
         .subscribe(
           res => { //Returns restaurant ID
             this.response = res;
+            console.log(this.response)
             if(this.response.message == 'email taken')
-              console.log('email takenn');
+              this.emailTaken = true;
             else if(this.response.message == 'error')
-              console.log('there was an error');
+              this.registerError = true;
             else {
               this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
                 data: {
