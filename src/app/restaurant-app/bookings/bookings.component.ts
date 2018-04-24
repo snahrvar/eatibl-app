@@ -291,6 +291,7 @@ export class BookingsComponent implements OnInit {
         .subscribe(
           res => {
             this.restaurant = res;
+            this.functions.changeRestaurantName(this.restaurant.name);
 
             //make API call for bookings
             this.http.get(this.apiUrl + '/booking/' + this.restaurantId)

@@ -67,7 +67,6 @@ export class BusinessHoursComponent implements OnInit {
     },
       {
         to: function (value) {
-          console.log(value)
           value = Math.round( value * 10) / 10; //Strip out erroneous extra decimals that nouislider sometimes adds
           var clockTime;
           var hour = Math.floor(value);

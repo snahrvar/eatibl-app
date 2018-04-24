@@ -14,6 +14,10 @@ import * as decode from 'jwt-decode';
 export class LoginComponent implements OnInit {
   contentLoaded = false; //Prevent content from loading until api calls are returned
   apiUrl = environment.apiURL;
+  user = {
+    email: '',
+    password: ''
+  };
   loginForm: FormGroup;
   submitAttempt = false;
   response = {} as any;
@@ -52,7 +56,6 @@ export class LoginComponent implements OnInit {
               var userData = decode(localStorage.getItem('token'));
 
               if(userData.type == "Restaurant") // for restaurants
-                console.log(userData)
                 this.router.navigate(['/restaurant/' + userData.restaurant_fid + '/bookings']);
               if(userData.type == "Admin") // for admins
                 this.router.navigate(['/'])
