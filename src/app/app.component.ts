@@ -3,6 +3,7 @@ import { SampleService } from './sample.service';
 import { UserService } from './_services/user.service';
 import { FunctionsService } from './_services/functions.service';
 import { Router } from '@angular/router';
+import * as decode from 'jwt-decode';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,12 @@ export class AppComponent implements OnInit{
 
   importedData = [];
   restaurantName:string;
+  userData: any;
 
   constructor(public userService: UserService, private sampleService: SampleService, private router: Router, private functions: FunctionsService){}
 
   ngOnInit(): void {
+    this.userData = decode(localStorage.getItem('token'));
     this.importedData = this.sampleService.numbers;
     this.sampleService.sayHello();
     console.log(this.importedData);
@@ -31,7 +34,11 @@ export class AppComponent implements OnInit{
 
   //Navigate to home page
   goHome(){
-    this.router.navigateByUrl('/');
+
+    if(this.userData.type == "Restaurant") // for restaurants
+      this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/bookings']);
+    if(this.userData.type == "Admin") // for admins
+      this.router.navigate(['/'])
   }
 
   logout(){

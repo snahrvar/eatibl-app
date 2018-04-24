@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { Router, ActivatedRoute } from '@angular/router';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 
 @Component({
   selector: 'app-register',
@@ -20,11 +23,39 @@ export class RegisterComponent implements OnInit {
     type: 'Restaurant',
     restaurant_fid: ''
   };
+  registerForm: FormGroup;
   restaurant: any;
+  submitAttempt = false;
+  response: any;
+  confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
 
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, public dialog: MatDialog) {
     this.contentLoaded = false;
+    //Form controls and validation
+    this.registerForm = this.formBuilder.group({
+      fullName: ['',  Validators.required],
+      phone: ['',  Validators.compose([
+          Validators.required,
+          Validators.pattern('[0-9 ()-]*')
+        ])
+      ],
+      email: ['',  Validators.compose([
+        Validators.required,
+        Validators.pattern('[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')
+      ])
+      ],
+      password: ['', Validators.compose([
+          Validators.required,
+          Validators.minLength(8)
+        ])
+      ]
+    });
+    //Watch for changes to the form
+    this.registerForm.valueChanges.subscribe(data => {
+      this.submitAttempt = false;
+      console.log('changed')
+    })
   }
 
   ngOnInit() {
@@ -45,15 +76,41 @@ export class RegisterComponent implements OnInit {
   }
 
   submitRegister(){
-    this.http.post(this.apiUrl + '/restaurant/register', this.newUser)
-      .subscribe(
-        res => { //Returns restaurant ID
-          this.router.navigate(['/']);
-        },
-        err => {
-          console.log(err);
-        }
-      );
+    if(!this.registerForm.valid){
+      Object.keys(this.registerForm.controls).forEach(field => { // {1}
+        const control = this.registerForm.get(field);            // {2}
+        control.markAsTouched({ onlySelf: true });       // {3}
+      });
+      this.submitAttempt = true;
+    }
+    else
+      this.http.post(this.apiUrl + '/restaurant/register', this.registerForm.value)
+        .subscribe(
+          res => { //Returns restaurant ID
+            this.response = res;
+            if(this.response.message == 'email taken')
+              console.log('email takenn');
+            else if(this.response.message == 'error')
+              console.log('there was an error');
+            else {
+              this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+                data: {
+                  title: "Account Created",
+                  message: "Account successfully created. Would you like to create another?"
+                }
+              });
+              this.confirmDialogRef.afterClosed().subscribe(result => {
+                if(result)
+                  this.registerForm.reset();
+                else
+                  this.router.navigateByUrl('/');
+              })
+            }
+          },
+          err => {
+            console.log(err);
+          }
+        );
   }
 
 }

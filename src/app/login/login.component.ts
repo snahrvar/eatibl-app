@@ -14,10 +14,6 @@ import * as decode from 'jwt-decode';
 export class LoginComponent implements OnInit {
   contentLoaded = false; //Prevent content from loading until api calls are returned
   apiUrl = environment.apiURL;
-  user = {
-    email: '',
-    password: ''
-  };
   loginForm: FormGroup;
   submitAttempt = false;
   response = {} as any;
