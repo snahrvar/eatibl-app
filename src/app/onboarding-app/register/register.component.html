@@ -29,13 +29,13 @@
           <div class="form-error" *ngIf="((registerForm.controls.name.hasError('required') && registerForm.controls.name.touched) || (registerForm.controls.phone.hasError('required') && registerForm.controls.phone.touched) || (registerForm.controls.email.hasError('required') && registerForm.controls.email.touched) || (registerForm.controls.password.hasError('required') && registerForm.controls.password.touched)) && submitAttempt">
             <span>Please fill in all the fields.</span>
           </div>
-          <div class="form-error" *ngIf="(registerForm.controls.phone.hasError('pattern') && (registerForm.controls.phone.dirty || submitAttempt))">
+          <div class="form-error" *ngIf="(registerForm.controls.phone.hasError('pattern') && (registerForm.controls.phone.touched || submitAttempt))">
             <span>Please enter a valid phone number.</span>
           </div>
-          <div class="form-error" *ngIf="(registerForm.controls.email.hasError('pattern') && (registerForm.controls.email.dirty || submitAttempt))">
+          <div class="form-error" *ngIf="(registerForm.controls.email.hasError('email') && (registerForm.controls.email.touched || submitAttempt))">
             <span>Please enter a valid email.</span>
           </div>
-          <div class="form-error" *ngIf="(!registerForm.controls.password.valid && (registerForm.controls.password.dirty && submitAttempt))">
+          <div class="form-error" *ngIf="(!registerForm.controls.password.valid && (registerForm.controls.password.touched || submitAttempt))">
             <span>Your password is too short.</span>
           </div>
           <div class="form-error" *ngIf="emailTaken && submitAttempt">
