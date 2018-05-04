@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
+import * as _ from 'underscore';
 
 
 @Component({
@@ -105,9 +106,12 @@ export class BusinessHoursComponent implements OnInit {
           res => {
             this.result = res; //res alone will not accept a .length check
             if (this.result.length){
+              var dayArray = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; //For sorting the business hours object
               this.hoursSaved = true;
               this.hasHours = true;
-              this.businessHours = this.result;
+              this.businessHours = _.sortBy(this.result, function(day){
+                return dayArray.indexOf(day.day)
+              });
             }
             this.buildBusinessHoursArray(this.businessHours);
           },

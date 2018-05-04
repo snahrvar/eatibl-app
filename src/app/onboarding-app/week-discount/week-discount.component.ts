@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import {Location} from '@angular/common';
 import { FunctionsService } from '../../_services/functions.service';
 import * as decode from 'jwt-decode';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-week-discount',
@@ -22,6 +23,7 @@ export class WeekDiscountComponent implements OnInit {
   discountArray = [];
   apiUrl = environment.apiURL;
   userData: any;
+  result: any;
 
   //To build the daily discount bars cards on front end
   buildDiscountArray(discounts, businessHours){
@@ -126,10 +128,12 @@ export class WeekDiscountComponent implements OnInit {
             this.http.get(this.apiUrl + '/hours/' + this.restaurantId)
               .subscribe(
                 res => {
-                  this.businessHours = res;
-                  console.log(this.businessHours);
+                  this.result = res; //cache res so it doesn't mess up the sortby
+                  var dayArray = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; //For sorting the business hours object
+                  this.businessHours = _.sortBy(this.result, function(day){
+                    return dayArray.indexOf(day.day)
+                  });
                   this.buildDiscountArray(this.discounts, this.businessHours);
-                  console.log(this.discountArray);
                   this.generateCharts();
                 },
                 err => {
