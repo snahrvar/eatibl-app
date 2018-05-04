@@ -20,15 +20,17 @@ import { UserService } from './_services/user.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './onboarding-app/register/register.component';
 import { FunctionsService } from './_services/functions.service';
-import { AuthGuard } from './_guards/auth.guard'; //login permissions
+import { AuthGuard, AuthGuardAdmin } from './_guards/auth.guard'; //login permissions
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './http-interceptor';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent }
 ];
 
@@ -38,7 +40,8 @@ const routes: Routes = [
     LoginComponent,
     DialogConfirmComponent,
     onboardingComponents,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent],
-  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, {
+  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin, {
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true

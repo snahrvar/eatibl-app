@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthGuard } from '../_guards/auth.guard'; //login permissions
+import { AuthGuard, AuthGuardAdmin } from '../_guards/auth.guard'; //login permissions
 import {Routes, RouterModule} from "@angular/router";
 import { NouisliderModule } from 'ng2-nouislider';
 import {MatTooltipModule, MatTabsModule} from '@angular/material';
@@ -14,14 +14,14 @@ import { RestaurantDetailsComponent } from '../onboarding-app/restaurant-details
 import { RegisterComponent } from '../onboarding-app/register/register.component'
 
 const routes: Routes = [
-  { path: '', component: RestaurantListComponent, canActivate: [AuthGuard] },
-  { path: ':restaurantId/hours', component: BusinessHoursComponent, canActivate: [AuthGuard]  },
+  { path: 'restaurantList', component: RestaurantListComponent, canActivate: [AuthGuardAdmin] },
+  { path: ':restaurantId/hours', component: BusinessHoursComponent, canActivate: [AuthGuardAdmin]  },
   { path: ':restaurantId/keyHours', component: KeyHoursComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/pricing/week', component: WeekDiscountComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/pricing/:day', component: DayDiscountComponent, canActivate: [AuthGuard]  },
   { path: 'restaurant/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  },
-  { path: ':restaurantId/register', component: RegisterComponent, canActivate: [AuthGuard]  },
-  { path: ':restaurantId/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  }
+  { path: ':restaurantId/register', component: RegisterComponent, canActivate: [AuthGuardAdmin]  },
+  { path: ':restaurantId/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuardAdmin]  }
 ];
 
 @NgModule({

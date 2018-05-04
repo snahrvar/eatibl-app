@@ -12,26 +12,25 @@ import * as decode from 'jwt-decode';
 })
 export class AppComponent implements OnInit{
 
-  importedData = [];
   restaurantName:string;
   userData: any;
 
   constructor(public userService: UserService, private sampleService: SampleService, private router: Router, private functions: FunctionsService){}
 
   ngOnInit(): void {
-    console.log('running first time')
     this.userData = decode(localStorage.getItem('token'));
-    this.importedData = this.sampleService.numbers;
-    this.sampleService.sayHello();
-    console.log(this.importedData);
-    this.sampleService.addNumber(25);
   }
 
   //Navigate to home page
   goHome(){
-    if(this.userData.type == "Restaurant") // for restaurants
-      this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/bookings']);
-    if(this.userData.type == "Admin") // for admins
+    if(localStorage.getItem('token') != null){
+      this.userData = decode(localStorage.getItem('token'));
+      if(this.userData.type == "Restaurant") // for restaurants
+        this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/bookings']);
+      else if(this.userData.type == "Admin") // for admins
+        this.router.navigate(['/restaurantList'])
+    }
+    else
       this.router.navigate(['/'])
   }
 
@@ -41,6 +40,11 @@ export class AppComponent implements OnInit{
     this.router.navigate(['/login']);
   }
 
+  login(){
+    this.router.navigate(['/login']);
+  }
+
+  //Fires when the router outlet content changes
   componentAdded(event){
     this.userData = decode(localStorage.getItem('token'));
 

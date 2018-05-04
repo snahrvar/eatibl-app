@@ -1,0 +1,149 @@
+<div id="primary" class="content-area">
+  <main id="home" class="site-main" role="main">
+
+    <!--************ Landing ************-->
+
+    <div id="landing">
+      <div class="frame flex-row">
+        <div class="landing-left">
+          <button *ngIf = "userService.checkUser()" class="button white small-screen" (click)="logout()">Logout</button>
+          <button *ngIf = "!userService.checkUser()" class="button white small-screen" (click)="login()">Login</button>
+          <img class="landing-logo" src="assets/images/white-logo-large.png" alt="">
+          <div class="landing-text">
+            <h2>Save when you crave</h2>
+            <p>Imagine an app that lets you save money while eating your favourite food! That’s what we’re working on at eatibl. With eatibl you can make discounted restaurant reservations during off-peak hours.</p>
+            <p>No signups or up-front payments required!</p>
+          </div>
+          <div class="email-signup">
+            <form id="userForm" action="process.php" method="POST" novalidate>
+              <input id="userEmail" name="userEmail" type="email" placeholder="Enter your email...">
+              <input id="userSubmit" type="submit" value="Get Deals" class="button-home signup-button">
+            </form>
+            <div class="social-media">
+              <a href="" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+              <a href="" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+              <a href="" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </div> <!-- end of landing-left -->
+        <div class="landing-right">
+          <button *ngIf = "userService.checkUser()" class="button white large-screen" (click)="logout()">Logout</button>
+          <button *ngIf = "!userService.checkUser()" class="button white large-screen" (click)="login()">Login</button>
+          <div class="landing-right-wrapper">
+            <div class="phone-wrapper">
+              <div class="slide-wrapper">
+                <div class="slide">
+                  <img src="assets/images/app-button.png" alt="">
+                </div>
+              </div>
+              <img class="landing-phone" src="assets/images/phone.png" alt="">
+            </div>
+
+          </div>
+        </div>  <!-- end of landing-right -->
+      </div> <!-- end of frame -->
+    </div> <!-- end of landing -->
+
+    <!--********* For Consumers *************-->
+
+    <div id="users-free">
+      <div class="frame flex-column">
+        <div class="users-toptext">
+          <h4>FOR HUNGRY PEOPLE</h4>
+          <h2>Simple and free</h2>
+          <p>Book a discounted reservation <br>in less than 30 seconds.</p>
+        </div> <!-- end of users-toptext -->
+        <div class="users-icons">
+          <div class="icon">
+            <img src="assets/images/icon-phone.png" alt="">
+            <p>Download our app for iOS and Android or simply browse through eatibl.com.</p>
+          </div>
+          <div class="icon">
+            <img src="assets/images/icon-tag.png" alt="">
+            <p>Special, unique offers on great restaurants in and around Toronto!</p>
+          </div>
+          <div class="icon">
+            <img src="assets/images/icon-plate.png" alt="">
+            <p>With hundreds of restaurants on eatibl, there's always something exciting to eat!</p>
+          </div>
+        </div> <!-- end of users-icons -->
+      </div> <!-- end of frame -->
+    </div> <!-- end of users1 -->
+
+    <div id="users-easy">
+      <div class="frame flex-row">
+        <div class="users-easy-left">
+          <div class="phone-wrapper">
+            <div class="slide-wrapper">
+              <div class="slide">
+                <img src="assets/images/mobile-screen-1.jpg" alt="">
+              </div>
+            </div>
+            <img class="landing-phone" src="assets/images/phone.png" alt="">
+          </div>
+        </div>
+        <div class="users-easy-right">
+          <div class="users-easy-right-text">
+            <h2>Easy to use</h2>
+            <p>Using eatibl is a piece of cake. You can search by time, cuisine, rating, and more. Once you reserve, all you have to do is show up, savour the flavour and enjoy the savings!</p>
+          </div>
+        </div>
+      </div> <!-- end of frame -->
+    </div> <!-- end of users2 -->
+
+    <div id="restauranteurs">
+      <div class="frame flex-column">
+        <div class="rest-toptext">
+          <h4>FOR RESTAURANTEURS</h4>
+          <h2>Reach more customers</h2>
+          <p>Working with eatibl helps you incentivise customers to make reservations during off-peak hours. Fill those empty tables and share your delicious food with new customers!</p>
+        </div> <!-- end of rest-toptext -->
+        <div class="rest-main">
+          <div class="rest-left">
+            <div class="icon">
+              <img src="assets/images/icon-clock.png" alt="">
+              <p>Managing your eatibl account is a breeze. You're always in control of your discounts and the number of seats you'd like to offer.</p>
+            </div>
+            <div class="icon">
+              <img src="assets/images/icon-desktop.png" alt="">
+              <p>Keeping track of your reservations is simple and organized. With your own Eatibl account, you can view upcoming reservations and keep your business flowing.</p>
+            </div>
+            <div class="email-signup">
+              <p>Partner with eatibl to help grow your business.</p>
+              <form id="restaurantForm" action="process.php" method="POST" novalidate>
+                <input id="restEmail" type="email" name="restEmail" class="tooltip" title="" placeholder="Enter your email...">
+                <input id="restSubmit" type="submit" value="Get Customers" class="button-home signup-button">
+              </form>
+            </div> <!-- end of email-signup -->
+          </div> <!-- end of rest-left -->
+          <div class="rest-right">
+            <div class="tablet-wrapper">
+              <div class="slide-wrapper">
+                <div class="slide">
+                  <img src="assets/images/tablet-screen-1.jpg" alt="">
+                </div>
+              </div>
+              <img class="rest-tablet" src="assets/images/tablet.png" alt="">
+            </div>
+          </div> <!-- end of rest-right -->
+        </div> <!-- end of rest-main -->
+      </div>
+    </div> <!-- end of restauranteurs -->
+    <div id="contactus">
+      <div class="frame flex-column">
+        <h2>Want more information?</h2>
+        <form id="contactForm" action="process.php" method="POST" novalidate>
+          <input id="inputName" class="tooltip" title="" type="text" name="name" placeholder="Name">
+          <input id="inputEmail" class="tooltip" title="" type="email" name="email" placeholder="Email">
+          <textarea id="inputMessage" class="tooltip" title="" rows="4" name="message" placeholder="Message"></textarea>
+          <input id="contactSubmit" type="submit" value="Contact Us" class="button-home">
+        </form>
+        <div class="social-media">
+          <a href="" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          <a href="" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+          <a href="" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

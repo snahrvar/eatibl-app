@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
               if(userData.type == "Restaurant") // for restaurants
                 this.router.navigate(['/restaurant/' + userData.restaurant_fid + '/bookings']);
               if(userData.type == "Admin") // for admins
-                this.router.navigate(['/'])
+                this.router.navigate(['/restaurantList'])
             }
           },
           err => {

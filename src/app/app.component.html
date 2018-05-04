@@ -1,5 +1,5 @@
 <!--header-->
-<div id="header">
+<div *ngIf="router.url != '/'" id="header">
   <div class="header-left">
     <button (click)="goHome()" class="home-button">
       <img src="/assets/images/white-logo.png" alt="">
@@ -9,6 +9,7 @@
   <div class="header-right">
     <p *ngIf = "userService.checkUser()">Hi, {{userService.getUserData().name}}</p>
     <button *ngIf = "userService.checkUser()" class="button white" (click)="logout()">Logout</button>
+    <button *ngIf = "!userService.checkUser() && router.url != '/login'" class="button white" (click)="login()">Login</button>
   </div>
 </div>
 
