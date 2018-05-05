@@ -30,6 +30,10 @@ export class LoginComponent implements OnInit {
       email: ['',  Validators.required],
       password: ['', Validators.required]
     });
+
+    this.loginForm.valueChanges.subscribe(data => {
+      this.badInput = false;
+    })
   }
 
   ngOnInit() {}
