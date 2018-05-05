@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
   restaurantName:string;
   userData: any;
 
-  constructor(public userService: UserService, private sampleService: SampleService, private router: Router, private functions: FunctionsService){}
+  constructor(public userService: UserService, private sampleService: SampleService, public router: Router, private functions: FunctionsService){}
 
   ngOnInit(): void {
     this.userData = decode(localStorage.getItem('token'));

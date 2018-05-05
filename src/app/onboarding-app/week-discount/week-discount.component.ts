@@ -131,7 +131,7 @@ export class WeekDiscountComponent implements OnInit {
                   this.result = res; //cache res so it doesn't mess up the sortby
                   var dayArray = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; //For sorting the business hours object
                   this.businessHours = _.sortBy(this.result, function(day){
-                    return dayArray.indexOf(day.day)
+                    return dayArray.indexOf(day['day'])
                   });
                   this.buildDiscountArray(this.discounts, this.businessHours);
                   this.generateCharts();
