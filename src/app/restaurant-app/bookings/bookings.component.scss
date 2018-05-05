@@ -119,6 +119,17 @@
             width: calc(100% - 40px);
           }
         }
+        .ui-datepicker{
+          .ui-datepicker-current-day{
+            .ui-state-default{
+              background-color: $eatibl-blue;
+              color: #fff;
+              &:hover{
+                background-color: $eatibl-blue;
+              }
+            }
+          }
+        }
       }
       .date-buttons{
         margin-top: 12px;
