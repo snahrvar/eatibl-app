@@ -6,7 +6,7 @@
     <div id="landing">
       <div class="frame flex-row">
         <div class="landing-left">
-          <button *ngIf = "userService.checkUser()" class="button white small-screen" (click)="logout()">Logout</button>
+          <button *ngIf = "userService.checkUser()" class="button white small-screen" (click)="navigateToApp()">Go to App</button>
           <button *ngIf = "!userService.checkUser()" class="button white small-screen" (click)="login()">Login</button>
           <img class="landing-logo" src="assets/images/white-logo-large.png" alt="">
           <div class="landing-text">
@@ -27,7 +27,7 @@
           </div>
         </div> <!-- end of landing-left -->
         <div class="landing-right">
-          <button *ngIf = "userService.checkUser()" class="button white large-screen" (click)="logout()">Logout</button>
+          <button *ngIf = "userService.checkUser()" class="button white large-screen" (click)="navigateToApp()">Go to App</button>
           <button *ngIf = "!userService.checkUser()" class="button white large-screen" (click)="login()">Login</button>
           <div class="landing-right-wrapper">
             <div class="phone-wrapper">

@@ -209,11 +209,11 @@ export class RestaurantDetailsComponent implements OnInit {
       });
       this.confirmDialogRef.afterClosed().subscribe(result => {
         if(result)
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/restaurantList');
       })
     }
     else
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/restaurantList');
   }
 
   //Navigate to business hours page

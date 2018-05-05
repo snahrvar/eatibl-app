@@ -25,6 +25,7 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
   apiUrl = environment.apiURL;
   timeslotsSaved = false;
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
+  firstload = true;
 
   constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, public dialog: MatDialog ) {
     this.sub = this.route.params.subscribe(params => {
@@ -50,6 +51,10 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
           }
         );
     });
+  }
+
+  ngAfterViewInit(){
+    console.log('view init')
   }
 
   //Configurations for all sliders. Second range config adds pips to last slider
@@ -117,6 +122,7 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
     this.discountsCached = JSON.parse(JSON.stringify(this.discounts));
     this.timeslotsSaved = true;
     this.contentLoaded = true;
+    this.resize();
   }
 
   //Fired when change quatity buttons are pressed
@@ -176,6 +182,14 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
       this.timeslotsSaved = true;
     else
       this.timeslotsSaved = false;
+  }
+
+  //Fires when noUisliders are set on initial load. Fixed ie11 sizing issue
+  resize(){
+    console.log('running')
+    if(this.firstload)
+      window.dispatchEvent(new Event('resize'));
+    this.firstload = false;
   }
 
 }

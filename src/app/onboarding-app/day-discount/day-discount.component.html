@@ -1,25 +1,14 @@
 <div class="loading-content" *ngIf="!contentLoaded">
   <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
 </div>
-<div class="frame overflow-scroll has-footer" *ngIf="contentLoaded">
+<div class="frame overflow-scroll has-footer white-background" *ngIf="contentLoaded">
   <div class="overflow-card-wrapper">
     <div class="card">
       <div class="card-header">
         <h2>{{day}}</h2>
       </div>
-      <div class="separator"></div>
+      <div class="separator no-line"></div>
       <div class="card-content flex-row">
-        <div class="row-titles">
-          <div class="title">
-            <h4>Pricing</h4>
-          </div>
-          <div class="title">
-            <h4>Timeslot</h4>
-          </div>
-          <div class="title">
-            <h4>Capacity</h4>
-          </div>
-        </div>
         <div class="discount-group">
           <div class="discount-scroll-wrapper">
             <div class="discount-slider" *ngFor="let timeslot of discounts; let i = index">
@@ -28,7 +17,7 @@
                 <p>{{(i%2 == 0) ? formatTime(timeslot.time) : '-'}}</p>
               </div>
               <button class="button-mini blue" (click)="changeQuantity(timeslot.time, 1)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-              <input type="number" min="0" [(ngModel)]="timeslot.quantity">
+              <input class="auto-height" type="number" min="0" [(ngModel)]="timeslot.quantity">
               <button class="button-mini blue" (click)="changeQuantity(timeslot.time, -1)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
             </div>
           </div>

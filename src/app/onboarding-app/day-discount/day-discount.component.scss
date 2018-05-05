@@ -1,10 +1,24 @@
 //Imports
 @import '~sass/variables';
 
+.frame{
+  &.white-background{
+    background-color: #fff;
+  }
+}
+
+.separator{
+  &.no-line{
+    border: none;
+  }
+}
+
 //Styling
 .card{
   display: flex;
   flex-direction: column;
+  box-shadow: none;
+  margin-left: 0;
   width: auto;
   .row-titles{
     display: flex;
@@ -69,6 +83,9 @@
           border-radius: 3px;
           border: 1px solid $grey;
           outline: none;
+          &.auto-height{
+            height: auto;
+          }
         }
       }
     }

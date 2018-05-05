@@ -161,11 +161,6 @@ export class WeekDiscountComponent implements OnInit {
       this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/bookings']);
   }
 
-  //Navigate to main restaurant list
-  goHome(){
-    this.router.navigateByUrl('/');
-  }
-
   ngOnInit() {
     this.userData = decode(localStorage.getItem('token'));
   }
