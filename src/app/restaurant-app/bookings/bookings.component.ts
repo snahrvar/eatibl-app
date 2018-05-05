@@ -133,9 +133,9 @@ export class BookingsComponent implements OnInit {
     var today = new Date();
     //If date is today, use exact time
     if(date.getFullYear() == today.getFullYear() && date.getMonth() == today.getMonth() && date.getDate() == today.getDate())
-      this.buildDate(this.date.raw);
+      this.date = this.buildDate(today);
     else
-      this.buildDate(this.dateToday.raw);
+      this.date = this.buildDate(this.date.raw);
     this.refreshBookings();
   }
 
