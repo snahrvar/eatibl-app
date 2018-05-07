@@ -27,7 +27,7 @@ import { AuthGuard, AuthGuardAdmin } from './_guards/auth.guard'; //login permis
 import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './http-interceptor';
+import { AuthInterceptor, CacheInterceptor } from './http-interceptor';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -57,11 +57,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent],
-  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  }],
+  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

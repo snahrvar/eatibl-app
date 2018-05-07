@@ -28,3 +28,20 @@ export class AuthInterceptor implements HttpInterceptor {
     }
   }
 }
+
+@Injectable()
+export class CacheInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>,
+            next: HttpHandler): Observable<HttpEvent<any>> {
+
+    const cloned = req.clone({
+      setHeaders: {'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': 'Sat, 01 Jan 2000 00:00:00 GMT'
+      }
+    });
+
+    return next.handle(cloned);
+  }
+}
