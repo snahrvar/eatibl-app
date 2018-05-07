@@ -154,9 +154,7 @@ $lightgrey: #f4f4f4;
     @media(max-width: 991px){
       min-height: 720px;
     }
-    .button{
-      color: $eatibl-red;
-      font-weight: 700;
+    .user-area{
       position: absolute;
       top: 20px;
       right: 0;
@@ -172,6 +170,14 @@ $lightgrey: #f4f4f4;
         @media(max-width: 991px){
           display: none;
         }
+      }
+      p{
+        display: inline-block;
+        margin-right: 6px;
+      }
+      .button{
+        color: $eatibl-red;
+        font-weight: 700;
       }
     }
     .landing-left{
