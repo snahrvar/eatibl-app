@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
+import { DialogTermsComponent } from '../../dialog-terms/dialog-terms.component';
 
 @Component({
   selector: 'app-register',
@@ -26,8 +27,10 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   restaurant: any;
   submitAttempt = false;
+  agreementDeclined = false;
   response: any;
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
+  termsDialogRef: MatDialogRef<DialogTermsComponent>;
   registerError = false; //For unhandled errors in the registration process
   emailTaken = false;
 
@@ -58,6 +61,7 @@ export class RegisterComponent implements OnInit {
       this.submitAttempt = false;
       this.emailTaken = false;
       this.registerError = false;
+      this.agreementDeclined = false;
     })
   }
 
@@ -80,41 +84,82 @@ export class RegisterComponent implements OnInit {
 
   submitRegister(){
     this.submitAttempt = true;
+
+    //If form is invalid, stop submit
     if(!this.registerForm.valid){
       Object.keys(this.registerForm.controls).forEach(field => { // {1}
         const control = this.registerForm.get(field);            // {2}
         control.markAsTouched({ onlySelf: true });       // {3}
       });
     }
-    else
-      this.http.post(this.apiUrl + '/restaurant/'+this.newUser.restaurant_fid+'/register', this.registerForm.value)
-        .subscribe(
-          res => { //Returns restaurant ID
-            this.response = res;
-            console.log(this.response)
-            if(this.response.message == 'email taken')
-              this.emailTaken = true;
-            else if(this.response.message == 'error')
-              this.registerError = true;
-            else {
-              this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
-                data: {
-                  title: "Account Created",
-                  message: "Account successfully created. Would you like to create another?"
+
+    //If form is valid, continue on
+    else {
+      //Opens restaurant agreement form
+      this.termsDialogRef = this.dialog.open(DialogTermsComponent, {
+        data: {
+          user: this.registerForm.value,
+          restaurant: this.restaurant
+        }
+      });
+
+      //TODO: Make it so if adding more users, you don't need to agree to the terms again
+      //Handle agreement form answer
+      this.termsDialogRef.afterClosed().subscribe(result => {
+        var terms = result;
+        if (terms)
+          this.http.post(this.apiUrl + '/restaurant/' + this.newUser.restaurant_fid + '/register', this.registerForm.value)
+            .subscribe(
+              res => {
+                this.response = res;
+
+                if (this.response.message == 'email taken')
+                  this.emailTaken = true;
+
+                else if (this.response.message == 'error')
+                  this.registerError = true;
+
+                //If user created successfully
+                else {
+                  // Add agreement values to restaurant
+                  this.http.post(this.apiUrl + '/restaurant/' + this.newUser.restaurant_fid + '/agreement', terms).subscribe(
+                    res => {
+                      this.response = res;
+
+                      if(this.response.message == 'agreed'){
+                        //Ask if user wants to create another account
+                        this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+                          data: {
+                            title: "Account Created",
+                            message: "Account successfully created. Would you like to create another?"
+                          }
+                        });
+
+                        //Handle whether user wants to create more accounts or not
+                        this.confirmDialogRef.afterClosed().subscribe(result => {
+                          if (result)
+                            this.registerForm.reset();
+                          else
+                            this.router.navigateByUrl('/restaurantList');
+                        })
+                      }
+                      else
+                        this.registerError = true;
+                    },
+                    err => {
+                      console.log(err);
+                    }
+                  )
                 }
-              });
-              this.confirmDialogRef.afterClosed().subscribe(result => {
-                if(result)
-                  this.registerForm.reset();
-                else
-                  this.router.navigateByUrl('/restaurantList');
-              })
-            }
-          },
-          err => {
-            console.log(err);
-          }
-        );
+              },
+              err => {
+                console.log(err);
+              }
+            );
+        else
+          this.agreementDeclined = true;
+      });
+    }
   }
 
 }

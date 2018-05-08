@@ -44,6 +44,9 @@
           <div class="form-error" *ngIf="registerError && submitAttempt">
             <span>There was an error creating this account. Please try again.</span>
           </div>
+          <div class="form-error" *ngIf="agreementDeclined">
+            <span>Restaurant agreement was declined. User not created.</span>
+          </div>
           <button class="button-full blue" type="submit" [disabled]="submitted">Register</button>
         </form>
       </div>
