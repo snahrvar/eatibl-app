@@ -7,6 +7,7 @@ import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.comp
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
+import { DialogTermsComponent } from '../../dialog-terms/dialog-terms.component';
 import * as _ from 'underscore';
 
 @Component({
@@ -36,6 +37,7 @@ export class RestaurantDetailsComponent implements OnInit {
   restaurantSaved = true; //Used to toggle disabled on the save button
   restaurantCached = {} as any; //To compare to edits
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
+  termsDialogRef: MatDialogRef<DialogTermsComponent>;
 
   //initialize file Uploader stuff
   fileURL:string;
@@ -121,6 +123,32 @@ export class RestaurantDetailsComponent implements OnInit {
     });
   }
 
+  //Open terms of agreement
+  termsDialog(restaurant){
+    //Opens restaurant agreement form
+    this.termsDialogRef = this.dialog.open(DialogTermsComponent, {
+      data: {
+        restaurant: restaurant
+      }
+    });
+    //Handle agreement form answer
+    this.termsDialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.restaurant['terms'] = {
+          name: result.name,
+          terms1: result.terms1,
+          terms2: result.terms2,
+          terms3: result.terms3,
+          terms4: result.terms4,
+          terms5: result.terms5,
+          terms6: result.terms6,
+          timestamp: Date.now()
+        };
+        this.onChanges();
+      }
+    });
+  }
+
   //Upload all images in the queue
   uploadImages(){
 
@@ -143,7 +171,6 @@ export class RestaurantDetailsComponent implements OnInit {
       this.restaurant['images'].push(currentName); //add these files to the restaurant entry so that when we submit, they will be linked
       this.onChanges();
     };
-    console.log(this.restaurant)
   }
 
   setRestaurantName(name){
