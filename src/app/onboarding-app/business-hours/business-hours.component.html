@@ -24,7 +24,7 @@
 </div>
 <div id="footer">
   <button class="button blue" (click)="prevPage()"><i class="fa fa-arrow-left icon-padding" aria-hidden="true"></i>Back</button>
-  <div class="flex-row">
+  <div class="footer-right">
     <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
     <button class="button blue margin-right margin-left" (click)="submitHours()" [disabled]="hoursSaved || submitted">Save</button>
     <button class="button blue" (click)="nextPage()" [disabled]="!hasHours">Next<i class="fa fa-arrow-right icon-padding-left" aria-hidden="true"></i></button>
