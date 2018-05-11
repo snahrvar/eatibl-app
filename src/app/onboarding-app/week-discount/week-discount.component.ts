@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
 import { environment } from '../../../environments/environment';
 import {Location} from '@angular/common';
 import { FunctionsService } from '../../_services/functions.service';
@@ -16,6 +18,7 @@ export class WeekDiscountComponent implements OnInit {
   private sub: any;
   restaurantId: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
+  confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
 
   discounts: any;
   businessHours: any;
@@ -111,7 +114,7 @@ export class WeekDiscountComponent implements OnInit {
     }
   }
 
-  constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router, private _location: Location, public functions: FunctionsService) {
+  constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router, private _location: Location, public functions: FunctionsService, public dialog: MatDialog) {
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -159,6 +162,18 @@ export class WeekDiscountComponent implements OnInit {
       this.router.navigateByUrl('/' + this.restaurantId + '/hours');
     else //for restaurants
       this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/settings']);
+  }
+
+  //Copy the discounts of the previous day
+  copyDiscounts(index){
+    this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+      data: {
+        title: "Copy Discounts",
+        message: "Would you like to copy the discount curve from "+this.discountArray[index - 1].day+"?"
+      }
+    });
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+    })
   }
 
   ngOnInit() {

@@ -241,6 +241,7 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   deleteImage(index){
+    console.log('hi')
     var filename = this.restaurant['images'][index];
     if(this.restaurantId)
       this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId + '/' + filename + '/remove')
