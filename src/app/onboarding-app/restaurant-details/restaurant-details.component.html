@@ -170,7 +170,7 @@
             <div class="image-box" *ngFor="let image of restaurant.images; let i = index">
               <div class="image" [ngStyle]="{'background-image': 'url(/api/files/' + image + ')'}" (click)="toggleActive($event)">
                 <input type="radio" name="featured" [value]="image" (click)="setFeaturedImage(image)" [checked]="restaurant.featuredImage == image">
-                <button class="button-icon white"><i class="fa fa-times" aria-hidden="true" (click)="deleteImage(i)"></i></button>
+                <button class="button-icon white" (click)="deleteImage(i)"><i class="fa fa-times" aria-hidden="true"></i></button>
               </div>
             </div>
           </form>

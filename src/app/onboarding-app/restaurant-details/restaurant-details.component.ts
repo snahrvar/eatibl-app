@@ -227,7 +227,12 @@ export class RestaurantDetailsComponent implements OnInit {
 
   //Select image to show delete button
   toggleActive(event){
-    if(event.target.classList.value.indexOf("active") >= 0){
+    var isActive = false;
+    for(var i = 0; i < event.target.classList.length; i++){
+      if(event.target.classList[i] == 'active')
+        isActive = true;
+    }
+    if(isActive){
       this.renderer.removeClass(event.target,"active");
     }
     else{
