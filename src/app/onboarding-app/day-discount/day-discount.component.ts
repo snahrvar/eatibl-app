@@ -64,7 +64,7 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
         min: 0,
         max: 50
       },
-      step: 10,
+      step: 5,
       direction: 'rtl',
       orientation: 'vertical',
       tooltips: true,
