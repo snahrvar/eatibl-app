@@ -97,6 +97,11 @@ mat-tab-group{
       font-size: 16px;
     }
   }
+  &.hide{
+    ::ng-deep mat-tab-header{
+      display: none !important;
+    }
+  }
 }
 
 .card-content{

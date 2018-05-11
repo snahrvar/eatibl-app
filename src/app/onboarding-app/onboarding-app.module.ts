@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: ':restaurantId/pricing/:day', component: DayDiscountComponent, canActivate: [AuthGuard]  },
   { path: 'restaurant/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/register', component: RegisterComponent, canActivate: [AuthGuardAdmin]  },
-  { path: ':restaurantId/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuardAdmin]  }
+  { path: ':restaurantId/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  }
 ];
 
 @NgModule({

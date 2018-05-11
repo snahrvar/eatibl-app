@@ -8,7 +8,9 @@ import { FileUploader } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
 import { DialogTermsComponent } from '../../dialog-terms/dialog-terms.component';
+import { map } from 'rxjs/operators';
 import * as _ from 'underscore';
+import * as decode from 'jwt-decode';
 
 @Component({
   selector: 'app-restaurant-details',
@@ -38,6 +40,8 @@ export class RestaurantDetailsComponent implements OnInit {
   restaurantCached = {} as any; //To compare to edits
   confirmDialogRef: MatDialogRef<DialogConfirmComponent>;
   termsDialogRef: MatDialogRef<DialogTermsComponent>;
+  userData: any; //Store decoded user data from local storage
+  selectedTab: number; //Selects the tab based on the numerical index
 
   //initialize file Uploader stuff
   fileURL:string;
@@ -77,50 +81,6 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, private renderer: Renderer2, public dialog: MatDialog) {
-
-    //Subscribe to the route parameters
-    this.sub = this.route.params.subscribe(params => {
-      this.action = params['action'];
-      this.restaurantId = params['restaurantId'];
-
-      this.fileURL = this.apiUrl + '/restaurant/uploadImages'; //for file upload route
-      this.uploader = new FileUploader({url: this.fileURL, authToken: 'Bearer '+ localStorage.getItem('token')});
-
-      //Only get restaurant information if we are editing an existing one
-      if(this.action == 'Edit')
-
-        this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
-          .subscribe(
-            res => {
-              this.restaurant = res;
-              this.restaurantCached = JSON.parse(JSON.stringify(res)); //Cache restaurant object in a way that wont be bound to this.restaurant
-              this.setRestaurantName(this.restaurant['name']);
-              this.contentLoaded = true;
-            },
-            err => {
-              console.log("Error occurred");
-            }
-          );
-      else{
-        this.restaurantSaved = false;
-        this.contentLoaded = true;
-      }
-
-      //Import entire list of categories
-      this.http.get(this.apiUrl + '/category/all')
-        .subscribe(
-          res => {
-            //Store res in variable to be able to use length
-            this.resObject = res;
-            for(var i = 0; i < this.resObject.length; i++){
-              this.categories.push(this.resObject[i]['name']);
-            }
-            this.categories = _.sortBy(this.categories, function(name){
-              return name;
-            })
-          }
-        )
-    });
   }
 
   //Open terms of agreement
@@ -227,20 +187,24 @@ export class RestaurantDetailsComponent implements OnInit {
 
   //Navigate to main restaurant list
   prevPage(){
-    if(!this.restaurantSaved){
-      this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
-        data: {
-          title: "Unsaved Data",
-          message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
-        }
-      });
-      this.confirmDialogRef.afterClosed().subscribe(result => {
-        if(result)
-          this.router.navigateByUrl('/restaurantList');
-      })
+    if(this.userData.type != 'Restaurant') { //for admin
+      if (!this.restaurantSaved) {
+        this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+          data: {
+            title: "Unsaved Data",
+            message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
+          }
+        });
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+          if (result)
+            this.router.navigateByUrl('/restaurantList');
+        })
+      }
+      else
+        this.router.navigateByUrl('/restaurantList');
     }
-    else
-      this.router.navigateByUrl('/restaurantList');
+    else //for restaurants
+      this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/settings']);
   }
 
   //Navigate to business hours page
@@ -311,6 +275,61 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userData = decode(localStorage.getItem('token'));
+
+    //Subscribe to the route parameters
+    this.sub = this.route.params.subscribe(params => {
+      this.action = params['action'];
+      this.restaurantId = params['restaurantId'];
+
+      this.fileURL = this.apiUrl + '/restaurant/uploadImages'; //for file upload route
+      this.uploader = new FileUploader({url: this.fileURL, authToken: 'Bearer '+ localStorage.getItem('token')});
+
+      //Only get restaurant information if we are editing an existing one
+      if(this.action == 'Edit')
+
+        this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
+          .subscribe(
+            res => {
+              this.restaurant = res;
+              this.restaurantCached = JSON.parse(JSON.stringify(res)); //Cache restaurant object in a way that wont be bound to this.restaurant
+              this.setRestaurantName(this.restaurant['name']);
+              this.contentLoaded = true;
+            },
+            err => {
+              console.log("Error occurred");
+            }
+          );
+      else{
+        this.restaurantSaved = false;
+        this.contentLoaded = true;
+      }
+
+      //Import entire list of categories
+      this.http.get(this.apiUrl + '/category/all')
+        .subscribe(
+          res => {
+            //Store res in variable to be able to use length
+            this.resObject = res;
+            for(var i = 0; i < this.resObject.length; i++){
+              this.categories.push(this.resObject[i]['name']);
+            }
+            this.categories = _.sortBy(this.categories, function(name){
+              return name;
+            })
+          }
+        )
+    });
+
+    //Used for restaurant dashboard access
+    this.sub = this.route
+      .queryParams
+      .subscribe(params => {
+        if(params['tab'] == 'items')
+          this.selectedTab = 0;
+        else if(params['tab'] == 'images')
+          this.selectedTab = 1;
+      });
   }
 
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import * as _ from 'underscore';
 
 @Injectable()
@@ -64,7 +64,13 @@ export class FunctionsService {
   }
 
   //General navigation function
-  navigateTo(link){
-    this.router.navigate([link])
+  navigateTo(link, optionalParams){
+    let navigationExtras: NavigationExtras = {
+      queryParams: optionalParams
+    };
+    if(!optionalParams)
+      this.router.navigate([link]);
+    else
+      this.router.navigate([link], navigationExtras);
   }
 }
