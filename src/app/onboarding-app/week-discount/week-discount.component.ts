@@ -125,30 +125,7 @@ export class WeekDiscountComponent implements OnInit {
       if(!this.functions.link) //no value means we're coming from restaurant app
         this.functions.link = 'restaurant/'+this.restaurantId + '/bookings';  //restaurant back link
 
-      this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/week')
-        .subscribe(
-          res => {
-            this.discounts = res;
-            this.http.get(this.apiUrl + '/hours/' + this.restaurantId)
-              .subscribe(
-                res => {
-                  this.result = res; //cache res so it doesn't mess up the sortby
-                  var dayArray = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; //For sorting the business hours object
-                  this.businessHours = _.sortBy(this.result, function(day){
-                    return dayArray.indexOf(day['day'])
-                  });
-                  this.buildDiscountArray(this.discounts, this.businessHours);
-                  this.generateCharts();
-                },
-                err => {
-                  console.log("Error occurred");
-                }
-              );
-          },
-          err => {
-            console.log("Error occurred");
-          }
-        );
+      this.getData();
     })
   }
 
@@ -189,8 +166,36 @@ export class WeekDiscountComponent implements OnInit {
     })
   }
 
+  getData(){
+    this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/week')
+      .subscribe(
+        res => {
+          this.discounts = res;
+          this.http.get(this.apiUrl + '/hours/' + this.restaurantId)
+            .subscribe(
+              res => {
+                this.result = res; //cache res so it doesn't mess up the sortby
+                var dayArray = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; //For sorting the business hours object
+                this.businessHours = _.sortBy(this.result, function(day){
+                  return dayArray.indexOf(day['day'])
+                });
+                this.buildDiscountArray(this.discounts, this.businessHours);
+                this.generateCharts();
+              },
+              err => {
+                console.log("Error occurred");
+              }
+            );
+        },
+        err => {
+          console.log("Error occurred");
+        }
+      );
+  }
+
   ngOnInit() {
     this.userData = decode(localStorage.getItem('token'));
+    this.getData();
   }
 
 }
