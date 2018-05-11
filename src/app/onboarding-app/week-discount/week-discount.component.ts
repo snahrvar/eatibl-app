@@ -54,7 +54,8 @@ export class WeekDiscountComponent implements OnInit {
         day.discountTime.push(businessHours[i].open +(0.5 * x));
       }
 
-      this.discountArray.push(day);
+      if(businessHours[i].open != businessHours[i].close)
+        this.discountArray.push(day);
     }
     this.contentLoaded = true;
   }
