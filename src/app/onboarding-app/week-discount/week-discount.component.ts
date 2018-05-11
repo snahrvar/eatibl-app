@@ -167,6 +167,8 @@ export class WeekDiscountComponent implements OnInit {
 
   //Copy the discounts of the previous day
   copyDiscounts(index){
+    var currentDay = this.discountArray[index].day;
+    var previousDay = this.discountArray[index-1].day;
     this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
       data: {
         title: "Copy Discounts",
@@ -174,6 +176,16 @@ export class WeekDiscountComponent implements OnInit {
       }
     });
     this.confirmDialogRef.afterClosed().subscribe(result => {
+      if(result)
+        this.http.post(this.apiUrl + '/discount/' + this.restaurantId + '/copy', {'previousDay': previousDay, 'currentDay': currentDay})
+          .subscribe(
+            res => {
+              console.log(res);
+            },
+            err => {
+              console.log("Error occurred");
+            }
+          );
     })
   }
 
