@@ -158,7 +158,7 @@ export class WeekDiscountComponent implements OnInit {
     if(this.userData.type != 'Restaurant') //for admin
       this.router.navigateByUrl('/' + this.restaurantId + '/hours');
     else //for restaurants
-      this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/bookings']);
+      this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/settings']);
   }
 
   ngOnInit() {

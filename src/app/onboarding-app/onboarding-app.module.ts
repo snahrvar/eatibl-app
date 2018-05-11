@@ -15,7 +15,7 @@ import { RegisterComponent } from '../onboarding-app/register/register.component
 
 const routes: Routes = [
   { path: 'restaurantList', component: RestaurantListComponent, canActivate: [AuthGuardAdmin] },
-  { path: ':restaurantId/hours', component: BusinessHoursComponent, canActivate: [AuthGuardAdmin]  },
+  { path: ':restaurantId/hours', component: BusinessHoursComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/keyHours', component: KeyHoursComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/pricing/week', component: WeekDiscountComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/pricing/:day', component: DayDiscountComponent, canActivate: [AuthGuard]  },

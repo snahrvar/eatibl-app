@@ -1,0 +1,33 @@
+.restaurant-settings{
+  .card{
+    margin-top: 80px;
+    .card-header{
+      padding: 6px;
+    }
+    .card-content{
+      height: 260px;
+      width: 340px;
+      display: flex;
+      flex-wrap: wrap;
+      .button-container{
+        width: 50%;
+        height: 50%;
+        padding: 6px;
+        button{
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          i{
+            font-size: 22px;
+          }
+          span{
+            margin-top: 6px;
+            line-height: 16px;
+          }
+        }
+      }
+    }
+  }
+}

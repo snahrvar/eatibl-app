@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.component';
+import * as decode from 'jwt-decode';
 import * as _ from 'underscore';
 
 
@@ -38,6 +39,7 @@ export class BusinessHoursComponent implements OnInit {
   newHours = [];
   hoursSaved = false; //Used to toggle disabled on the save button
   hasHours = false; //Set to true if editing a businesses hours or if a new restaurants hours have been saved. Disables next button if false
+  userData: any;
 
   rangeConfig: any = {
     connect: true,
@@ -174,20 +176,24 @@ export class BusinessHoursComponent implements OnInit {
 
   //Navigate to main restaurant list
   prevPage(){
-    if(!this.hoursSaved){
-      this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
-        data: {
-          title: "Unsaved Data",
-          message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
-        }
-      });
-      this.confirmDialogRef.afterClosed().subscribe(result => {
-        if(result)
-          this.router.navigateByUrl('/restaurantList');
-      })
+    if(this.userData.type != 'Restaurant'){ //for admin
+      if(!this.hoursSaved){
+        this.confirmDialogRef = this.dialog.open(DialogConfirmComponent, {
+          data: {
+            title: "Unsaved Data",
+            message: "You have unsaved changes to this restaurant. Are you sure you would like to continue?"
+          }
+        });
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+          if(result)
+            this.router.navigateByUrl('/restaurantList');
+        })
+      }
+      else
+        this.router.navigateByUrl('/' + this.restaurantId + '/Edit');
     }
-    else
-      this.router.navigateByUrl('/' + this.restaurantId + '/Edit');
+    else //for restaurants
+      this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/settings']);
   }
 
   //Navigate to business hours page
@@ -209,6 +215,7 @@ export class BusinessHoursComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userData = decode(localStorage.getItem('token'));
   }
 
   onChanges(){

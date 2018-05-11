@@ -312,7 +312,7 @@ export class BookingsComponent implements OnInit {
   }
 
   navPricing(){
-    this.router.navigateByUrl(this.restaurantId+'/pricing/week');
+    this.router.navigateByUrl('restaurant/'+this.restaurantId+'/settings');
   }
 
   ngOnDestroy(){

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as _ from 'underscore';
 
 @Injectable()
@@ -12,7 +13,10 @@ export class FunctionsService {
 
   restaurantName = this.restaurantNameSource.asObservable();
 
-  constructor() {}
+  constructor(
+    private route:ActivatedRoute,
+    private router: Router
+  ) {}
 
   //Format a raw time to clocktime. Full is true if we want minutes
   formatTime(value, full){
@@ -38,21 +42,29 @@ export class FunctionsService {
     this.link = value;
   }
 
+  //Sets or changes the restaurant name in local storage
   changeRestaurantName(name: string) {
     localStorage.setItem('restaurantName', name);
     this.restaurantNameSource.next(name);
   }
 
+  //Gets the restaurant name from local storage to put into the header
   getRestaurantName() {
     var name = localStorage.getItem('restaurantName');
     if(name != null)
       this.restaurantNameSource.next(name);
   }
 
+  //Returns true if both objects are completely identical
   compareObjects(object1, object2){
     return _.every(_.keys(object2), function(currentKey) {
       return _.has(object1, currentKey) &&
         _.isEqual(object1[currentKey], object2[currentKey]);
     });
+  }
+
+  //General navigation function
+  navigateTo(link){
+    this.router.navigate([link])
   }
 }
