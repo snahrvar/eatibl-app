@@ -126,14 +126,17 @@ export class BusinessHoursComponent implements OnInit {
 
   copyHours(index){
     this.businessHoursArray[index] = this.businessHoursArray[index - 1];
+    this.onChanges();
   }
 
   open24hrs(){
     this.businessHoursArray = [[6,30],[6,30],[6,30],[6,30],[6,30],[6,30],[6,30]];
+    this.onChanges();
   }
 
   closedToday(index){
     this.businessHoursArray[index] = [9,9];
+    this.onChanges();
   }
 
   buildBusinessHoursArray(businessHours){
