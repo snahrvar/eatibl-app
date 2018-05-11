@@ -241,29 +241,13 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   deleteImage(index){
-    console.log('hi')
     var filename = this.restaurant['images'][index];
-    if(this.restaurantId)
-      this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId + '/' + filename + '/remove')
-        .subscribe(
-          res => {
-            this.restaurant['images'].splice(index, 1);
+    this.restaurant['images'].splice(index, 1);
 
-            //if featured image is deleted, update it
-            if(filename == this.restaurant['featuredImage'])
-              this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
-          },
-          err => {
-            console.log("Error occurred");
-          }
-        );
-    else{
-      this.restaurant['images'].splice(index, 1);
-
-      //if featured image is deleted, update it
-      if(filename == this.restaurant['featuredImage'])
-        this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
-    }
+    //if featured image is deleted, update it
+    if(filename == this.restaurant['featuredImage'])
+      this.restaurant['featuredImage'] = this.restaurant['images'].length > 0 ? this.restaurant['images'][0] : '';
+    this.onChanges();
   }
 
   setFeaturedImage(image){
