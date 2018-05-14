@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
@@ -6,6 +6,7 @@ import { DialogConfirmComponent } from '../../dialog-confirm/dialog-confirm.comp
 import { environment } from '../../../environments/environment';
 import {Location} from '@angular/common';
 import { FunctionsService } from '../../_services/functions.service';
+import { UIChart } from "primeng/components/chart/chart";
 import * as decode from 'jwt-decode';
 import * as _ from 'underscore';
 
@@ -15,6 +16,7 @@ import * as _ from 'underscore';
   styleUrls: ['week-discount.component.scss']
 })
 export class WeekDiscountComponent implements OnInit {
+  @ViewChild('chart') chart: UIChart;
   private sub: any;
   restaurantId: any;
   contentLoaded = false; //Prevent content from loading until api calls are returned
@@ -27,9 +29,11 @@ export class WeekDiscountComponent implements OnInit {
   apiUrl = environment.apiURL;
   userData: any;
   result: any;
+  response: any; //for use in updateData http call
 
   //To build the daily discount bars cards on front end
   buildDiscountArray(discounts, businessHours){
+    var discountArray = [];
 
     //Loop through each day
     for (var i = 0; i < businessHours.length; i++){
@@ -54,10 +58,12 @@ export class WeekDiscountComponent implements OnInit {
         day.discountTime.push(businessHours[i].open +(0.5 * x));
       }
 
+      //If
       if(businessHours[i].open != businessHours[i].close)
-        this.discountArray.push(day);
+        discountArray.push(day);
     }
     this.contentLoaded = true;
+    return discountArray;
   }
 
   //Generate discount bar charts
@@ -115,6 +121,23 @@ export class WeekDiscountComponent implements OnInit {
     }
   }
 
+  //Update chart data
+  updateData(index, discount){
+    this.http.get(this.apiUrl + '/discount/' + this.restaurantId + '/' + this.discountArray[index].day)
+      .subscribe(
+        res => {
+          this.response = res; //Cache response to avoid typescript errors
+
+          //Rebuild discounts array and chart data for particular day
+          this.discountArray[index] = this.buildDiscountArray(this.response, this.businessHours)[index];
+          this.graph[index].data.datasets[0].data = this.discountArray[index].discountValue;
+        },
+        err => {
+          console.log("Error occurred");
+        }
+      );
+  }
+
   constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router, private _location: Location, public functions: FunctionsService, public dialog: MatDialog) {
 
     //Subscribe to the route parameters
@@ -124,8 +147,6 @@ export class WeekDiscountComponent implements OnInit {
       //Since the service is not able to recall the value from the booking module, we'll HACK IT.
       if(!this.functions.link) //no value means we're coming from restaurant app
         this.functions.link = 'restaurant/'+this.restaurantId + '/bookings';  //restaurant back link
-
-      this.getData();
     })
   }
 
@@ -157,10 +178,10 @@ export class WeekDiscountComponent implements OnInit {
         this.http.post(this.apiUrl + '/discount/' + this.restaurantId + '/copy', {'previousDay': previousDay, 'currentDay': currentDay})
           .subscribe(
             res => {
-              console.log(res);
+              this.updateData(index, res);
             },
             err => {
-              console.log("Error occurred");
+              console.log(err);
             }
           );
     })
@@ -179,7 +200,7 @@ export class WeekDiscountComponent implements OnInit {
                 this.businessHours = _.sortBy(this.result, function(day){
                   return dayArray.indexOf(day['day'])
                 });
-                this.buildDiscountArray(this.discounts, this.businessHours);
+                this.discountArray = this.buildDiscountArray(this.discounts, this.businessHours);
                 this.generateCharts();
               },
               err => {
