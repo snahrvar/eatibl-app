@@ -1,4 +1,4 @@
-import { Component,OnInit  } from '@angular/core';
+import { Component,OnInit,ViewChildren,ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -16,6 +16,8 @@ import * as _ from 'underscore';
   styleUrls: ['business-hours.component.scss']
 })
 export class BusinessHoursComponent implements OnInit {
+  @ViewChildren('slider') sliders;
+
   private sub: any;
   restaurantId: any;
   result: any; //Store http get result to be able to use .length
@@ -41,54 +43,37 @@ export class BusinessHoursComponent implements OnInit {
   hasHours = false; //Set to true if editing a businesses hours or if a new restaurants hours have been saved. Disables next button if false
   userData: any;
 
-  rangeConfig: any = {
+  //Initialiize options for sliders
+  sliderOn = [true,true,true,true,true,true,true]; //Used hiding and showing the sliders so they are recreated after being destroyed
+  isSplit = [false,false,false,false,false,false,false]; //store whether any slider is split or not
+  formatTooltip = function (value) { //Store tooltip function to clean up code
+    value = Math.round( value * 10) / 10; //Strip out erroneous extra decimals that nouislider sometimes adds
+    var clockTime;
+    var hour = Math.floor(value);
+    var minutes = (value - hour) == 0.5 ? ':30' : ':00';
+    if(hour < 12)
+      clockTime = hour + minutes + ' AM';
+    else if(hour < 13 && hour >= 12)
+      clockTime = hour + minutes + ' PM';
+    else if(hour >= 13 && hour < 24){
+      hour = hour - 12;
+      clockTime = hour + minutes + ' PM';
+    }
+    else if(hour >= 24){
+      hour = hour - 24;
+      clockTime = hour + minutes + ' AM';
+    }
+    return clockTime;
+  };
+  rangeConfig = [];
+  sliderOptions: any = {
     connect: true,
     range: {
       min: 6,
       max: 30
     },
     step: 0.5,
-    tooltips: [{
-      to: function (value) {
-        var clockTime;
-        var hour = Math.floor(value);
-        var minutes = (value - hour) == 0.5 ? ':30' : ':00';
-        if(hour < 12)
-          clockTime = hour + minutes + ' AM';
-        else if(hour < 13 && hour >= 12)
-          clockTime = hour + minutes + ' PM';
-        else if(hour >= 13 && hour < 24){
-          hour = hour - 12;
-          clockTime = hour + minutes + ' PM';
-        }
-        else if(hour >= 24){
-          hour = hour - 24;
-          clockTime = hour + minutes + ' AM';
-        }
-        return clockTime;
-      }
-    },
-      {
-        to: function (value) {
-          value = Math.round( value * 10) / 10; //Strip out erroneous extra decimals that nouislider sometimes adds
-          var clockTime;
-          var hour = Math.floor(value);
-          var minutes = (value - hour) == 0.5 ? ':30' : ':00';
-          if(hour < 12)
-            clockTime = hour + minutes + ' AM';
-          else if(hour < 13 && hour >= 12)
-            clockTime = hour + minutes + ' PM';
-          else if(hour >= 13 && hour < 24){
-            hour = hour - 12;
-            clockTime = hour + minutes + ' PM';
-          }
-          else if(hour >= 24){
-            hour = hour - 24;
-            clockTime = hour + minutes + ' AM';
-          }
-          return clockTime;
-        }
-      }],
+    tooltips: [{to: this.formatTooltip}, {to: this.formatTooltip}],
     pips: { // Show a scale with the slider
       mode: 'values',
       values: [],
@@ -97,7 +82,12 @@ export class BusinessHoursComponent implements OnInit {
     }
   };
 
-  constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, public dialog: MatDialog){
+  constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, public dialog: MatDialog, public cdRef: ChangeDetectorRef){
+
+    //Initialize config options for noUiSliders
+    for (var i= 0; i < 7; i++){
+      this.rangeConfig.push(this.sliderOptions);
+    }
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -124,9 +114,51 @@ export class BusinessHoursComponent implements OnInit {
     });
   }
 
+  //Copy hours from previous day to selected day
   copyHours(index){
     this.businessHoursArray[index] = this.businessHoursArray[index - 1];
     this.onChanges();
+  }
+
+  //Split hours into two segments to show that a restaurant is close for a portion of the day
+  splitSlider(index){
+    if(!this.isSplit[index]){
+      //Destroy slider to allow new config options
+      this.sliders._results[index].slider.destroy();
+      this.sliderOn[index] = false; //Remove slider from dom
+
+      //Build new businessHoursArray at index (day)
+      var hoursCached = this.businessHoursArray[index]; //Cache business hours for the specified day for ease of use
+      var splitStart = Math.floor((hoursCached[0] + hoursCached[1]) / 2); //Split the hours in the middle
+      var splitEnd = splitStart + 1; //Start of second segment one hour after end of first
+
+      this.rangeConfig[index].connect = [false, true, false, true, false];
+      this.rangeConfig[index].tooltips = [{to: this.formatTooltip},{to: this.formatTooltip},{to: this.formatTooltip},{to: this.formatTooltip}];
+      this.businessHoursArray[index] = [hoursCached[0], splitStart, splitEnd, hoursCached[1]];
+
+      //Detect changes to scope and re-add slider to dom so that it recreates itself
+      this.cdRef.detectChanges();
+      this.sliderOn[index] = true;
+      this.isSplit[index] = true;
+    }
+    else{
+      //Destroy slider to allow new config options
+      this.sliders._results[index].slider.destroy();
+      this.sliderOn[index] = false; //Remove slider from dom
+
+      //Build new businessHoursArray at index (day)
+      var hoursCached = this.businessHoursArray[index]; //Cache business hours for the specified day for ease of use
+
+      this.rangeConfig[index].connect = true;
+      this.rangeConfig[index].tooltips = [{to: this.formatTooltip},{to: this.formatTooltip}];
+      this.businessHoursArray[index] = [hoursCached[0], hoursCached[3]];
+
+      //Detect changes to scope and re-add slider to dom so that it recreates itself
+      this.cdRef.detectChanges();
+      this.sliderOn[index] = true;
+      this.isSplit[index] = false;
+
+    }
   }
 
   open24hrs(){
@@ -134,8 +166,9 @@ export class BusinessHoursComponent implements OnInit {
     this.onChanges();
   }
 
+  //Toggle whether restaurant is open or closed that day
   closedToday(index){
-    this.businessHoursArray[index] = [9,9];
+    this.businessHoursArray[index] = [9,9]; //Set both ends of the slider to the same time
     this.onChanges();
   }
 
