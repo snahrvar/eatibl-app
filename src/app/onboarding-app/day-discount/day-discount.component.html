@@ -12,13 +12,13 @@
         <div class="discount-group">
           <div class="discount-scroll-wrapper">
             <div class="discount-slider" *ngFor="let timeslot of discounts; let i = index">
-              <nouislider [config]="rangeConfig" (end)="onChanges()" [ngClass]="{'no-tooltip' : (timeslot.discount == 0)}" [(ngModel)]="timeslot.discount"></nouislider>
+              <nouislider [config]="rangeConfig" (end)="onChanges()" [disabled]="timeslot.disabled" [ngClass]="{'no-tooltip' : (timeslot.discount == 0)}" [(ngModel)]="timeslot.discount"></nouislider>
               <div class="time">
                 <p>{{(i%2 == 0) ? formatTime(timeslot.time) : '-'}}</p>
               </div>
-              <button class="button-mini blue" (click)="changeQuantity(timeslot.time, 1)"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-              <input class="auto-height" type="number" min="0" [(ngModel)]="timeslot.quantity">
-              <button class="button-mini blue" (click)="changeQuantity(timeslot.time, -1)"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+              <button class="button-mini blue" (click)="changeQuantity(timeslot.time, 1)" [disabled]="timeslot.disabled"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+              <input class="auto-height" type="number" min="0" [(ngModel)]="timeslot.quantity" [disabled]="timeslot.disabled">
+              <button class="button-mini blue" (click)="changeQuantity(timeslot.time, -1)" [disabled]="timeslot.disabled"><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
             </div>
           </div>
         </div>

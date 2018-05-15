@@ -98,22 +98,32 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
     var today = this.day;
     businessHours = _.filter(businessHours, function(dailyHours){
       return dailyHours['day'] == today;
-    })
+    });
 
     //Loop through business hours for this day
-    console.log(businessHours)
-    for (var i = businessHours[0].open; i < businessHours[0].close; i = i + 0.5){
+    var hoursLength = businessHours[0].hours.length;
+    for (var i = businessHours[0].hours[0]; i < businessHours[0].hours[hoursLength - 1]; i = i + 0.5){
+      var disabled = false; //Assume timeslot is during open hours, make the check later in loop
       var exists = _.findIndex(discounts, function(discount){
         return discount['time'] == i;
       });
+      //Find if restaurant has midday closing
+      if(hoursLength == 4){
+        if(i >= businessHours[0].hours[1] && i < businessHours[0].hours[2]){
+          disabled = true;
+        }
+      }
       if(exists == -1) //Add zero entries to fill all business hours
         discounts.push({
           restaurant_fid: '5a4e84f70951642744164a7e',
           day: this.day,
           time: i,
+          disabled: disabled, //Checks if this particular timeslot falls under midday closed hours
           discount: 0,
           quantity: 0
         })
+      else
+        discounts[exists].disabled = disabled; //Checks if existing timeslots fall under midday closed hours
     }
 
     this.discounts = _.sortBy(discounts, function(discount){
