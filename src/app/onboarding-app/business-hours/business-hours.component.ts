@@ -116,25 +116,47 @@ export class BusinessHoursComponent implements OnInit {
 
   //Copy hours from previous day to selected day
   copyHours(index){
-    this.businessHoursArray[index] = this.businessHoursArray[index - 1];
+    ///Cache from and to business hour arrays
+    var fromArray = this.businessHoursArray[index - 1];
+    var toArray = this.businessHoursArray[index];
+
+    //If either from array or to array are split, use splitSlider function. Otherwise just copy
+    if((fromArray.length == 4 && toArray.length == 2) || (fromArray.length == 2 && toArray.length == 4))
+      this.splitSlider(index, 'copy');
+    else
+      this.businessHoursArray[index] = this.businessHoursArray[index - 1];
     this.onChanges();
   }
 
   //Split hours into two segments to show that a restaurant is close for a portion of the day
-  splitSlider(index){
+  splitSlider(index, type){
+    var newHours = [];
+    var hoursCached = this.businessHoursArray[index];
+
     //Destroy slider to allow new config options
     this.sliders._results[index].slider.destroy();
     this.sliderOn[index] = false; //Remove slider from dom
 
     //Build new businessHoursArray at index (day)
-    var hoursCached = this.businessHoursArray[index]; //Cache business hours for the specified day for ease of use
-    var splitStart = Math.floor((hoursCached[0] + hoursCached[1]) / 2); //Split the hours in the middle
-    var splitEnd = splitStart + 1; //Start of second segment one hour after end of first
+    if(type == 'copy'){ //If we are copying, add previous day values to new hours
+      newHours = this.businessHoursArray[index - 1];
+    }
+    else { //If we are just splitting, cache the hours of current day
+      var hoursCached = this.businessHoursArray[index];
+      var splitStart = Math.floor((hoursCached[0] + hoursCached[1]) / 2); //Split the hours in the middle
+      var splitEnd = splitStart + 1; //Start of second segment one hour after end of first
 
-    if(!this.isSplit[index]){
+      if(hoursCached.length == 2) //If current day is not split, split into newHours
+        newHours = [hoursCached[0], splitStart, splitEnd, hoursCached[1]];
+      else //If current day is split, combine into newHours
+        newHours = [hoursCached[0], hoursCached[3]];
+    }
+
+    //If today is not split
+    if(hoursCached.length == 2){
       this.rangeConfig[index].connect = [false, true, false, true, false];
       this.rangeConfig[index].tooltips = [{to: this.formatTooltip},{to: this.formatTooltip},{to: this.formatTooltip},{to: this.formatTooltip}];
-      this.businessHoursArray[index] = [hoursCached[0], splitStart, splitEnd, hoursCached[1]];
+      this.businessHoursArray[index] = [newHours[0], newHours[1], newHours[2], newHours[3]];
 
       //Detect changes to scope and re-add slider to dom so that it recreates itself
       this.cdRef.detectChanges();
@@ -144,7 +166,7 @@ export class BusinessHoursComponent implements OnInit {
     else{
       this.rangeConfig[index].connect = true;
       this.rangeConfig[index].tooltips = [{to: this.formatTooltip},{to: this.formatTooltip}];
-      this.businessHoursArray[index] = [hoursCached[0], hoursCached[3]];
+      this.businessHoursArray[index] = [newHours[0], newHours[1]];
 
       //Detect changes to scope and re-add slider to dom so that it recreates itself
       this.cdRef.detectChanges();

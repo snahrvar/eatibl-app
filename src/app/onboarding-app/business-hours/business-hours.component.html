@@ -14,7 +14,7 @@
           <p>{{day.day}}</p>
           <nouislider *ngIf="sliderOn[i]" #slider (end)="onChanges()" [config]="rangeConfig[i]" [(ngModel)]="businessHoursArray[i]"></nouislider>
           <button class="button-icon blue small-button" (click)="copyHours(i)" [disabled]="i == 0" matTooltip="Same hours as previous day." matTooltipPosition="above" matTooltipShowDelay="500"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
-          <button class="button-icon blue small-button" [ngClass]="{'split': isSplit}" (click)="splitSlider(i)" matTooltip="Toggle business hour split." matTooltipPosition="above" matTooltipShowDelay="500"><i *ngIf="!isSplit[i]" class="fa fa-clone" aria-hidden="true"></i><i *ngIf="isSplit[i]" class="fa fa-square-o" aria-hidden="true"></i></button>
+          <button class="button-icon blue small-button" [ngClass]="{'split': isSplit}" (click)="splitSlider(i, 'split')" matTooltip="Toggle business hour split." matTooltipPosition="above" matTooltipShowDelay="500"><i *ngIf="!isSplit[i]" class="fa fa-clone" aria-hidden="true"></i><i *ngIf="isSplit[i]" class="fa fa-square-o" aria-hidden="true"></i></button>
           <button class="button" [ngClass]="[businessHoursArray[i][0] == businessHoursArray[i][1] ? 'red' : 'blue']" (click)="closedToday(i)" [disabled]="submitted">{{businessHoursArray[i][0] == businessHoursArray[i][1] ? 'Closed' : 'Open'}}</button>
         </div>
       </div>
