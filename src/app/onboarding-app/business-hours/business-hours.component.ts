@@ -138,9 +138,12 @@ export class BusinessHoursComponent implements OnInit {
     this.sliderOn[index] = false; //Remove slider from dom
 
     //Build new businessHoursArray at index (day)
-    if(type == 'copy'){ //If we are copying, add previous day values to new hours
+    if(type == 'copy') //If we are copying, add previous day values to new hours
       newHours = this.businessHoursArray[index - 1];
-    }
+
+    else if(type == 'closed') //If we are closing the day
+     newHours = [9,9];
+
     else { //If we are just splitting, cache the hours of current day
       var hoursCached = this.businessHoursArray[index];
       var splitStart = Math.floor((hoursCached[0] + hoursCached[1]) / 2); //Split the hours in the middle
@@ -173,11 +176,6 @@ export class BusinessHoursComponent implements OnInit {
       this.sliderOn[index] = true;
       this.isSplit[index] = false;
     }
-    this.onChanges();
-  }
-
-  open24hrs(){
-    this.businessHoursArray = [[6,30],[6,30],[6,30],[6,30],[6,30],[6,30],[6,30]];
     this.onChanges();
   }
 
