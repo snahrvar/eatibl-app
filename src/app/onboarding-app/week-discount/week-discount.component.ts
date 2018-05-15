@@ -24,6 +24,7 @@ export class WeekDiscountComponent implements OnInit {
 
   discounts: any;
   businessHours: any;
+  loading = []; //Used to overlay loading screen on day that is being updated
   graph = [];
   discountArray = [];
   apiUrl = environment.apiURL;
@@ -59,8 +60,9 @@ export class WeekDiscountComponent implements OnInit {
       }
 
       //If
-      if(businessHours[i].open != businessHours[i].close)
+      if(businessHours[i].open != businessHours[i].close) //TODO: Fix this shit (change open and close to hours)
         discountArray.push(day);
+        this.loading.push(false);
     }
     this.contentLoaded = true;
     return discountArray;
@@ -174,14 +176,17 @@ export class WeekDiscountComponent implements OnInit {
       }
     });
     this.confirmDialogRef.afterClosed().subscribe(result => {
+      this.loading[index] = true;
       if(result)
         this.http.post(this.apiUrl + '/discount/' + this.restaurantId + '/copy', {'previousDay': previousDay, 'currentDay': currentDay})
           .subscribe(
             res => {
               this.updateData(index, res);
+              this.loading[index] = false;
             },
             err => {
               console.log(err);
+              this.loading[index] = false;
             }
           );
     })

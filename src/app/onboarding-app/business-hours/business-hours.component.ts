@@ -192,7 +192,7 @@ export class BusinessHoursComponent implements OnInit {
 
   buildBusinessHoursArray(businessHours){
     for (var i = 0; i < businessHours.length; i++){
-      this.businessHoursArray.push([businessHours[i].open, businessHours[i].close]);
+      this.businessHoursArray.push([businessHours[i].open, businessHours[i].close]);//TODO: Fix this shit (change open and close to hours)
     }
     this.businessHoursArrayCached = JSON.parse(JSON.stringify(this.businessHoursArray));
     this.contentLoaded = true;

@@ -5,6 +5,9 @@
   <div *ngIf="discountArray.length > 0" class="frame">
     <div *ngFor="let day of discountArray; let i = index">
       <div class="card">
+        <div *ngIf="loading[i]" class="loading-overlay">
+          <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
+        </div>
         <div class="day">
           <h2>{{day.day}}</h2>
           <div class="flex-row">
