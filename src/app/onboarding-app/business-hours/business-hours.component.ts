@@ -200,12 +200,9 @@ export class BusinessHoursComponent implements OnInit {
 
   processHours(businessHoursArray){
     for( var i = 0; i < businessHoursArray.length; i++){
-      var openHour = businessHoursArray[i][0],
-          closeHour = businessHoursArray[i][1];
       this.newHours.push({
         day: this.businessHours[i]['day'],
-        open: openHour,
-        close: closeHour
+        hours: this.businessHoursArray[i]
       })
     }
   }
