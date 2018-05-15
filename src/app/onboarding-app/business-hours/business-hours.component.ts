@@ -123,9 +123,10 @@ export class BusinessHoursComponent implements OnInit {
     //If either from array or to array are split, use splitSlider function. Otherwise just copy
     if((fromArray.length == 4 && toArray.length == 2) || (fromArray.length == 2 && toArray.length == 4))
       this.splitSlider(index, 'copy');
-    else
+    else{
       this.businessHoursArray[index] = this.businessHoursArray[index - 1];
-    this.onChanges();
+      this.onChanges();
+    }
   }
 
   //Split hours into two segments to show that a restaurant is close for a portion of the day
@@ -142,7 +143,7 @@ export class BusinessHoursComponent implements OnInit {
       newHours = this.businessHoursArray[index - 1];
 
     else if(type == 'closed') //If we are closing the day
-     newHours = [9,9];
+      newHours = [9,9];
 
     else { //If we are just splitting, cache the hours of current day
       var hoursCached = this.businessHoursArray[index];
@@ -181,8 +182,12 @@ export class BusinessHoursComponent implements OnInit {
 
   //Toggle whether restaurant is open or closed that day
   closedToday(index){
-    this.businessHoursArray[index] = [9,9]; //Set both ends of the slider to the same time
-    this.onChanges();
+    if(this.businessHoursArray[index].length == 4)
+      this.splitSlider(index, 'closed')
+    else{
+      this.businessHoursArray[index] = [9,9]; //Set both ends of the slider to the same time
+      this.onChanges();
+    }
   }
 
   buildBusinessHoursArray(businessHours){
