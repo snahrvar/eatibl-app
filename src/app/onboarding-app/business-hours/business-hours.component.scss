@@ -16,7 +16,10 @@
       width: 100%;
     }
     button{
-      margin-left: 36px;
+      margin-left: 12px;
+    }
+    .small-button{
+      min-width: 40px;
     }
   }
 }

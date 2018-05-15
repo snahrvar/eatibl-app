@@ -122,16 +122,16 @@ export class BusinessHoursComponent implements OnInit {
 
   //Split hours into two segments to show that a restaurant is close for a portion of the day
   splitSlider(index){
+    //Destroy slider to allow new config options
+    this.sliders._results[index].slider.destroy();
+    this.sliderOn[index] = false; //Remove slider from dom
+
+    //Build new businessHoursArray at index (day)
+    var hoursCached = this.businessHoursArray[index]; //Cache business hours for the specified day for ease of use
+    var splitStart = Math.floor((hoursCached[0] + hoursCached[1]) / 2); //Split the hours in the middle
+    var splitEnd = splitStart + 1; //Start of second segment one hour after end of first
+
     if(!this.isSplit[index]){
-      //Destroy slider to allow new config options
-      this.sliders._results[index].slider.destroy();
-      this.sliderOn[index] = false; //Remove slider from dom
-
-      //Build new businessHoursArray at index (day)
-      var hoursCached = this.businessHoursArray[index]; //Cache business hours for the specified day for ease of use
-      var splitStart = Math.floor((hoursCached[0] + hoursCached[1]) / 2); //Split the hours in the middle
-      var splitEnd = splitStart + 1; //Start of second segment one hour after end of first
-
       this.rangeConfig[index].connect = [false, true, false, true, false];
       this.rangeConfig[index].tooltips = [{to: this.formatTooltip},{to: this.formatTooltip},{to: this.formatTooltip},{to: this.formatTooltip}];
       this.businessHoursArray[index] = [hoursCached[0], splitStart, splitEnd, hoursCached[1]];
@@ -142,13 +142,6 @@ export class BusinessHoursComponent implements OnInit {
       this.isSplit[index] = true;
     }
     else{
-      //Destroy slider to allow new config options
-      this.sliders._results[index].slider.destroy();
-      this.sliderOn[index] = false; //Remove slider from dom
-
-      //Build new businessHoursArray at index (day)
-      var hoursCached = this.businessHoursArray[index]; //Cache business hours for the specified day for ease of use
-
       this.rangeConfig[index].connect = true;
       this.rangeConfig[index].tooltips = [{to: this.formatTooltip},{to: this.formatTooltip}];
       this.businessHoursArray[index] = [hoursCached[0], hoursCached[3]];
@@ -157,8 +150,8 @@ export class BusinessHoursComponent implements OnInit {
       this.cdRef.detectChanges();
       this.sliderOn[index] = true;
       this.isSplit[index] = false;
-
     }
+    this.onChanges();
   }
 
   open24hrs(){
