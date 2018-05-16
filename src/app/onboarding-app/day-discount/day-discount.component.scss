@@ -87,6 +87,16 @@
             height: auto;
           }
         }
+        &.disabled{
+          ::ng-deep nouislider{
+            .noUi-vertical{
+              background: #e4e4e4;
+            }
+            .noUi-handle{
+              background: #f3f3f3;
+            }
+          }
+        }
       }
     }
   }

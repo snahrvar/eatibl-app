@@ -11,7 +11,7 @@
       <div class="card-content flex-row">
         <div class="discount-group">
           <div class="discount-scroll-wrapper">
-            <div class="discount-slider" *ngFor="let timeslot of discounts; let i = index">
+            <div class="discount-slider" [ngClass]="{'disabled': timeslot.disabled}" *ngFor="let timeslot of discounts; let i = index">
               <nouislider [config]="rangeConfig" (end)="onChanges()" [disabled]="timeslot.disabled" [ngClass]="{'no-tooltip' : (timeslot.discount == 0)}" [(ngModel)]="timeslot.discount"></nouislider>
               <div class="time">
                 <p>{{(i%2 == 0) ? formatTime(timeslot.time) : '-'}}</p>
