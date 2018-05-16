@@ -15,7 +15,7 @@ export class RestaurantSettingsComponent implements OnInit {
 
   constructor(
     private route:ActivatedRoute,
-    private functions: FunctionsService
+    public functions: FunctionsService
   ) { }
 
   ngOnInit() {
