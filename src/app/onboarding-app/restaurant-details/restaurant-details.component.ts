@@ -111,21 +111,12 @@ export class RestaurantDetailsComponent implements OnInit {
 
   //Upload all images in the queue
   uploadImages(){
-
-    for(var i = 0; i < this.uploader.queue.length; i++){
-
-      var currentName = this.uploader.queue[i].file.name,
-          temp = currentName.split("."),
-          extension = temp[temp.length-1]; //the last piece is the extension
-
-      this.uploader.queue[i].file.name = "file-"+Date.now()+i+'.'+extension; //rename to a unique file for backend
-    }
-
     //upload them bad boys
     this.uploader.uploadAll();
 
     this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-      var currentName = item.file.name;
+      var serverResponse = JSON.parse(response);
+      var currentName = serverResponse.file; //get updated filename from API response
       if(this.restaurant['images'].length == 0)
         this.restaurant['featuredImage'] = currentName;
       this.restaurant['images'].push(currentName); //add these files to the restaurant entry so that when we submit, they will be linked
