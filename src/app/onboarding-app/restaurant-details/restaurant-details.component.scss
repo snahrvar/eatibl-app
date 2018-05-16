@@ -41,23 +41,38 @@ form{
 }
 .menu-item-list{
   form{
-    align-items: flex-end;
-    .form-group{
-      width: 80%;
-      margin: 0 12px;
-      &:first-of-type{
-        margin-left: 0;
-      }
-      &.price{
-        width: 20%;
-        position: relative;
-        i{
-          position: absolute;
-          right: 8px;
-          bottom: 8px;
-          color: $dark-grey;
+    align-items: flex-start;
+    .form-inputs{
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      .form-group{
+        width: 80%;
+        padding: 0 12px;
+        &:first-of-type{
+          padding-left: 0;
+        }
+        &.price{
+          width: 20%;
+          position: relative;
+          i{
+            position: absolute;
+            right: 18px;
+            bottom: 8px;
+            color: $dark-grey;
+          }
+        }
+        &.desc{
+          padding-left: 0;
+          width: 100%;
+          textarea{
+            resize:vertical;
+          }
         }
       }
+    }
+    button{
+      margin-top: 30px;
     }
   }
 }
