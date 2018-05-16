@@ -40,14 +40,15 @@ export class WeekDiscountComponent implements OnInit {
     for (var i = 0; i < businessHours.length; i++){
       let day = {} as any;
       day.day = businessHours[i].day; //For card header
+      var hoursLength = businessHours[i].hours.length;
 
       //Build the y-axes values for the discount chart
-      day.discountValue = new Array ((businessHours[i].close - businessHours[i].open) * 2); //Initialize array based on business hours
+      day.discountValue = new Array ((businessHours[i].hours[hoursLength - 1] - businessHours[i].hours[0]) * 2); //Initialize array based on business hours
       day.discountValue.fill(0);
 
       for (var a = 0; a < discounts.length; a++){
         if(discounts[a].day == day.day){
-          var index = (discounts[a].time - businessHours[i].open) * 2;
+          var index = (discounts[a].time - businessHours[i].hours[0]) * 2;
           day.discountValue[index] = discounts[a].discount;
         }
       }
@@ -56,11 +57,11 @@ export class WeekDiscountComponent implements OnInit {
       day.discountTime = [];
 
       for (var x = 0; x < day.discountValue.length; x++){
-        day.discountTime.push(businessHours[i].open +(0.5 * x));
+        day.discountTime.push(businessHours[i].hours[0] +(0.5 * x));
       }
 
       //If
-      if(businessHours[i].open != businessHours[i].close) //TODO: Fix this shit (change open and close to hours)
+      if(businessHours[i].hours[0] != businessHours[i].hours[hoursLength - 1]) //TODO: Fix this shit (change open and close to hours)
         discountArray.push(day);
         this.loading.push(false);
     }
