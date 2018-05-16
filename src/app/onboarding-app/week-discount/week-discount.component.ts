@@ -61,9 +61,10 @@ export class WeekDiscountComponent implements OnInit {
       }
 
       //If
-      if(businessHours[i].hours[0] != businessHours[i].hours[hoursLength - 1]) //TODO: Fix this shit (change open and close to hours)
+      if(businessHours[i].hours[0] != businessHours[i].hours[hoursLength - 1]){
         discountArray.push(day);
         this.loading.push(false);
+      }
     }
     this.contentLoaded = true;
     return discountArray;

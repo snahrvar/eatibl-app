@@ -30,13 +30,13 @@ export class BusinessHoursComponent implements OnInit {
   businessHoursArray = [];
   businessHoursArrayCached = [];
   businessHours = [
-    {day: "Monday", open: 9, close: 21},
-    {day: "Tuesday", open: 9, close: 21},
-    {day: "Wednesday", open: 9, close: 21},
-    {day: "Thursday", open: 9, close: 21},
-    {day: "Friday", open: 9, close: 21},
-    {day: "Saturday", open: 9, close: 21},
-    {day: "Sunday", open: 9, close: 21}
+    {day: "Monday", hours: [9, 21]},
+    {day: "Tuesday", hours: [9, 21]},
+    {day: "Wednesday", hours: [9, 21]},
+    {day: "Thursday", hours: [9, 21]},
+    {day: "Friday", hours: [9, 21]},
+    {day: "Saturday", hours: [9, 21]},
+    {day: "Sunday", hours: [9, 21]}
   ];
   newHours = [];
   hoursSaved = false; //Used to toggle disabled on the save button
@@ -72,8 +72,8 @@ export class BusinessHoursComponent implements OnInit {
       min: 6,
       max: 30
     },
+    tooltips: [{to: this.formatTooltip},{to: this.formatTooltip}],
     step: 0.5,
-    tooltips: [{to: this.formatTooltip}, {to: this.formatTooltip}],
     pips: { // Show a scale with the slider
       mode: 'values',
       values: [],
@@ -83,11 +83,6 @@ export class BusinessHoursComponent implements OnInit {
   };
 
   constructor(private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, public dialog: MatDialog, public cdRef: ChangeDetectorRef){
-
-    //Initialize config options for noUiSliders
-    for (var i= 0; i < 7; i++){
-      this.rangeConfig.push(this.sliderOptions);
-    }
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -183,7 +178,7 @@ export class BusinessHoursComponent implements OnInit {
   //Toggle whether restaurant is open or closed that day
   closedToday(index){
     if(this.businessHoursArray[index].length == 4)
-      this.splitSlider(index, 'closed')
+      this.splitSlider(index, 'closed');
     else{
       this.businessHoursArray[index] = [9,9]; //Set both ends of the slider to the same time
       this.onChanges();
@@ -192,7 +187,15 @@ export class BusinessHoursComponent implements OnInit {
 
   buildBusinessHoursArray(businessHours){
     for (var i = 0; i < businessHours.length; i++){
-      this.businessHoursArray.push([businessHours[i].open, businessHours[i].close]);//TODO: Fix this shit (change open and close to hours)
+      this.businessHoursArray.push(businessHours[i].hours);
+      var sliderOptions = Object.assign({}, this.sliderOptions); //Cache sliderOptions to sever the angular binding between rangeConfig[i] and this.sliderOptions
+
+      //Set correct nouislider options based on midday closing or not
+      if(businessHours[i].hours.length == 4){ //Midday closing
+        sliderOptions.connect = [false, true, false, true, false];
+        sliderOptions.tooltips = [{to: this.formatTooltip},{to: this.formatTooltip},{to: this.formatTooltip},{to: this.formatTooltip}];
+      }
+      this.rangeConfig[i] = sliderOptions;
     }
     this.businessHoursArrayCached = JSON.parse(JSON.stringify(this.businessHoursArray));
     this.contentLoaded = true;
