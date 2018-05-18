@@ -62,9 +62,17 @@ export class DayDiscountComponent implements OnInit, OnDestroy {
       connect: [true, false],
       range: {
         min: 0,
+        '20%': 10,
+        '30%': 15,
+        '40%': 20,
+        '50%': 25,
+        '60%': 30,
+        '70%': 35,
+        '80%': 40,
+        '90%': 45,
         max: 50
       },
-      step: 5,
+      snap: true,
       direction: 'rtl',
       orientation: 'vertical',
       tooltips: true,
