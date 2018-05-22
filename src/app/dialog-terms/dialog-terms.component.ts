@@ -23,10 +23,10 @@ export class DialogTermsComponent {
 
       //Cache restaurant info
       var terms = this.data.restaurant.terms;
+      console.log(this.data)
 
       //Form controls and validation
       this.termsForm = this.formBuilder.group({
-        name: [terms.name, Validators.required],
         terms1: [terms.terms1, Validators.pattern('true')],
         terms2: [terms.terms2, Validators.pattern('true')],
         terms3: [terms.terms3, Validators.pattern('true')],
@@ -42,7 +42,6 @@ export class DialogTermsComponent {
     else
     //Form controls and validation
       this.termsForm = this.formBuilder.group({
-        name: ['', Validators.required],
         terms1: [true, Validators.pattern('true')],
         terms2: [true, Validators.pattern('true')],
         terms3: [true, Validators.pattern('true')],

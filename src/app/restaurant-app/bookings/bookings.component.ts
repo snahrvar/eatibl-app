@@ -311,10 +311,6 @@ export class BookingsComponent implements OnInit {
     });
   }
 
-  navPricing(){
-    this.router.navigateByUrl('restaurant/'+this.restaurantId+'/settings');
-  }
-
   ngOnDestroy(){
     this.subTime.unsubscribe();
   }
