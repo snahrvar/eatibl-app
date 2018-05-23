@@ -22,8 +22,14 @@ export class DialogTermsComponent {
     if(this.data.restaurant.hasOwnProperty('terms')){
 
       //Cache restaurant info
-      var terms = this.data.restaurant.terms;
-      console.log(this.data)
+      var terms = {
+        terms1: true,
+        terms2: true,
+        terms3: true,
+        terms4: true,
+        terms5: true,
+        terms6: (this.data.restaurant.terms == "false")
+      };
 
       //Form controls and validation
       this.termsForm = this.formBuilder.group({
