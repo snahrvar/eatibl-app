@@ -25,14 +25,21 @@
           <input type="checkbox" class="form-control" id="terms5" [formControl]="termsForm.controls['terms5']">
           <span class="checkmark"></span>
         </label>
-        <label class="container" [ngClass]="{'disabled': agreed}"><span class="number">6.</span>Pay $1 CAD Flat Fee per customer that fulfills a reservation through Eatibl’s platform.
-          <input type="checkbox" class="form-control" id="terms6" [formControl]="termsForm.controls['terms6']">
+        <label class="container" [ngClass]="{'disabled': agreed}">
+          <input type="checkbox" class="form-control" id="terms6" [formControl]="termsForm.controls['terms6']" (change)="feeValidator()">
+          <span class="number">6.</span>Pay $ <input type="number" class="form-control" id="fee" [formControl]="termsForm.controls['fee']"> CAD Flat Fee per customer that fulfills a reservation through Eatibl’s platform.
           <span class="checkmark"></span>
         </label>
       </div>
     </div>
     <div class="dialog-actions" mat-dialog-actions>
-      <button *ngIf="!agreed" class="button blue" type="submit" [disabled]="termsForm.status == 'INVALID'">Agree</button>
+      <div class="form-error" *ngIf="(termsForm.controls['fee'].hasError('needsFee') && submitAttempt)">
+        <span>Fill in a fee or uncheck terms item 6.</span>
+      </div>
+      <div class="form-error" *ngIf="(patternError && submitAttempt)">
+        <span>Must agree to terms 1 through 5.</span>
+      </div>
+      <button *ngIf="!agreed" class="button blue" type="submit">Agree</button>
       <button *ngIf="!agreed" class="button white" type="button" (click)="dialogRef.close(false)">Decline</button>
       <button *ngIf="agreed" class="button white" type="button" (click)="dialogRef.close(false)">Close</button>
     </div>

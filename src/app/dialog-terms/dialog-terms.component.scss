@@ -99,4 +99,23 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+
+  #fee{
+    position: relative;
+    opacity: 1;
+    height: 30px;
+    width: 40px;
+    font-size: 16px;
+    text-align: center;
+    font-family: Quicksand;
+    cursor: text;
+  }
+  .form-error{
+    font-family: "Quicksand";
+    margin: 6px 6px 6px 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    color: $eatibl-orange;
+  }
 }

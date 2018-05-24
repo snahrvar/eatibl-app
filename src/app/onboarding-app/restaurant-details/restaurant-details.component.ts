@@ -102,7 +102,8 @@ export class RestaurantDetailsComponent implements OnInit {
           terms4: result.terms4,
           terms5: result.terms5,
           terms6: result.terms6,
-          timestamp: Date.now()
+          timestamp: Date.now(),
+          fee: result.fee
         };
         this.onChanges();
       }
