@@ -23,6 +23,8 @@ export class DialogTermsComponent {
     //If restaurant has already agreed to terms
     if(this.data.restaurant.hasOwnProperty('terms')){
 
+
+
       //Cache restaurant info
       var terms = {
         terms1: true,
@@ -30,7 +32,7 @@ export class DialogTermsComponent {
         terms3: true,
         terms4: true,
         terms5: true,
-        terms6: this.data.restaurant.terms.terms6 == "true",
+        terms6: typeof this.data.restaurant.terms.terms6 == "boolean" ? this.data.restaurant.terms.terms6 : this.data.restaurant.terms.terms6 == "true",
         fee: this.data.restaurant.terms.fee
       };
 
