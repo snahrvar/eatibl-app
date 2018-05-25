@@ -77,7 +77,7 @@ export class RestaurantListComponent implements OnInit {
 
   //Navigate to restaurant edit page
   editRestaurant(restaurantId){
-      this.router.navigateByUrl('/' + restaurantId + '/Edit');
+      this.router.navigateByUrl('/' + restaurantId + '/action/Edit');
   }
 
   //Navigate to business hours page

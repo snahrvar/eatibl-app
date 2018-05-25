@@ -52,16 +52,6 @@ export class LoginComponent implements OnInit {
   forgotPassword(){
     //console.log(booking._id);
     this.confirmDialogRef = this.dialog.open(DialogForgotPasswordComponent, {});
-    this.confirmDialogRef.afterClosed().subscribe(result => {
-      if(result){
-        this.http.post(this.apiUrl + '/user/passwordReset', result)
-          .subscribe(
-            res => {
-              this.response = res;
-              console.log(this.response.message)
-            });
-      }
-    })
   }
 
   submitLogin(){

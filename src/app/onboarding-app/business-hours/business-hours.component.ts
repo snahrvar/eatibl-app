@@ -244,7 +244,7 @@ export class BusinessHoursComponent implements OnInit {
         })
       }
       else
-        this.router.navigateByUrl('/' + this.restaurantId + '/Edit');
+        this.router.navigateByUrl('/' + this.restaurantId + '/action/Edit');
     }
     else //for restaurants
       this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/settings']);

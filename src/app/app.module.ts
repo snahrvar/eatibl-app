@@ -30,10 +30,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor, CacheInterceptor } from './http-interceptor';
 import { DialogTermsComponent } from './dialog-terms/dialog-terms.component';
 import { DialogForgotPasswordComponent } from './dialog-forgot-password/dialog-forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'resetPassword/:token', component: ResetPasswordComponent }
 ];
 
 @NgModule({
@@ -45,7 +47,8 @@ const routes: Routes = [
     RegisterComponent,
     HomeComponent,
     DialogTermsComponent,
-    DialogForgotPasswordComponent
+    DialogForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
