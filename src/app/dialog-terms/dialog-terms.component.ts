@@ -30,7 +30,7 @@ export class DialogTermsComponent {
         terms3: true,
         terms4: true,
         terms5: true,
-        terms6: this.data.restaurant.terms.terms6,
+        terms6: this.data.restaurant.terms.terms6 == "true",
         fee: this.data.restaurant.terms.fee
       };
 
@@ -44,6 +44,8 @@ export class DialogTermsComponent {
         terms6: [terms.terms6],
         fee: [terms.fee, this.needsFee]
       });
+      console.log(terms)
+      console.log(this.termsForm)
 
       //Disable form
       this.agreed = true;
