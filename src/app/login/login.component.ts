@@ -4,6 +4,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../_services/user.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { DialogForgotPasswordComponent } from '../dialog-forgot-password/dialog-forgot-password.component';
 import * as decode from 'jwt-decode';
 
 @Component({
@@ -22,8 +24,16 @@ export class LoginComponent implements OnInit {
   submitAttempt = false;
   response = {} as any;
   badInput = false;
+  confirmDialogRef: MatDialogRef<DialogForgotPasswordComponent>;
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute, public userService: UserService, private formBuilder: FormBuilder) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute,
+    public userService: UserService,
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog
+  ) {
     this.contentLoaded = true;
     //Form controls and validation
     this.loginForm = this.formBuilder.group({
@@ -37,6 +47,21 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  //Open forgot password dialog
+  forgotPassword(){
+    //console.log(booking._id);
+    this.confirmDialogRef = this.dialog.open(DialogForgotPasswordComponent, {});
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.http.post(this.apiUrl + '/user/passwordReset', result)
+          .subscribe(
+            res => {
+              console.log(res.message)
+            });
+      }
+    })
+  }
 
   submitLogin(){
     if(!this.loginForm.valid){

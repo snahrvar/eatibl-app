@@ -34,6 +34,15 @@
           color: $eatibl-orange;
         }
       }
+      .forgot-password{
+        font-size: 14px;
+        text-align: right;
+        cursor: pointer;
+        color: $eatibl-blue;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

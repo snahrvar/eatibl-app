@@ -29,6 +29,7 @@ import { DialogConfirmComponent } from './dialog-confirm/dialog-confirm.componen
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor, CacheInterceptor } from './http-interceptor';
 import { DialogTermsComponent } from './dialog-terms/dialog-terms.component';
+import { DialogForgotPasswordComponent } from './dialog-forgot-password/dialog-forgot-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,7 +44,8 @@ const routes: Routes = [
     onboardingComponents,
     RegisterComponent,
     HomeComponent,
-    DialogTermsComponent
+    DialogTermsComponent,
+    DialogForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,7 @@ const routes: Routes = [
     RestaurantAppModule,
     RouterModule.forRoot(routes)
   ],
-  entryComponents: [DialogConfirmComponent, DialogTermsComponent],
+  entryComponents: [DialogConfirmComponent, DialogTermsComponent, DialogForgotPasswordComponent],
   providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true}
