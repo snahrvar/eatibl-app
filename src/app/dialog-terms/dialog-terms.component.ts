@@ -22,7 +22,6 @@ export class DialogTermsComponent {
 
     //If restaurant has already agreed to terms
     if(this.data.restaurant.hasOwnProperty('terms') && this.data.restaurant.terms != null){
-      console.log('case 1')
 
       //Cache restaurant info
       var terms = {
@@ -51,7 +50,6 @@ export class DialogTermsComponent {
       this.termsForm.disable();
     }
     else{
-      console.log('case 2')
 
       //Form controls and validation
       this.termsForm = this.formBuilder.group({
@@ -61,7 +59,7 @@ export class DialogTermsComponent {
         terms4: [true, Validators.pattern('true')],
         terms5: [true, Validators.pattern('true')],
         terms6: [true],
-        fee: ['', this.needsFee]
+        fee: [1, this.needsFee]
       });
     }
 
