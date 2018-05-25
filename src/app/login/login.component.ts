@@ -20,9 +20,9 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
+  response = {} as any;
   loginForm: FormGroup;
   submitAttempt = false;
-  response = {} as any;
   badInput = false;
   confirmDialogRef: MatDialogRef<DialogForgotPasswordComponent>;
 
@@ -57,7 +57,8 @@ export class LoginComponent implements OnInit {
         this.http.post(this.apiUrl + '/user/passwordReset', result)
           .subscribe(
             res => {
-              console.log(res.message)
+              this.response = res;
+              console.log(this.response.message)
             });
       }
     })
