@@ -257,7 +257,7 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userData = decode(localStorage.getItem('token'));
+    this.userData = decode(localStorage.getItem('eatiblToken'));
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -265,7 +265,7 @@ export class RestaurantDetailsComponent implements OnInit {
       this.restaurantId = params['restaurantId'];
 
       this.fileURL = this.apiUrl + '/restaurant/uploadImages'; //for file upload route
-      this.uploader = new FileUploader({url: this.fileURL, authToken: 'Bearer '+ localStorage.getItem('token')});
+      this.uploader = new FileUploader({url: this.fileURL, authToken: 'Bearer '+ localStorage.getItem('eatiblToken')});
 
       //Only get restaurant information if we are editing an existing one
       if(this.action == 'Edit')

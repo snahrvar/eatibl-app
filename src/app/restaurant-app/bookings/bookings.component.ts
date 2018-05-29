@@ -275,7 +275,7 @@ export class BookingsComponent implements OnInit {
   //FOR TESTING ONLY
 
   ngOnInit() {
-    this.userData = decode(localStorage.getItem('token'));
+    this.userData = decode(localStorage.getItem('eatiblToken'));
     this.dateToday = this.date = this.buildDate(Date.now());
 
     //Subscribe to the route parameters

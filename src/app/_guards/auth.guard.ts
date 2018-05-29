@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    if(localStorage.getItem('token'))
+    if(localStorage.getItem('eatiblToken'))
       return true;
 
     else {
@@ -31,9 +31,9 @@ export class AuthGuardAdmin implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-      console.log(decode(localStorage.getItem('token')).type)
+      console.log(decode(localStorage.getItem('eatiblToken')).type)
 
-    if(decode(localStorage.getItem('token')).type == "Admin")
+    if(decode(localStorage.getItem('eatiblToken')).type == "Admin")
       return true;
 
     else {

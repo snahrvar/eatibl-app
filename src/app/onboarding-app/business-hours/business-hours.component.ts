@@ -269,7 +269,7 @@ export class BusinessHoursComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userData = decode(localStorage.getItem('token'));
+    this.userData = decode(localStorage.getItem('eatiblToken'));
   }
 
   onChanges(){

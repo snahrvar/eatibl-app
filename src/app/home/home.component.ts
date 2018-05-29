@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToApp(){
-    var user = decode(localStorage.getItem('token'));
+    var user = decode(localStorage.getItem('eatiblToken'));
     if (user.type == "Admin")
       this.router.navigate(['/restaurantList']);
     else if (user.type == "Restaurant"){

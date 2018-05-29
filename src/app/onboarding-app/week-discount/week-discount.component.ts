@@ -222,7 +222,7 @@ export class WeekDiscountComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userData = decode(localStorage.getItem('token'));
+    this.userData = decode(localStorage.getItem('eatiblToken'));
     this.getData();
   }
 
