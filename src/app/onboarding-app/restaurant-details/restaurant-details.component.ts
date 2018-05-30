@@ -21,6 +21,7 @@ export class RestaurantDetailsComponent implements OnInit {
   //Initialize variables
   private sub: any;
   restaurant: Object = {
+    _id: '',
     name: '',
     contacts: [],
     recommendedItems: [],
@@ -166,6 +167,7 @@ export class RestaurantDetailsComponent implements OnInit {
       .subscribe(
         res => { //Returns restaurant ID
           this.restaurantId = res;
+          this.restaurant['_id'] = res;
           this.setRestaurantName(this.restaurant['name']);
           this.restaurantSaved = true;
           this.submitted = false;
