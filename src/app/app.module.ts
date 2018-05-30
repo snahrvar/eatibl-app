@@ -12,6 +12,7 @@ import { RestaurantAppModule, restaurantComponents } from './restaurant-app/rest
 import { AppMaterialModule } from './app-material/app-material.module'; //Angular Material components
 import { PrimeNgModule } from './prime-ng/prime-ng.module'; //PrimeNG components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AgmCoreModule } from '@agm/core';
 
 //Services
 import {ClockService} from "./_services/clock.service";
@@ -51,6 +52,10 @@ const routes: Routes = [
     ResetPasswordComponent
   ],
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyA-_Be-L1dtPl1uCPpCPpIX7-mkpNS7VHw",
+      libraries: ["places"]
+    }),
     BrowserModule,
     HttpClientModule,
     FormsModule,

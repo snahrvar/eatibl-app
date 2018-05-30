@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
 import { DialogTermsComponent } from '../../dialog-terms/dialog-terms.component';
 import { map } from 'rxjs/operators';
+import { MapsAPILoader } from '@agm/core';
 import * as _ from 'underscore';
 import * as decode from 'jwt-decode';
 
@@ -18,19 +19,12 @@ import * as decode from 'jwt-decode';
   styleUrls: ['restaurant-details.component.scss']
 })
 export class RestaurantDetailsComponent implements OnInit {
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+
   //Initialize variables
   private sub: any;
-  restaurant: Object = {
-    _id: '',
-    name: '',
-    contacts: [],
-    recommendedItems: [],
-    dineIn: true,
-    takeOut: false,
-    featuredImage: String,
-    images: [],
-    categories: []
-  };
+  restaurant = {} as any;
   restaurantId: any;
   action: any; //Either edit restaurant or add restaurant
   contentLoaded = false; //Prevent content from loading until api calls are returned
@@ -43,6 +37,11 @@ export class RestaurantDetailsComponent implements OnInit {
   termsDialogRef: MatDialogRef<DialogTermsComponent>;
   userData: any; //Store decoded user data from local storage
   selectedTab: number; //Selects the tab based on the numerical index
+
+  //Google places initializing
+  googleForm: FormGroup;
+  mapOptions = {} as any;
+  googleImport = {} as any;
 
   //initialize file Uploader stuff
   fileURL:string;
@@ -79,9 +78,67 @@ export class RestaurantDetailsComponent implements OnInit {
           }
         );
     };
+
+    setTimeout(() => { //this.searchElementRef is undefined initially, so wait for it to be set
+      //load Places Autocomplete
+      this.mapsAPILoader.load().then(() => {
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+          types: ["establishment"]
+        });
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            //get the place result
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+            //Set googleImport object
+            this.googleImport = {
+              name: place.name,
+              phone: place.formatted_phone_number,
+              address: place.address_components[0].long_name + ' ' + place.address_components[1].long_name,
+              city: place.address_components[3].long_name,
+              state: place.address_components[5].long_name,
+              country: place.address_components[6].long_name,
+              zipcode: place.address_components[7].long_name,
+              placeId: place.place_id,
+              rating: {
+                ratingNumber: place.rating,
+                reviews: place.reviews,
+                timestamp: Date.now()
+              }
+            }
+            if(place.price_level) {this.googleImport.priceLevel = place.price_level}; //Some restaurants on google don't have price level
+
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+
+            //set latitude, longitude and zoom
+            this.mapOptions.latitude = place.geometry.location.lat();
+            this.mapOptions.longitude = place.geometry.location.lng();
+            this.mapOptions.zoom = 12;
+          });
+        });
+      });
+    }, 1000);
   }
 
-  constructor( private http: HttpClient, private route:ActivatedRoute, private router: Router, private functions: FunctionsService, private renderer: Renderer2, public dialog: MatDialog) {
+  constructor(
+    private http: HttpClient,
+    private route:ActivatedRoute,
+    private router: Router,
+    private functions: FunctionsService,
+    private renderer: Renderer2,
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
+  ) {
+    //Form controls and validation
+    this.googleForm = this.formBuilder.group({
+      search: ['',  Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
   //Open terms of agreement
@@ -251,6 +308,8 @@ export class RestaurantDetailsComponent implements OnInit {
 
   //When an input is changed, find if the restaurant info is updated to enable the save button
   onChanges(){
+    console.log(this.restaurantCached)
+    console.log(this.restaurant)
     var isEqual = this.functions.compareObjects(this.restaurantCached, this.restaurant);
     if(isEqual)
       this.restaurantSaved = true;
@@ -258,8 +317,29 @@ export class RestaurantDetailsComponent implements OnInit {
       this.restaurantSaved = false;
   }
 
+  //Import google data into restaurant object
+  import(){
+    this.restaurant['name'] = this.googleImport.name;
+    this.restaurant['address'] = this.googleImport.address;
+    this.restaurant['city'] = this.googleImport.city;
+    this.restaurant['state'] = this.googleImport.state;
+    this.restaurant['country'] = this.googleImport.country;
+    this.restaurant['zipcode'] = this.googleImport.zipcode;
+    this.restaurant['price'] = this.googleImport.priceLevel || '';
+    this.restaurant['rating'] = this.googleImport.rating;
+    this.restaurant['placeId'] = this.googleImport.placeId;
+    this.onChanges();
+  }
+
   ngOnInit() {
     this.userData = decode(localStorage.getItem('eatiblToken'));
+
+    //Set google map options
+    this.mapOptions = {
+      latitude: 43.6532,
+      longitude: -79.3832,
+      zoom: 14
+    }
 
     //Subscribe to the route parameters
     this.sub = this.route.params.subscribe(params => {
@@ -275,6 +355,7 @@ export class RestaurantDetailsComponent implements OnInit {
         this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
           .subscribe(
             res => {
+              console.log(res)
               this.restaurant = res;
               this.restaurantCached = JSON.parse(JSON.stringify(res)); //Cache restaurant object in a way that wont be bound to this.restaurant
               this.setRestaurantName(this.restaurant['name']);

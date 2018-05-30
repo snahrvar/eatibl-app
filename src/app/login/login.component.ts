@@ -72,7 +72,8 @@ export class LoginComponent implements OnInit {
               this.badInput = true;
             }
             else{
-              localStorage.setItem('eatiblToken',JSON.stringify(res).replace(/['"]+/g, '')); //add token to localStorage so we can detect verified user
+              localStorage.setItem('eatiblToken' +
+                '',JSON.stringify(res).replace(/['"]+/g, '')); //add token to localStorage so we can detect verified user
               var userData = decode(localStorage.getItem('eatiblToken'));
 
               if(userData.type == "Restaurant") // for restaurants

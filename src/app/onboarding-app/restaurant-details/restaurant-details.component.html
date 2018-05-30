@@ -3,6 +3,36 @@
 </div>
 <div class="scroll-wrapper has-footer" *ngIf="contentLoaded">
   <mat-tab-group [selectedIndex]="selectedTab" [ngClass]="{'hide' : userData.type == 'Restaurant'}">
+    <mat-tab label="Import From Google">
+      <div class="frame flex">
+        <div class="card import">
+          <div class="card-header">
+            <h2>Import From Google</h2>
+          </div>
+          <div class="separator"></div>
+          <div class="card-content">
+            <form>
+              <div class="form-inputs">
+                <div class="search-wrapper">
+                  <div class="form-group">
+                    <label>Search for Restaurant</label>
+                    <input placeholder="Enter restaurant name" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="googleForm.controls['search']">
+                  </div>
+                  <button type="button" class="button blue" (click)="import()" [disabled]="googleImport.name == null">
+                    <i class="fa fa-download icon-padding" aria-hidden="true"></i> Import
+                  </button>
+                </div>
+                <agm-map [latitude]="mapOptions?.latitude" [longitude]="mapOptions?.longitude" [scrollwheel]="false" [zoom]="mapOptions?.zoom">
+                  <agm-marker [latitude]="mapOptions?.latitude" [longitude]="mapOptions?.longitude"></agm-marker>
+                </agm-map>
+              </div>
+            </form>
+          </div>
+          <div class="card-actions">
+          </div>
+        </div>
+      </div>
+    </mat-tab>
     <mat-tab label="Details" *ngIf="userData.type == 'Admin'">
       <div class="frame">
         <div class="card">

@@ -82,6 +82,30 @@ form{
     justify-content: center;
     .card{
       width: 75%;
+      &.import{
+        width: 50%;
+        form{
+          width: 100%;
+          .form-inputs{
+            width: 100%;
+            .search-wrapper{
+              display: flex;
+              justify-content: space-between;
+              .form-group{
+                width: 80%;
+              }
+              button{
+                align-self: flex-end;
+                margin-bottom: 8px;
+              }
+            }
+            agm-map{
+              height: 240px;
+              width: 100%;
+            }
+          }
+        }
+      }
     }
   }
   &.column{
