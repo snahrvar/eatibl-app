@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
 import { FunctionsService } from './../../_services/functions.service';
 import { DialogTermsComponent } from '../../dialog-terms/dialog-terms.component';
 import { map } from 'rxjs/operators';
+import {} from '@types/googlemaps';
 import { MapsAPILoader } from '@agm/core';
 import * as _ from 'underscore';
 import * as decode from 'jwt-decode';
