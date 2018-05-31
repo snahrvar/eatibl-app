@@ -309,8 +309,6 @@ export class RestaurantDetailsComponent implements OnInit {
 
   //When an input is changed, find if the restaurant info is updated to enable the save button
   onChanges(){
-    console.log(this.restaurantCached)
-    console.log(this.restaurant)
     var isEqual = this.functions.compareObjects(this.restaurantCached, this.restaurant);
     if(isEqual)
       this.restaurantSaved = true;
@@ -356,7 +354,6 @@ export class RestaurantDetailsComponent implements OnInit {
         this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
           .subscribe(
             res => {
-              console.log(res)
               this.restaurant = res;
               this.restaurantCached = JSON.parse(JSON.stringify(res)); //Cache restaurant object in a way that wont be bound to this.restaurant
               this.setRestaurantName(this.restaurant['name']);
