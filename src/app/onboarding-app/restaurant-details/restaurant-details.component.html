@@ -3,7 +3,7 @@
 </div>
 <div class="scroll-wrapper has-footer" *ngIf="contentLoaded">
   <mat-tab-group [selectedIndex]="selectedTab" [ngClass]="{'hide' : userData.type == 'Restaurant'}">
-    <mat-tab label="Import From Google">
+    <mat-tab label="Import From Google" *ngIf="userData.type == 'Admin'">
       <div class="frame flex">
         <div class="card import">
           <div class="card-header">
