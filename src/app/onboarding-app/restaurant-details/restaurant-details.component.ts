@@ -91,15 +91,38 @@ export class RestaurantDetailsComponent implements OnInit {
             //get the place result
             let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
+            var locationData = {} as any;
+
+            //Properly store location data given the variance in the place.address_component array
+            for(var i = 0; i < place.address_components.length; i++){
+              var value = place.address_components[i].long_name;
+              if(place.address_components[i].types.indexOf('street_number') > -1)
+                locationData.streetNumber = value;
+              if(place.address_components[i].types.indexOf('route') > -1)
+                locationData.route = value;
+              if(place.address_components[i].types.indexOf('locality') > -1)
+                locationData.city = value;
+              if(place.address_components[i].types.indexOf('administrative_area_level_1') > -1)
+                locationData.state = value;
+              if(place.address_components[i].types.indexOf('country') > -1)
+                locationData.country = value;
+              if(place.address_components[i].types.indexOf('postal_code') > -1)
+                locationData.zipcode = value;
+            }
+
+            //Compile streetNumber and route if we have it
+            if(locationData.streetNumber)
+              locationData.address = locationData.streetNumber + ' ' + locationData.route;
+
             //Set googleImport object
             this.googleImport = {
               name: place.name,
               phone: place.formatted_phone_number,
-              address: place.address_components[0].long_name + ' ' + place.address_components[1].long_name,
-              city: place.address_components[3].long_name,
-              state: place.address_components[5].long_name,
-              country: place.address_components[6].long_name,
-              zipcode: place.address_components[7].long_name,
+              address: locationData.address || '',
+              city: locationData.city || '',
+              state: locationData.state || '',
+              country: locationData.country || '',
+              zipcode: locationData.zipcode || '',
               placeId: place.place_id,
               rating: {
                 ratingNumber: place.rating,
@@ -107,6 +130,7 @@ export class RestaurantDetailsComponent implements OnInit {
                 timestamp: Date.now()
               }
             }
+
             if(place.price_level) {this.googleImport.priceLevel = place.price_level}; //Some restaurants on google don't have price level
 
             //verify result
