@@ -5,7 +5,14 @@
   <div class="overflow-card-wrapper">
     <div class="card">
       <div class="card-content">
-
+        <h2>Restaurants</h2>
+        <div class="restaurant" *ngFor="let restaurant of restaurants; let i = index">
+          <div class="info">
+            <p class="name">{{restaurant.name}}</p>
+            <p class="address">{{restaurant.address}}</p>
+          </div>
+          <button (click)="selectRestaurant()" class="button blue">Select</button>
+        </div>
       </div>
     </div>
   </div>

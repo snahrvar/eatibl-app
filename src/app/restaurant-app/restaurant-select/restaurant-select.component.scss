@@ -1,0 +1,23 @@
+//Imports
+@import '../../../sass/variables';
+
+//Restaurant Select styling
+.restaurant{
+  padding: 0 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e8e8e8;
+  width: 500px;
+  &:nth-of-type(even){
+    background-color: $light-grey;
+  }
+  .name{
+    font-weight: 700;
+    font-size: 18px;
+    color: $eatibl-red;
+  }
+  .address{
+    color: lighten($dark-grey, 10%);
+  }
+}

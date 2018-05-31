@@ -82,7 +82,7 @@ export class RestaurantListComponent implements OnInit {
 
   //Navigate to business hours page
   addRestaurant(){
-    this.router.navigateByUrl('/restaurant/Add');
+    this.router.navigateByUrl('/restaurant/action/Add');
   }
 
   ngOnInit() : void {

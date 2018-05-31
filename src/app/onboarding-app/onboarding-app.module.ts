@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: ':restaurantId/keyHours', component: KeyHoursComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/pricing/week', component: WeekDiscountComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/pricing/:day', component: DayDiscountComponent, canActivate: [AuthGuard]  },
-  { path: 'restaurant/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  },
+  { path: 'restaurant/action/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/register', component: RegisterComponent, canActivate: [AuthGuardAdmin]  },
   { path: ':restaurantId/action/:action', component: RestaurantDetailsComponent, canActivate: [AuthGuard]  }
 ];
