@@ -327,6 +327,7 @@ export class RestaurantDetailsComponent implements OnInit {
     this.restaurant['price'] = this.googleImport.priceLevel || '';
     this.restaurant['rating'] = this.googleImport.rating;
     this.restaurant['placeId'] = this.googleImport.placeId;
+    this.restaurant['phone'] = this.googleImport.phone;
     this.onChanges();
   }
 
@@ -354,7 +355,7 @@ export class RestaurantDetailsComponent implements OnInit {
         this.http.get(this.apiUrl + '/restaurant/' + this.restaurantId)
           .subscribe(
             res => {
-              this.restaurant = res;
+              this.restaurant = res;``
               this.restaurantCached = JSON.parse(JSON.stringify(res)); //Cache restaurant object in a way that wont be bound to this.restaurant
               this.setRestaurantName(this.restaurant['name']);
               this.contentLoaded = true;

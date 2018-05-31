@@ -100,7 +100,6 @@ export class RestaurantListComponent implements OnInit {
                     res => {
                       this.discounts = res;
                       this.checkDiscounts();
-                      console.log(this.restaurants);
                     },
                     err => {
                       console.log(err);

@@ -266,7 +266,7 @@
   </div>
   <div class="footer-right">
     <p-progressSpinner strokeWidth="8" *ngIf="submitted"></p-progressSpinner>
-    <button class="button blue margin-right margin-left" (click)="submitRestaurant()" [disabled]="restaurantSaved || restaurant['name'] == '' || submitted">Save</button>
+    <button class="button blue margin-right margin-left" (click)="submitRestaurant()" [disabled]="restaurantSaved || !restaurant.hasOwnProperty('name') || submitted">Save</button>
     <button *ngIf="userData.type == 'Admin'" class="button blue" (click)="nextPage()" [disabled]="!restaurantId">Next<i class="fa fa-arrow-right icon-padding-left" aria-hidden="true"></i></button>
   </div>
 </div>
