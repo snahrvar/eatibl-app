@@ -34,6 +34,11 @@ export class AppComponent implements OnInit{
       this.router.navigate(['/'])
   }
 
+  navigateTo(link){
+    this.functions.changeRestaurantName('');
+    this.router.navigate([link])
+  }
+
   logout(){
     this.userService.logout();
     this.functions.changeRestaurantName('');

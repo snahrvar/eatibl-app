@@ -76,8 +76,12 @@ export class LoginComponent implements OnInit {
                 '',JSON.stringify(res).replace(/['"]+/g, '')); //add token to localStorage so we can detect verified user
               var userData = decode(localStorage.getItem('eatiblToken'));
 
-              if(userData.type == "Restaurant") // for restaurants
-                this.router.navigate(['/restaurant/' + userData.restaurant_fid + '/bookings']);
+              if(userData.type == "Restaurant") { // for restaurants
+                if(userData.restaurants.length > 1)
+                  this.router.navigate(['/restaurant/select']);
+                if(userData.restaurants.length == 1)
+                  this.router.navigate(['/restaurant/' + userData.restaurant_fid + '/bookings']);
+              }
               if(userData.type == "Admin") // for admins
                 this.router.navigate(['/restaurantList'])
             }

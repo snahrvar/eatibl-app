@@ -11,7 +11,7 @@
             <p class="name">{{restaurant.name}}</p>
             <p class="address">{{restaurant.address}}</p>
           </div>
-          <button (click)="selectRestaurant()" class="button blue">Select</button>
+          <button (click)="navigateTo('restaurant/' + restaurant._id + '/bookings', restaurant.name)" class="button blue">Select</button>
         </div>
       </div>
     </div>

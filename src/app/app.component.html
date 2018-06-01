@@ -5,6 +5,9 @@
       <img src="/assets/images/white-logo.png" alt="">
     </button>
     <p *ngIf="restaurantName != ''">{{restaurantName}}</p>
+    <div *ngIf="userData">
+      <button *ngIf="restaurantName != '' && userData.restaurants.length > 1" class="button blue change-restaurant" (click)="navigateTo('restaurant/select')">Change Restaurant</button>
+    </div>
   </div>
   <div class="header-right">
     <p *ngIf = "userService.checkUser()">Hi, {{userService.getUserData().name}}</p>

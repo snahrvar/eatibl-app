@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FunctionsService } from './../../_services/functions.service';
+import { environment } from '../../../environments/environment';
 import * as decode from 'jwt-decode';
 
 @Component({
@@ -11,30 +14,33 @@ export class RestaurantSelectComponent implements OnInit {
 
   contentLoaded = false;
   userData: any;
-
-  restaurants = [
-    {
-      name: 'Restaurant 1',
-      address: '768 Bean Avenue',
-    },
-    {
-      name: 'Restaurant 2',
-      address: '1354 Artichoke Boulevard',
-    },
-    {
-      name: 'Restaurant 3',
-      address: '64 Leek Street',
-    }
-  ]
+  apiUrl = environment.apiURL;
+  restaurants: any;
 
   constructor(
+    public functions: FunctionsService,
+    private http: HttpClient,
+    private router: Router,
     private route:ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.userData = decode(localStorage.getItem('eatiblToken'));
-    console.log(this.userData)
+    this.http.post(this.apiUrl + '/restaurant/multiple', this.userData.restaurants)
+      .subscribe(
+        res => {
+          this.restaurants = res;
+        },
+        err => {
+          console.log(err);
+        }
+      );
     this.contentLoaded = true;
+  }
+
+  navigateTo(link, name){
+    this.functions.changeRestaurantName(name);
+    this.router.navigate([link])
   }
 
 }
