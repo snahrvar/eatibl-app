@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
                 if(userData.restaurants.length > 1)
                   this.router.navigate(['/restaurant/select']);
                 if(userData.restaurants.length == 1)
-                  this.router.navigate(['/restaurant/' + userData.restaurant_fid + '/bookings']);
+                  this.router.navigate(['/restaurant/' + userData.restaurants[0] + '/bookings']);
               }
               if(userData.type == "Admin") // for admins
                 this.router.navigate(['/restaurantList'])

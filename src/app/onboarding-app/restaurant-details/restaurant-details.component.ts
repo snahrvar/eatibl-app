@@ -284,7 +284,7 @@ export class RestaurantDetailsComponent implements OnInit {
         this.router.navigateByUrl('/restaurantList');
     }
     else //for restaurants
-      this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/settings']);
+      this.router.navigate(['/restaurant/' + this.restaurantId + '/settings']);
   }
 
   //Navigate to business hours page

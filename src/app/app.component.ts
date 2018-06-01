@@ -25,8 +25,12 @@ export class AppComponent implements OnInit{
   goHome(){
     if(localStorage.getItem('eatiblToken') != null){
       this.userData = decode(localStorage.getItem('eatiblToken'));
-      if(this.userData.type == "Restaurant") // for restaurants
-        this.router.navigate(['/restaurant/' + this.userData.restaurant_fid + '/bookings']);
+      if(this.userData.type == "Restaurant") { // for restaurants
+        if (this.userData.restaurants.length > 1)
+          this.router.navigate(['/restaurant/select']);
+        if (this.userData.restaurants.length == 1)
+          this.router.navigate(['/restaurant/' + this.userData.restaurants[0] + '/bookings']);
+      }
       else if(this.userData.type == "Admin") // for admins
         this.router.navigate(['/restaurantList'])
     }
