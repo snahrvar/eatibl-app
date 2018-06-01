@@ -220,6 +220,8 @@ export class RestaurantDetailsComponent implements OnInit {
       phone: '',
       notes: ''
     };
+    if(!this.restaurant['contacts'])
+      this.restaurant.contacts = [];
     this.restaurant['contacts'].push(contact);
     this.onChanges();
   }
@@ -234,6 +236,8 @@ export class RestaurantDetailsComponent implements OnInit {
       item: '',
       price: ''
     };
+    if(!this.restaurant['recommendedItems'])
+      this.restaurant.recommendedItems = [];
     this.restaurant['recommendedItems'].push(recommendedItem);
     this.onChanges();
   }
