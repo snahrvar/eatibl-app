@@ -91,6 +91,8 @@ export class RestaurantDetailsComponent implements OnInit {
             //get the place result
             let place: google.maps.places.PlaceResult = autocomplete.getPlace();
 
+            console.log(place.geometry.location.lat())
+
             var locationData = {} as any;
 
             //Properly store location data given the variance in the place.address_component array
@@ -124,6 +126,8 @@ export class RestaurantDetailsComponent implements OnInit {
               country: locationData.country || '',
               zipcode: locationData.zipcode || '',
               placeId: place.place_id,
+              latitude: place.geometry.location.lat() || 0,
+              longitude: place.geometry.location.lng() || 0,
               rating: {
                 ratingNumber: place.rating,
                 reviews: place.reviews,
@@ -141,7 +145,7 @@ export class RestaurantDetailsComponent implements OnInit {
             //set latitude, longitude and zoom
             this.mapOptions.latitude = place.geometry.location.lat();
             this.mapOptions.longitude = place.geometry.location.lng();
-            this.mapOptions.zoom = 12;
+            this.mapOptions.zoom = 14;
           });
         });
       });
@@ -356,6 +360,8 @@ export class RestaurantDetailsComponent implements OnInit {
     this.restaurant['rating'] = this.googleImport.rating;
     this.restaurant['placeId'] = this.googleImport.placeId;
     this.restaurant['phone'] = this.googleImport.phone;
+    this.restaurant['latitude'] = this.googleImport.latitude;
+    this.restaurant['longitude'] = this.googleImport.longitude;
     this.onChanges();
   }
 
