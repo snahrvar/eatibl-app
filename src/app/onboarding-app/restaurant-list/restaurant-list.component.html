@@ -5,8 +5,15 @@
   <div class="frame" *ngIf="contentLoaded">
     <div class="card">
       <div class="card-header">
-        <h2>Restaurant List</h2>
-        <button (click)="addRestaurant()" class="button blue"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>New</button>
+        <div class="header-left">
+          <h2>Restaurant List</h2>
+        </div>
+        <div class="header-center">
+          <button (click)="navigateTo('bookingList', '')" class="button blue">Booking List</button>
+        </div>
+        <div class="header-right">
+          <button (click)="addRestaurant()" class="button blue"><i class="fa fa-plus icon-padding" aria-hidden="true"></i>New</button>
+        </div>
       </div>
       <div class="separator"></div>
       <div class="restaurant-table">

@@ -1,0 +1,45 @@
+<div class="loading-content" *ngIf="!contentLoaded">
+  <p-progressSpinner class="content-loading" strokeWidth="4"></p-progressSpinner>
+</div>
+<div class="scroll-wrapper">
+  <div class="frame" *ngIf="contentLoaded">
+    <div class="card">
+      <div class="card-header">
+        <div class="header-left">
+          <h2>Booking List</h2>
+        </div>
+        <div class="header-center">
+          <button (click)="navigateTo('restaurantList', '')" class="button blue">Restaurant List</button>
+        </div>
+        <div class="header-right"></div>
+      </div>
+      <div class="separator"></div>
+      <div class="restaurant-table">
+        <div class="table-header">
+          <div class="column-name large">Restaurant</div>
+          <div class="column-name large">Name</div>
+          <div class="column-name">Phone Number</div>
+          <div class="column-name">Date</div>
+          <div class="column-name">Time</div>
+          <div class="column-name">Pricing</div>
+          <div class="column-name">Party Size</div>
+          <div class="column-name">Status</div>
+          <div class="column-name">Date Created</div>
+        </div>
+        <div class="table-content">
+          <div class="list-item" *ngFor="let booking of bookings; let i = index">
+            <div class="list-field large">{{booking.restaurant_fid.name}}</div>
+            <div class="list-field large">{{booking.name}}</div>
+            <div class="list-field">{{booking.phone}}</div>
+            <div class="list-field">{{booking.date | date}}</div>
+            <div class="list-field">{{booking.time}}</div>
+            <div class="list-field">{{booking.discount}}</div>
+            <div class="list-field">{{booking.people}}</div>
+            <div class="list-field">{{booking.status}}</div>
+            <div class="list-field">{{booking.created_at | date}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -11,10 +11,12 @@ import { WeekDiscountComponent } from '../onboarding-app/week-discount/week-disc
 import { DayDiscountComponent } from '../onboarding-app/day-discount/day-discount.component';
 import { RestaurantListComponent } from '../onboarding-app/restaurant-list/restaurant-list.component';
 import { RestaurantDetailsComponent } from '../onboarding-app/restaurant-details/restaurant-details.component'
-import { RegisterComponent } from '../onboarding-app/register/register.component'
+import { RegisterComponent } from '../onboarding-app/register/register.component';
+import { BookingListComponent } from './booking-list/booking-list.component'
 
 const routes: Routes = [
   { path: 'restaurantList', component: RestaurantListComponent, canActivate: [AuthGuardAdmin] },
+  { path: 'bookingList', component: BookingListComponent, canActivate: [AuthGuardAdmin] },
   { path: ':restaurantId/hours', component: BusinessHoursComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/keyHours', component: KeyHoursComponent, canActivate: [AuthGuard]  },
   { path: ':restaurantId/pricing/week', component: WeekDiscountComponent, canActivate: [AuthGuard]  },
@@ -34,7 +36,8 @@ const routes: Routes = [
   ],
   exports: [NouisliderModule],
   providers: [AuthGuard],
+  declarations: [],
 })
 export class OnboardingAppModule { }
 
-export const onboardingComponents = [RestaurantDetailsComponent, RestaurantListComponent, DayDiscountComponent, WeekDiscountComponent, KeyHoursComponent, BusinessHoursComponent, RegisterComponent];
+export const onboardingComponents = [BookingListComponent, RestaurantDetailsComponent, RestaurantListComponent, DayDiscountComponent, WeekDiscountComponent, KeyHoursComponent, BusinessHoursComponent, RegisterComponent];
