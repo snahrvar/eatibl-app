@@ -60,6 +60,7 @@ $lightgrey: #f4f4f4;
   }
 
   .button-home {
+    text-align: center;
     font-size: 18px;
     outline: none;
     cursor: pointer;
@@ -71,6 +72,9 @@ $lightgrey: #f4f4f4;
     &:hover {
       background-color: lighten($eatibl-orange, 5%);
       transition: 0.2s all;
+    }
+    &.submitted{
+      background-color: $eatibl-green;
     }
   }
 
@@ -116,9 +120,9 @@ $lightgrey: #f4f4f4;
       input {
         width: 60%;
         border: none;
-        &.button-home {
-          width: 40%;
-        }
+      }
+      .button-home {
+        width: 40%;
       }
     }
   }
@@ -497,13 +501,13 @@ $lightgrey: #f4f4f4;
         }
         .email-signup{
           width: 80%;
-          input{
+          input {
             border-top: 1px solid #ccc;
             border-left: 1px solid #ccc;
             border-bottom: 1px solid #ccc;
-            &.button-home{
-              border: none;
-            }
+          }
+          .button-home{
+            border: none;
           }
           @media(max-width: 991px){
             width: 100%;

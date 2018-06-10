@@ -14,9 +14,10 @@
           </div>
           <div class="email-signup">
             <p>We are currently in private beta, provide your email to get invited!</p>
-            <form id="userForm" action="process.php" method="POST" novalidate>
-              <input id="userEmail" name="userEmail" type="email" placeholder="Enter your email...">
-              <input id="userSubmit" type="submit" value="Get Deals" class="button-home signup-button">
+            <form id="userForm" method="POST" novalidate>
+              <input id="userEmail" [(ngModel)]="email" name="userEmail" type="email" placeholder="Enter your email...">
+              <button *ngIf="!formOne" id="userSubmit" (click)="emailFormSubmit('User')" class="button-home signup-button">Get Deals</button>
+              <button *ngIf="formOne" class="button-home signup-button submitted">Thank You!</button>
             </form>
             <div class="social-media">
               <a href="" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -113,8 +114,9 @@
             <div class="email-signup">
               <p>Partner with eatibl to help grow your business.</p>
               <form id="restaurantForm" action="process.php" method="POST" novalidate>
-                <input id="restEmail" type="email" name="restEmail" class="tooltip" title="" placeholder="Enter your email...">
-                <input id="restSubmit" type="submit" value="Get Customers" class="button-home signup-button">
+                <input id="restEmail" [(ngModel)]="email2" type="email" name="restEmail" class="tooltip" title="" placeholder="Enter your email...">
+                <input *ngIf="!formTwo" id="restSubmit" (click)="emailFormSubmit('Restaurant')" value="Get Customers" class="button-home signup-button">
+                <input *ngIf="formTwo" type="submit" value="Thank You!" class="button-home signup-button submitted">
               </form>
             </div> <!-- end of email-signup -->
           </div> <!-- end of rest-left -->
@@ -134,11 +136,12 @@
     <div id="contactus">
       <div class="frame flex-column">
         <h2>Want more information?</h2>
-        <form id="contactForm" action="process.php" method="POST" novalidate>
-          <input id="inputName" class="tooltip" title="" type="text" name="name" placeholder="Name">
-          <input id="inputEmail" class="tooltip" title="" type="email" name="email" placeholder="Email">
-          <textarea id="inputMessage" class="tooltip" title="" rows="4" name="message" placeholder="Message"></textarea>
-          <input id="contactSubmit" type="submit" value="Contact Us" class="button-home">
+        <form id="contactForm"  novalidate>
+          <input id="inputName" [(ngModel)]="name" class="tooltip" title="" type="text" name="name" placeholder="Name">
+          <input id="inputEmail" [(ngModel)]="email3" class="tooltip" title="" type="email" name="email" placeholder="Email">
+          <textarea id="inputMessage" [(ngModel)]="message" class="tooltip" title="" rows="4" name="message" placeholder="Message"></textarea>
+          <input *ngIf="!formThree" id="contactSubmit" (click)="emailFormSubmit('General')" value="Contact Us" class="button-home">
+          <input *ngIf="formThree" type="submit" value="Thank You!" class="button-home submitted">
         </form>
         <div class="social-media">
           <a href="" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
