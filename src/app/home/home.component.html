@@ -15,7 +15,7 @@
           <div class="email-signup">
             <p>We are currently in private beta, provide your email to get invited!</p>
             <form id="userForm" method="POST" novalidate>
-              <input id="userEmail" [(ngModel)]="email" name="userEmail" type="email" placeholder="Enter your email...">
+              <input id="userEmail" [(ngModel)]="email1" name="userEmail" type="email" placeholder="Enter your email...">
               <button *ngIf="!formOne" id="userSubmit" (click)="emailFormSubmit('User')" class="button-home signup-button">Get Deals</button>
               <button *ngIf="formOne" class="button-home signup-button submitted">Thank You!</button>
             </form>
