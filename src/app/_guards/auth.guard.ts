@@ -12,8 +12,16 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    if(localStorage.getItem('eatiblToken'))
-      return true;
+    if(localStorage.getItem('eatiblToken')) {
+      if (decode(localStorage.getItem('eatiblToken')).hasOwnProperty('restaurant_fid')){
+        localStorage.removeItem('eatiblToken');
+        this.router.navigate(['/login']);
+        return false;
+      }
+
+      else
+        return true
+    }
 
     else {
       this.router.navigate(['/login']);
@@ -31,10 +39,15 @@ export class AuthGuardAdmin implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-      console.log(decode(localStorage.getItem('eatiblToken')).type)
-
-    if(decode(localStorage.getItem('eatiblToken')).type == "Admin")
-      return true;
+    if(decode(localStorage.getItem('eatiblToken')).type == "Admin") {
+      if (decode(localStorage.getItem('eatiblToken')).hasOwnProperty('restaurant_fid')) {
+        localStorage.removeItem('eatiblToken');
+        this.router.navigate(['/login']);
+        return false;
+      }
+      else
+        return true
+    }
 
     else {
       this.router.navigate(['/login']);
