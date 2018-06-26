@@ -191,6 +191,8 @@ export class WeekDiscountComponent implements OnInit {
               this.loading[index] = false;
             }
           );
+      else
+        this.loading[index] = false;
     })
   }
 
