@@ -614,6 +614,16 @@ $lightgrey: #f4f4f4;
       .social-media{
         width: auto;
       }
+      .terms-privacy-button{
+        margin-top: 20px;
+        a{
+          color: #fff;
+          &:hover {
+            color: $eatibl-orange;
+            transition: 0.2s color;
+          }
+        }
+      }
     }
   }
 }

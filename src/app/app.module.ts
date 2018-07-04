@@ -32,9 +32,11 @@ import { AuthInterceptor, CacheInterceptor } from './http-interceptor';
 import { DialogTermsComponent } from './dialog-terms/dialog-terms.component';
 import { DialogForgotPasswordComponent } from './dialog-forgot-password/dialog-forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TermsPrivacyComponent } from './terms-privacy/terms-privacy.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'terms-privacy', component: TermsPrivacyComponent},
   { path: 'login', component: LoginComponent },
   { path: 'resetPassword/:token', component: ResetPasswordComponent }
 ];
@@ -49,7 +51,8 @@ const routes: Routes = [
     HomeComponent,
     DialogTermsComponent,
     DialogForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    TermsPrivacyComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
