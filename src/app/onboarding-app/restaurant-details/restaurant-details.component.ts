@@ -253,7 +253,7 @@ export class RestaurantDetailsComponent implements OnInit {
 
   submitRestaurant(){
     this.submitted = true;
-    this.http.post(this.apiUrl + '/restaurant/create', this.restaurant)
+    this.http.post(this.apiUrl + '/restaurant/create', {restaurant: this.restaurant, user: this.userData})
       .subscribe(
         res => { //Returns restaurant ID
           this.restaurantId = res;
