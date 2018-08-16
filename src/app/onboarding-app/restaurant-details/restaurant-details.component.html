@@ -55,6 +55,10 @@
                 <label for="zipcode">Zipcode</label>
                 <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode" [(ngModel)]="restaurant.zipcode" (ngModelChange)="onChanges()" required>
               </div>
+              <div class="form-group">
+                <label for="vicinity">Vicinity</label>
+                <input type="text" class="form-control" id="vicinity" name="vicinity" placeholder="Vicinity" [(ngModel)]="restaurant.vicinity" (ngModelChange)="onChanges()" required>
+              </div>
             </div>
             <div class="form-cluster">
               <div class="form-group">
@@ -68,6 +72,15 @@
               <div class="form-group">
                 <label for="country">Country</label>
                 <input type="text" class="form-control" id="country" name="country" placeholder="Country" [(ngModel)]="restaurant.country" (ngModelChange)="onChanges()" required>
+              </div>
+              <div class="form-group">
+                <label>Price</label>
+                <div class="radio-group">
+                  <input type="radio" name="price" [value]="1" [(ngModel)]="restaurant.price" (ngModelChange)="onChanges()"> $
+                  <input type="radio" name="price" [value]="2" [(ngModel)]="restaurant.price" (ngModelChange)="onChanges()"> $$
+                  <input type="radio" name="price" [value]="3" [(ngModel)]="restaurant.price" (ngModelChange)="onChanges()"> $$$
+                  <input type="radio" name="price" [value]="4" [(ngModel)]="restaurant.price" (ngModelChange)="onChanges()"> $$$$
+                </div>
               </div>
             </div>
             <div class="form-cluster full">
@@ -84,17 +97,6 @@
               <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description" placeholder="Description" [(ngModel)]="restaurant.description" (ngModelChange)="onChanges()" required></textarea>
-              </div>
-              <div class="flex-row">
-                <div class="form-group">
-                  <label>Price</label>
-                  <div class="radio-group">
-                    <input type="radio" name="price" [value]="1" [(ngModel)]="restaurant.price" (ngModelChange)="onChanges()"> $
-                    <input type="radio" name="price" [value]="2" [(ngModel)]="restaurant.price" (ngModelChange)="onChanges()"> $$
-                    <input type="radio" name="price" [value]="3" [(ngModel)]="restaurant.price" (ngModelChange)="onChanges()"> $$$
-                    <input type="radio" name="price" [value]="4" [(ngModel)]="restaurant.price" (ngModelChange)="onChanges()"> $$$$
-                  </div>
-                </div>
               </div>
             </div>
             <div class="form-cluster">
