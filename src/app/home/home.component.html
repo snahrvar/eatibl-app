@@ -20,7 +20,7 @@
           <div class="user-area large-screen">
             <p *ngIf = "userService.checkUser()">Hi, {{userService.getUserData().name}}</p>
             <button *ngIf = "userService.checkUser()" class="button white" (click)="navigateToApp()">Go to App</button>
-            <button *ngIf = "!userService.checkUser()" class="button white" (click)="login()">Login</button>
+            <button *ngIf = "!userService.checkUser()" class="button white" (click)="login()">Restaurant Login</button>
           </div>
           <div class="landing-right-wrapper">
             <div class="phone-wrapper">
@@ -34,6 +34,12 @@
 
           </div>
         </div>  <!-- end of landing-right -->
+
+        <div class="social-media">
+          <a href="https://www.facebook.com/eatibl/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          <a href="https://twitter.com/eatiblapp" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+          <a href="https://www.instagram.com/eatiblapp/?hl=en" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+        </div>
       </div> <!-- end of frame -->
     </div> <!-- end of landing -->
 
@@ -137,9 +143,10 @@
           <input *ngIf="formThree" type="submit" value="Thank You!" class="button-home submitted">
         </form>
         <div class="social-media">
-          <a href="" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-          <a href="" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-          <a href="" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+          <a href="https://www.facebook.com/eatibl/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          <a href="https://twitter.com/eatiblapp
+" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+          <a href="https://www.instagram.com/eatiblapp/?hl=en" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
         </div>
         <div class="terms-privacy-button">
           <a href="/terms-privacy">Terms of Use / Privacy Policy</a>

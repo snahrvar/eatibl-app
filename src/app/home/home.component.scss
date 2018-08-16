@@ -130,6 +130,7 @@ $lightgrey: #f4f4f4;
   .social-media {
     width: 100%;
     a {
+      text-align: center;
       color: #fff;
       font-size: 22px;
       width: 20px;
@@ -152,11 +153,14 @@ $lightgrey: #f4f4f4;
     background: -moz-linear-gradient(-45deg, $red 33%, $lightred 100%); /* FF3.6-15 */
     background: -webkit-linear-gradient(-45deg, $red 33%,$lightred 100%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(135deg, $red 33%,$lightred 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    .frame{
+      flex-wrap: wrap;
+    }
     @media(max-width: 991px){
       min-height: 660px;
     }
     @media(max-width: 991px){
-      min-height: 720px;
+      min-height: 500px;
     }
     .user-area{
       position: absolute;
@@ -289,6 +293,17 @@ $lightgrey: #f4f4f4;
             }
           }
         }
+      }
+    }
+    .social-media{
+      width: 20%;
+      margin: -60px auto 0 auto;
+      display: flex;
+      border-top: 1px solid #fff;
+      justify-content: center;
+      z-index: 999;
+      a{
+        margin: 10px 14px;
       }
     }
     .landing-logo{
