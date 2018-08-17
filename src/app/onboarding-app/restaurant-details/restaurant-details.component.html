@@ -56,8 +56,10 @@
                 <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode" [(ngModel)]="restaurant.zipcode" (ngModelChange)="onChanges()" required>
               </div>
               <div class="form-group">
-                <label for="vicinity">Vicinity</label>
-                <input type="text" class="form-control" id="vicinity" name="vicinity" placeholder="Vicinity" [(ngModel)]="restaurant.vicinity" (ngModelChange)="onChanges()" required>
+                <label>Vicinity</label>
+                <p-autoComplete class="vicinity" [(ngModel)]="restaurant.vicinity" name="vicinity" [suggestions]="filteredVicinity" (onSelect)="onChanges()" (onUnselect)="onChanges()" (completeMethod)="filterVicinity($event)" [size]="30"
+                                [minLength]="1" placeholder="Vicinity" [dropdown]="true" [multiple]="false" [forceSelection]="true">
+                </p-autoComplete>
               </div>
             </div>
             <div class="form-cluster">

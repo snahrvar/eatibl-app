@@ -251,6 +251,13 @@ p-progressSpinner{
 }
 
 p-autoComplete{
+  &.vicinity{
+    .ui-autocomplete {
+      button {
+        width: 10% !important;
+      }
+    }
+  }
   .ui-autocomplete{
     width: 100% !important;
     .ui-autocomplete-multiple-container{
