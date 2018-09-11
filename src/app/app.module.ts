@@ -18,6 +18,7 @@ import { AgmCoreModule } from '@agm/core';
 import {ClockService} from "./_services/clock.service";
 import { SampleService } from './sample.service';
 import { UserService } from './_services/user.service';
+import { AnalyticsUserService } from './services/analytics-user.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -33,12 +34,14 @@ import { DialogTermsComponent } from './dialog-terms/dialog-terms.component';
 import { DialogForgotPasswordComponent } from './dialog-forgot-password/dialog-forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TermsPrivacyComponent } from './terms-privacy/terms-privacy.component';
+import { UserComponent } from './analytics/user/user.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'terms-privacy', component: TermsPrivacyComponent},
   { path: 'login', component: LoginComponent },
-  { path: 'resetPassword/:token', component: ResetPasswordComponent }
+  { path: 'resetPassword/:token', component: ResetPasswordComponent },
+  { path: 'analytics/users', component: UserComponent }
 ];
 
 @NgModule({
@@ -52,7 +55,8 @@ const routes: Routes = [
     DialogTermsComponent,
     DialogForgotPasswordComponent,
     ResetPasswordComponent,
-    TermsPrivacyComponent
+    TermsPrivacyComponent,
+    UserComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -72,7 +76,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent, DialogTermsComponent, DialogForgotPasswordComponent],
-  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,
+  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,AnalyticsUserService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true}
     ],
