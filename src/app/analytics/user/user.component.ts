@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs/observable';
 import { AnalyticsUserService } from '../../services/analytics-user.service';
 import { User } from '../../models/user.model';
+import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 
@@ -11,20 +12,23 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit, AfterViewInit {
-  
-  displayedColumns = ['name', 'email', 'type', 'phone']
+
+  displayedColumns = ['name', 'email', 'type', 'phone', 'deviceId', 'createdAt'];
   dataSource:MatTableDataSource<User> = new MatTableDataSource<User>();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private userService: AnalyticsUserService) { }
+  constructor(private userService: AnalyticsUserService, private router: Router) { }
 
   ngOnInit() {
     this.userService.getUsers().subscribe(
-      users => this.dataSource.data = users,
-      console.log
+      users => this.dataSource.data = users
       );
+  }
+
+  navigateToDevice(deviceId){
+    this.router.navigate(['/analytics/users/' + deviceId ]);
   }
 
   ngAfterViewInit(): void {

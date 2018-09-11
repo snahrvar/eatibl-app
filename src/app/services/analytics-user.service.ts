@@ -15,10 +15,10 @@ export class AnalyticsUserService {
       'Content-Type':  'application/json',
       'Authorization': localStorage.getItem("eatiblToken")
     });
-    return this.http.get<User[]>(`${environment.apiURL}/analytics/allusers`, { headers: headers })
+    return this.http.get<User[]>(`${environment.apiURL}/analytics/users/all`, { headers: headers })
       .pipe(
-        map(users => users.map( t => { 
-          return { name: t.name, phone: t.phone, email: t.email, type: t.type, updatedAt: t.updatedAt } 
+        map(users => users.map( t => {
+          return { name: t.name, phone: t.phone, email: t.email, type: t.type, deviceId: t.deviceId, updatedAt: t.updated_at, createdAt: t.created_at }
         })),
         tap( console.log)
       );

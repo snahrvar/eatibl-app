@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiURL: 'https://test.eatibl.com/api',
+  apiURL: 'http://localhost:3000/api',
   imageApiURL: 'https://test.eatibl.com/api'
 };

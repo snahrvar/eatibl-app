@@ -23,6 +23,14 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Phone</mat-header-cell>
                 <mat-cell *matCellDef="let user">{{ user.phone }}</mat-cell>
               </ng-container>
+              <ng-container matColumnDef='deviceId'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Device</mat-header-cell>
+                <mat-cell *matCellDef="let user" (click)="navigateToDevice(user.deviceId)">{{ user.deviceId}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef='createdAt'>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Created At</mat-header-cell>
+                <mat-cell *matCellDef="let user">{{ user.createdAt}}</mat-cell>
+              </ng-container>
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
