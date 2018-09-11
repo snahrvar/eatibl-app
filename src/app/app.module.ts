@@ -19,6 +19,7 @@ import {ClockService} from "./_services/clock.service";
 import { SampleService } from './sample.service';
 import { UserService } from './_services/user.service';
 import { AnalyticsUserService } from './services/analytics-user.service';
+import { AnalyticsUserLogService } from './services/analytics-user-log.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -35,13 +36,15 @@ import { DialogForgotPasswordComponent } from './dialog-forgot-password/dialog-f
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TermsPrivacyComponent } from './terms-privacy/terms-privacy.component';
 import { UserComponent } from './analytics/user/user.component';
+import { UserLogComponent } from './analytics/user-log/user-log.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'terms-privacy', component: TermsPrivacyComponent},
   { path: 'login', component: LoginComponent },
   { path: 'resetPassword/:token', component: ResetPasswordComponent },
-  { path: 'analytics/users', component: UserComponent }
+  { path: 'analytics/users', component: UserComponent },
+  { path: 'analytics/users/:deviceId', component: UserLogComponent}
 ];
 
 @NgModule({
@@ -56,7 +59,8 @@ const routes: Routes = [
     DialogForgotPasswordComponent,
     ResetPasswordComponent,
     TermsPrivacyComponent,
-    UserComponent
+    UserComponent,
+    UserLogComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -76,7 +80,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent, DialogTermsComponent, DialogForgotPasswordComponent],
-  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,AnalyticsUserService,
+  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,AnalyticsUserService,AnalyticsUserLogService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true}
     ],
