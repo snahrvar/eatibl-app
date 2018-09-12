@@ -20,6 +20,7 @@ import { SampleService } from './sample.service';
 import { UserService } from './_services/user.service';
 import { AnalyticsUserService } from './services/analytics-user.service';
 import { AnalyticsUserLogService } from './services/analytics-user-log.service';
+import { AnalyticsDeviceService } from './services/analytics-device.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -37,6 +38,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { TermsPrivacyComponent } from './terms-privacy/terms-privacy.component';
 import { UserComponent } from './analytics/user/user.component';
 import { UserLogComponent } from './analytics/user-log/user-log.component';
+import { DeviceComponent } from './analytics/device/device.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,7 +46,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'resetPassword/:token', component: ResetPasswordComponent },
   { path: 'analytics/users', component: UserComponent },
-  { path: 'analytics/users/:deviceId', component: UserLogComponent}
+  { path: 'analytics/users/:deviceId', component: UserLogComponent},
+  { path: 'analytics/devices', component: DeviceComponent}
 ];
 
 @NgModule({
@@ -60,7 +63,8 @@ const routes: Routes = [
     ResetPasswordComponent,
     TermsPrivacyComponent,
     UserComponent,
-    UserLogComponent
+    UserLogComponent,
+    DeviceComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -80,7 +84,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   entryComponents: [DialogConfirmComponent, DialogTermsComponent, DialogForgotPasswordComponent],
-  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,AnalyticsUserService,AnalyticsUserLogService,
+  providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,
+    AnalyticsUserService,
+    AnalyticsUserLogService,
+    AnalyticsDeviceService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true}
     ],
