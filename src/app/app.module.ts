@@ -21,6 +21,7 @@ import { UserService } from './_services/user.service';
 import { AnalyticsUserService } from './services/analytics-user.service';
 import { AnalyticsUserLogService } from './services/analytics-user-log.service';
 import { AnalyticsDeviceService } from './services/analytics-device.service';
+import { AnalyticsBookingService } from './services/analytics-booking.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -39,6 +40,7 @@ import { TermsPrivacyComponent } from './terms-privacy/terms-privacy.component';
 import { UserComponent } from './analytics/user/user.component';
 import { UserLogComponent } from './analytics/user-log/user-log.component';
 import { DeviceComponent } from './analytics/device/device.component';
+import { BookingComponent } from './analytics/booking/booking.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,7 +49,8 @@ const routes: Routes = [
   { path: 'resetPassword/:token', component: ResetPasswordComponent },
   { path: 'analytics/users', component: UserComponent },
   { path: 'analytics/users/:deviceId', component: UserLogComponent},
-  { path: 'analytics/devices', component: DeviceComponent}
+  { path: 'analytics/devices', component: DeviceComponent},
+  { path: 'analytics/bookings', component: BookingComponent}
 ];
 
 @NgModule({
@@ -64,7 +67,8 @@ const routes: Routes = [
     TermsPrivacyComponent,
     UserComponent,
     UserLogComponent,
-    DeviceComponent
+    DeviceComponent,
+    BookingComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -88,6 +92,7 @@ const routes: Routes = [
     AnalyticsUserService,
     AnalyticsUserLogService,
     AnalyticsDeviceService,
+    AnalyticsBookingService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true}
     ],
