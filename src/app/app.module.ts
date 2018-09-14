@@ -41,6 +41,7 @@ import { UserComponent } from './analytics/user/user.component';
 import { UserLogComponent } from './analytics/user-log/user-log.component';
 import { DeviceComponent } from './analytics/device/device.component';
 import { BookingComponent } from './analytics/booking/booking.component';
+import { RecentLogComponent } from './analytics/recent-log/recent-log.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'resetPassword/:token', component: ResetPasswordComponent },
   { path: 'analytics/users', component: UserComponent },
+  { path: 'analytics/users/recentLog', component: RecentLogComponent},
   { path: 'analytics/users/:deviceId', component: UserLogComponent},
   { path: 'analytics/devices', component: DeviceComponent},
   { path: 'analytics/bookings', component: BookingComponent}
@@ -68,7 +70,8 @@ const routes: Routes = [
     UserComponent,
     UserLogComponent,
     DeviceComponent,
-    BookingComponent
+    BookingComponent,
+    RecentLogComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
