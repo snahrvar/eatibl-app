@@ -7,13 +7,13 @@
           <input matInput type='text' (keyup)="FilterUser($event.target.value)" placeholder="Filter here" />
         </mat-form-field>
         <mat-table [dataSource]='dataSource' matSort>
+          <ng-container matColumnDef='deviceId'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Device</mat-header-cell>
+            <mat-cell *matCellDef="let log"><button (click)="navigateToDevice(log.deviceId)">{{log.deviceId}}</button></mat-cell>
+          </ng-container>
           <ng-container matColumnDef='event'>
             <mat-header-cell *matHeaderCellDef mat-sort-header>Event</mat-header-cell>
             <mat-cell *matCellDef="let log">{{ log.event }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef='deviceId'>
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Device ID</mat-header-cell>
-            <mat-cell *matCellDef="let log" (click)="navigateToDevice(log.deviceId)">{{log.deviceId}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef='page'>
             <mat-header-cell *matHeaderCellDef mat-sort-header>Page</mat-header-cell>

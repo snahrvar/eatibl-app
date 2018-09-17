@@ -13,7 +13,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 })
 export class UserComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['name', 'email', 'type', 'phone', 'deviceId', 'createdAt'];
+  displayedColumns = ['deviceId', 'name', 'email', 'type', 'phone', 'createdAt'];
   dataSource:MatTableDataSource<User> = new MatTableDataSource<User>();
 
   @ViewChild(MatSort) sort: MatSort;

@@ -1,0 +1,9 @@
+<div class="content-area">
+  <main class="site-main" role="main">
+
+    <div class="scroll-wrapper">
+      <agm-map [latitude]="mapOptions?.latitude" [longitude]="mapOptions?.longitude" [scrollwheel]="false" [zoom]="mapOptions?.zoom" (mapReady) = "createHeatMap($event)"></agm-map>
+    </div>
+  </main>
+</div>
+

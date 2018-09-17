@@ -44,6 +44,8 @@ import { DeviceComponent } from './analytics/device/device.component';
 import { BookingComponent } from './analytics/booking/booking.component';
 import { RecentLogComponent } from './analytics/recent-log/recent-log.component';
 import { RestaurantComponent } from './analytics/restaurant/restaurant.component';
+import { MapComponent } from './analytics/map/map.component';
+import { GeneralComponent } from './analytics/general/general.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -55,8 +57,9 @@ const routes: Routes = [
   { path: 'analytics/users/:deviceId', component: UserLogComponent},
   { path: 'analytics/devices', component: DeviceComponent},
   { path: 'analytics/bookings', component: BookingComponent},
-  { path: 'analytics/restaurants', component: RestaurantComponent}
-
+  { path: 'analytics/restaurants', component: RestaurantComponent},
+  { path: 'analytics/map', component: MapComponent},
+  { path: 'analytics', component: GeneralComponent}
 ];
 
 @NgModule({
@@ -76,12 +79,14 @@ const routes: Routes = [
     DeviceComponent,
     BookingComponent,
     RecentLogComponent,
-    RestaurantComponent
+    RestaurantComponent,
+    MapComponent,
+    GeneralComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyA-_Be-L1dtPl1uCPpCPpIX7-mkpNS7VHw",
-      libraries: ["places"]
+      libraries: ["places","visualization"]
     }),
     BrowserModule,
     HttpClientModule,

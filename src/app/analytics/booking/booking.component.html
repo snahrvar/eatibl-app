@@ -9,7 +9,7 @@
         <mat-table [dataSource]='dataSource' matSort>
           <ng-container matColumnDef='user_fid'>
             <mat-header-cell *matHeaderCellDef mat-sort-header>User</mat-header-cell>
-            <mat-cell *matCellDef="let booking" (click)="navigateToDevice(booking.user_fid)">View Log</mat-cell>
+            <mat-cell *matCellDef="let booking"><button (click)="navigateToDevice(booking.user_fid)">View Log</button></mat-cell>
           </ng-container>
           <ng-container matColumnDef='restaurant_fid'>
             <mat-header-cell *matHeaderCellDef mat-sort-header>Restaurant</mat-header-cell>
