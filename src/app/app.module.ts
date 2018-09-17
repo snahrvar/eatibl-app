@@ -22,6 +22,7 @@ import { AnalyticsUserService } from './services/analytics-user.service';
 import { AnalyticsUserLogService } from './services/analytics-user-log.service';
 import { AnalyticsDeviceService } from './services/analytics-device.service';
 import { AnalyticsBookingService } from './services/analytics-booking.service';
+import { AnalyticsRestaurantService } from './services/analytics-restaurant.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -42,6 +43,7 @@ import { UserLogComponent } from './analytics/user-log/user-log.component';
 import { DeviceComponent } from './analytics/device/device.component';
 import { BookingComponent } from './analytics/booking/booking.component';
 import { RecentLogComponent } from './analytics/recent-log/recent-log.component';
+import { RestaurantComponent } from './analytics/restaurant/restaurant.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -52,7 +54,9 @@ const routes: Routes = [
   { path: 'analytics/users/recentLog', component: RecentLogComponent},
   { path: 'analytics/users/:deviceId', component: UserLogComponent},
   { path: 'analytics/devices', component: DeviceComponent},
-  { path: 'analytics/bookings', component: BookingComponent}
+  { path: 'analytics/bookings', component: BookingComponent},
+  { path: 'analytics/restaurants', component: RestaurantComponent}
+
 ];
 
 @NgModule({
@@ -71,7 +75,8 @@ const routes: Routes = [
     UserLogComponent,
     DeviceComponent,
     BookingComponent,
-    RecentLogComponent
+    RecentLogComponent,
+    RestaurantComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -96,6 +101,7 @@ const routes: Routes = [
     AnalyticsUserLogService,
     AnalyticsDeviceService,
     AnalyticsBookingService,
+    AnalyticsRestaurantService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true}
     ],
