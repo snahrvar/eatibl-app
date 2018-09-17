@@ -18,6 +18,10 @@ import { AgmCoreModule } from '@agm/core';
 import {ClockService} from "./_services/clock.service";
 import { SampleService } from './sample.service';
 import { UserService } from './_services/user.service';
+import { AnalyticsUserService } from './services/analytics-user.service';
+import { AnalyticsUserLogService } from './services/analytics-user-log.service';
+import { AnalyticsDeviceService } from './services/analytics-device.service';
+import { AnalyticsBookingService } from './services/analytics-booking.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -33,12 +37,22 @@ import { DialogTermsComponent } from './dialog-terms/dialog-terms.component';
 import { DialogForgotPasswordComponent } from './dialog-forgot-password/dialog-forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TermsPrivacyComponent } from './terms-privacy/terms-privacy.component';
+import { UserComponent } from './analytics/user/user.component';
+import { UserLogComponent } from './analytics/user-log/user-log.component';
+import { DeviceComponent } from './analytics/device/device.component';
+import { BookingComponent } from './analytics/booking/booking.component';
+import { RecentLogComponent } from './analytics/recent-log/recent-log.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'terms-privacy', component: TermsPrivacyComponent},
   { path: 'login', component: LoginComponent },
-  { path: 'resetPassword/:token', component: ResetPasswordComponent }
+  { path: 'resetPassword/:token', component: ResetPasswordComponent },
+  { path: 'analytics/users', component: UserComponent },
+  { path: 'analytics/users/recentLog', component: RecentLogComponent},
+  { path: 'analytics/users/:deviceId', component: UserLogComponent},
+  { path: 'analytics/devices', component: DeviceComponent},
+  { path: 'analytics/bookings', component: BookingComponent}
 ];
 
 @NgModule({
@@ -52,7 +66,12 @@ const routes: Routes = [
     DialogTermsComponent,
     DialogForgotPasswordComponent,
     ResetPasswordComponent,
-    TermsPrivacyComponent
+    TermsPrivacyComponent,
+    UserComponent,
+    UserLogComponent,
+    DeviceComponent,
+    BookingComponent,
+    RecentLogComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -73,6 +92,10 @@ const routes: Routes = [
   ],
   entryComponents: [DialogConfirmComponent, DialogTermsComponent, DialogForgotPasswordComponent],
   providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,
+    AnalyticsUserService,
+    AnalyticsUserLogService,
+    AnalyticsDeviceService,
+    AnalyticsBookingService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true}
     ],

@@ -50,7 +50,9 @@ export class RestaurantDetailsComponent implements OnInit {
 
   //Initializations for autocomplete
   categories: string[] = [];
+  vicinities: string[] = [];
   filteredCategories: any[];
+  filteredVicinity: any[];
   resObject = {} as any; //Need to cache res object when requesting all categories to use .length
 
   filterCategories(event) {
@@ -59,6 +61,16 @@ export class RestaurantDetailsComponent implements OnInit {
       let category = this.categories[i];
       if(category.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
         this.filteredCategories.push(category);
+      }
+    }
+  }
+
+  filterVicinity(event) {
+    this.filteredVicinity = [];
+    for(let i = 0; i < this.vicinities.length; i++) {
+      let vicinity = this.vicinities[i];
+      if(vicinity.toLowerCase().indexOf(event.query.toLowerCase()) == 0) {
+        this.filteredVicinity.push(vicinity);
       }
     }
   }
@@ -407,12 +419,29 @@ export class RestaurantDetailsComponent implements OnInit {
       this.http.get(this.apiUrl + '/category/all')
         .subscribe(
           res => {
+            console.log(res);
             //Store res in variable to be able to use length
             this.resObject = res;
+            console.log(this.resObject);
             for(var i = 0; i < this.resObject.length; i++){
               this.categories.push(this.resObject[i]['name']);
             }
             this.categories = _.sortBy(this.categories, function(name){
+              return name;
+            })
+          }
+        )
+
+      //Import entire list of vicinity
+      this.http.get(this.apiUrl + '/vicinity/all')
+        .subscribe(
+          res => {
+            //Store res in variable to be able to use length
+            this.resObject = res;
+            for(var i = 0; i < this.resObject.length; i++){
+              this.vicinities.push(this.resObject[i]['name']);
+            }
+            this.vicinities = _.sortBy(this.vicinities, function(name){
               return name;
             })
           }
