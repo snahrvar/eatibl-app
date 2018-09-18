@@ -51,16 +51,16 @@ import { GeneralComponent } from './analytics/general/general.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'terms-privacy', component: TermsPrivacyComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'resetPassword/:token', component: ResetPasswordComponent },
-  { path: 'analytics/users', component: UserComponent },
-  { path: 'analytics/users/recentLog', component: RecentLogComponent},
-  { path: 'analytics/users/:deviceId', component: UserLogComponent},
-  { path: 'analytics/devices', component: DeviceComponent},
-  { path: 'analytics/bookings', component: BookingComponent},
-  { path: 'analytics/restaurants', component: RestaurantComponent},
-  { path: 'analytics/map', component: MapComponent},
-  { path: 'analytics', component: GeneralComponent}
+  { path: 'login', component: LoginComponent},
+  { path: 'resetPassword/:token', component: ResetPasswordComponent},
+  { path: 'analytics/users', component: UserComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/users/recentLog', component: RecentLogComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/users/:deviceId', component: UserLogComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/devices', component: DeviceComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/bookings', component: BookingComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/restaurants', component: RestaurantComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/map', component: MapComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics', component: GeneralComponent, canActivate: [AuthGuardAdmin]}
 ];
 
 @NgModule({
