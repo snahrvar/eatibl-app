@@ -9,10 +9,10 @@
         <mat-table [dataSource]='dataSource' matSort>
           <ng-container matColumnDef='deviceId'>
             <mat-header-cell *matHeaderCellDef mat-sort-header>Device</mat-header-cell>
-            <mat-cell *matCellDef="let device" (click)="navigateToDevice(device.deviceId)">{{ device.deviceId }}</mat-cell>
+            <mat-cell *matCellDef="let device"><button (click)="navigateToDevice(device.deviceId)">View Log</button></mat-cell>
           </ng-container>
           <ng-container matColumnDef='platform'>
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Platform</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-headeer>Platform</mat-header-cell>
             <mat-cell *matCellDef="let device">{{ device.platform }}</mat-cell>
           </ng-container>
           <ng-container matColumnDef='model'>
