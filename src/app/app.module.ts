@@ -13,6 +13,7 @@ import { AppMaterialModule } from './app-material/app-material.module'; //Angula
 import { PrimeNgModule } from './prime-ng/prime-ng.module'; //PrimeNG components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
+import { FacebookModule } from 'ngx-facebook';
 
 //Services
 import {ClockService} from "./_services/clock.service";
@@ -98,7 +99,8 @@ const routes: Routes = [
     FileUploadModule,
     OnboardingAppModule,
     RestaurantAppModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FacebookModule.forRoot()
   ],
   entryComponents: [DialogConfirmComponent, DialogTermsComponent, DialogForgotPasswordComponent],
   providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,
