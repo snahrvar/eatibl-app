@@ -49,6 +49,7 @@ import { RestaurantComponent } from './analytics/restaurant/restaurant.component
 import { MapComponent } from './analytics/map/map.component';
 import { GeneralComponent } from './analytics/general/general.component';
 import { ActivityComponent } from './analytics/activity/activity.component';
+import { DailyDataComponent } from './analytics/daily-data/daily-data.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -63,7 +64,8 @@ const routes: Routes = [
   { path: 'analytics/restaurants', component: RestaurantComponent, canActivate: [AuthGuardAdmin]},
   { path: 'analytics/map', component: MapComponent, canActivate: [AuthGuardAdmin]},
   { path: 'analytics', component: GeneralComponent, canActivate: [AuthGuardAdmin]},
-  { path: 'analytics/activity', component: ActivityComponent, canActivate: [AuthGuardAdmin]}
+  { path: 'analytics/activity', component: ActivityComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/dailyData', component: DailyDataComponent, canActivate: [AuthGuardAdmin]}
 ];
 
 @NgModule({
@@ -86,7 +88,8 @@ const routes: Routes = [
     RestaurantComponent,
     MapComponent,
     GeneralComponent,
-    ActivityComponent
+    ActivityComponent,
+    DailyDataComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
