@@ -3,6 +3,14 @@
 
     <div class="scroll-wrapper">
       <div class="frame">
+        <div>Successful Bookings: {{details?.booking.length}}</div>
+        <div>Cancel Attempted: {{details?.cancelAttempted.length}}</div>
+        <div>Cancel Success: {{details?.cancelSuccess.length}}</div>
+        <div>Redeem Attempted: {{details?.redeem.length}}</div>
+        <div>Redeem Success: {{details?.redeemSuccess.length}}</div>
+        <div>Activity Date Range: {{details?.firstActive}} - {{details?.lastActive}}</div>
+        <div>Active Days: {{details?.activeDays.length}}</div>
+
         <mat-form-field>
           <input matInput type='text' (keyup)="FilterUser($event.target.value)" placeholder="Filter here" />
         </mat-form-field>

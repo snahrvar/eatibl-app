@@ -4,6 +4,8 @@ import { AnalyticsUserLogService } from '../../services/analytics-user-log.servi
 import { UserLog } from '../../models/userLog.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-user-log',
@@ -15,11 +17,13 @@ export class UserLogComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['event', 'page', 'notes', 'createdAt'];
   dataSource:MatTableDataSource<UserLog> = new MatTableDataSource<UserLog>();
+  apiUrl = environment.apiURL;
+  details: any;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private userLogService: AnalyticsUserLogService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private userLogService: AnalyticsUserLogService, private router: Router, private route: ActivatedRoute, private http:HttpClient) { }
 
   ngOnInit() {
     //Subscribe to the route parameters and get DeviceId
@@ -28,6 +32,18 @@ export class UserLogComponent implements OnInit, AfterViewInit {
       this.userLogService.getUserLog(params['deviceId']).subscribe(
         userLogs => this.dataSource.data = userLogs
       );
+
+      //get user Details
+      this.http.get(this.apiUrl + '/analytics/userLogs/'+params['deviceId']+'/details')
+        .subscribe(
+          res => {
+            this.details = res;
+            console.log(res);
+          },
+          err => {
+            console.log("Error occurred");
+          }
+        );
     });
   }
 

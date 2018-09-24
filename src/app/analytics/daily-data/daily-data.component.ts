@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment';
 export class DailyDataComponent implements OnInit, AfterViewInit {
 
   apiUrl = environment.apiURL;
-  displayedColumns = ['date', 'sessions', 'bookings', 'devices', 'bookingAttempts', 'users'];
+  displayedColumns = ['date', 'devices', 'bookings', 'bookingAttempts', 'sessions', 'users'];
   dataSource:MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatSort) sort:MatSort;
