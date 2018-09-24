@@ -3,38 +3,67 @@
 
     <div class="scroll-wrapper">
       <div class="frame">
-        <div>Successful Bookings: {{details?.booking.length}}</div>
-        <div>Cancel Attempted: {{details?.cancelAttempted.length}}</div>
-        <div>Cancel Success: {{details?.cancelSuccess.length}}</div>
-        <div>Redeem Attempted: {{details?.redeem.length}}</div>
-        <div>Redeem Success: {{details?.redeemSuccess.length}}</div>
-        <div>Activity Date Range: {{details?.firstActive}} - {{details?.lastActive}}</div>
-        <div>Active Days: {{details?.activeDays.length}}</div>
+        <div class="card">
+          <div class="header">
+            <div class="title">
+              <h3>Individual Device Logs</h3>
+            </div>
+            <div class="toolbar">
+              <div class="aggregate-data">
+                <div class="booking-data">
+                  <div class="left-titles">
+                    <h4>Attempted</h4>
+                    <h4>Successful</h4>
+                  </div>
+                  <div class="data-column">
+                    <h4>Booked</h4>
+                    <span>{{details?.bookingAttempted.length}}</span>
+                    <span>{{details?.bookingSuccess.length}}</span>
+                  </div>
+                  <div class="data-column">
+                    <h4>Redeemed</h4>
+                    <span>{{details?.redeemAttempted.length}}</span>
+                    <span>{{details?.redeemSuccess.length}}</span>
+                  </div>
+                  <div class="data-column">
+                    <h4>Canceled</h4>
+                    <span>{{details?.cancelAttempted.length}}</span>
+                    <span>{{details?.cancelSuccess.length}}</span>
+                  </div>
+                  <div class="data-column date">
+                    <span><h4>Acivity Date Range: </h4>{{details?.firstActive | date: 'MMM d, y'}} - {{details?.lastActive | date: 'MMM d, y'}}</span>
+                    <span><h4>Active Days: </h4>{{details?.activeDays.length}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <mat-form-field>
-          <input matInput type='text' (keyup)="FilterUser($event.target.value)" placeholder="Filter here" />
-        </mat-form-field>
-        <mat-table [dataSource]='dataSource' matSort>
-          <ng-container matColumnDef='event'>
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Event</mat-header-cell>
-            <mat-cell *matCellDef="let log">{{ log.event }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef='page'>
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Page</mat-header-cell>
-            <mat-cell *matCellDef="let log">{{ log.page }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef='notes'>
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Notes</mat-header-cell>
-            <mat-cell *matCellDef="let log">{{ log.notes }}</mat-cell>
-          </ng-container>
-          <ng-container matColumnDef='createdAt'>
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Created At</mat-header-cell>
-            <mat-cell *matCellDef="let log">{{ log.createdAt}}</mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-        <mat-paginator [pageSize]="200" [pageSizeOptions]="[10, 50, 100, 200]"></mat-paginator>
+          <mat-form-field>
+            <input matInput type='text' (keyup)="FilterUser($event.target.value)" placeholder="Filter here" />
+          </mat-form-field>
+          <mat-table [dataSource]='dataSource' matSort>
+            <ng-container matColumnDef='event'>
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Event</mat-header-cell>
+              <mat-cell *matCellDef="let log">{{ log.event }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef='page'>
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Page</mat-header-cell>
+              <mat-cell *matCellDef="let log">{{ log.page }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef='notes'>
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Notes</mat-header-cell>
+              <mat-cell *matCellDef="let log">{{ log.notes }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef='createdAt'>
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Created At</mat-header-cell>
+              <mat-cell *matCellDef="let log">{{ log.createdAt}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSize]="200" [pageSizeOptions]="[10, 50, 100, 200]"></mat-paginator>
+        </div>
       </div>
     </div>
   </main>

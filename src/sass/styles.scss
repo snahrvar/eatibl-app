@@ -572,3 +572,19 @@ form{
   }
 
 }
+
+//Analytics
+
+.header {
+  .title {
+    h3 {
+      color: $eatibl-red;
+      text-align: left;
+      margin-top: 0;
+    }
+  }
+  .toolbar {
+    display: flex;
+    align-items: center;
+  }
+}

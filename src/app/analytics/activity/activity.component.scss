@@ -12,16 +12,7 @@
   }
 }
 .header {
-  .title{
-    h3{
-      color: $eatibl-red;
-      text-align: center;
-      margin-top: 0;
-    }
-  }
   .toolbar{
-    display: flex;
-    align-items: center;
     .button{
       min-width: 40px;
     }
