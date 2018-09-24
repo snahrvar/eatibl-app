@@ -1,0 +1,57 @@
+//Imports
+@import '../../../sass/variables';
+
+
+.aggregate-data{
+  width: 100%;
+  background-color: #f4f4f4;
+  padding: 6px 12px;
+}
+.toolbar{
+  .filter{
+
+  }
+}
+.booking-data{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  .top-titles{
+    width: 100%;
+    h3 {
+      color: $eatibl-blue;
+      text-align: left;
+      margin-top: 0;
+    }
+  }
+  .left-titles{
+    padding-top: 22px;
+    margin-right: 12px;
+    h4{
+      margin: 10px 0;
+    }
+  }
+  .data-column{
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    &.date{
+      width: 40%;
+      align-items: left;
+      span{
+        display: flex;
+        width: 100%;
+        h4{
+          margin-right: 6px;
+        }
+      }
+    }
+    span{
+      margin: 6px 0;
+      font-size: 16px;
+      font-family: Quicksand;
+    }
+  }
+}

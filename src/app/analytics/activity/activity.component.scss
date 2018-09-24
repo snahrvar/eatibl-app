@@ -1,7 +1,63 @@
+//Imports
+@import '../../../sass/variables';
+
+.card{
+  min-height: 400px;
+  .loading-wrapper{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.header {
+  .toolbar{
+    .button{
+      min-width: 40px;
+    }
+    p-dropdown{
+      margin: 0 6px;
+      ::ng-deep.dropdown {
+        background: #ffffff;
+        border: 1px solid #a6a6a6;
+        border-radius: 3px;
+        transition: border-color 0.2s;
+        height: 40px;
+        font-family: Quicksand;
+        &:hover {
+          border-color: lighten($eatibl-blue, 20%);
+        }
+        .ui-dropdown-label {
+          padding: 6px 24px 6px 6px;
+          line-height: 26px;
+        }
+        .ui-clickable{
+          margin-top: 12px !important;
+        }
+        .ui-dropdown-panel{
+          background: #fff;
+          .ui-dropdown-item{
+            transition: background-color 0.2s;
+            &:hover{
+              background-color: #ddd;
+            }
+            &.ui-state-highlight{
+              color: $eatibl-red;
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
 .chart-wrapper{
   display: flex;
-  .chart{
-    width: 100%;
-    margin-top: 10px;
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+  canvas{
+    min-height: 400px;
   }
 }

@@ -12,6 +12,9 @@
   }
   .header-center{
     justify-content: center;
+    button{
+      margin: 0 6px;
+    }
   }
   .header-right{
     justify-content: flex-end;

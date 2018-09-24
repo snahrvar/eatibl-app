@@ -16,6 +16,7 @@ export class ActivityComponent implements OnInit {
   lineChartData:Array<any>;
   resultArray: any;
   weekday: any;
+  chartLoading = true;
   days = [
     {label: "Monday",value: "Monday"},
     {label: "Tuesday",value: "Tuesday"},
@@ -61,11 +62,13 @@ export class ActivityComponent implements OnInit {
       {data: hourData['Booking: Initiated'], label: 'Booking: Initiated'},
       {data: hourData['Create Booking: Success'], label: 'Create Booking: Success'}
     ];
+    this.chartLoading = false;
   }
 
   public lineChartLabels:Array<any> = ['0', '1', '2', '3', '4', '5', '6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'];
   public lineChartOptions:any = {
-    responsive: true
+    responsive: true,
+    maintainAspectRatio: false
   };
   public lineChartColors:Array<any> = [
     { // grey
