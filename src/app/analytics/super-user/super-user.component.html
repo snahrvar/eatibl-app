@@ -1,0 +1,38 @@
+<div class="content-area">
+  <main class="site-main" role="main">
+
+    <div class="scroll-wrapper">
+      <div class="frame">
+        <mat-form-field>
+          <input matInput type='text' (keyup)="FilterUser($event.target.value)" placeholder="Filter here" />
+        </mat-form-field>
+        <mat-table [dataSource]='dataSource' matSort>
+          <ng-container matColumnDef='deviceId'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>DeviceId</mat-header-cell>
+            <mat-cell *matCellDef="let data">{{ data.deviceId}}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef='email'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+            <mat-cell *matCellDef="let data">{{ data.email }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef='count'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Bookings</mat-header-cell>
+            <mat-cell *matCellDef="let data">{{ data.count }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef='name'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let data">{{ data.name }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef='details'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
+            <mat-cell *matCellDef="let data">Click for more</mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [pageSize]="50" [pageSizeOptions]="[10, 50, 100, 200]"></mat-paginator>
+      </div>
+    </div>
+  </main>
+</div>
+

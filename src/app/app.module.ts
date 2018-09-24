@@ -50,6 +50,7 @@ import { MapComponent } from './analytics/map/map.component';
 import { GeneralComponent } from './analytics/general/general.component';
 import { ActivityComponent } from './analytics/activity/activity.component';
 import { DailyDataComponent } from './analytics/daily-data/daily-data.component';
+import { SuperUserComponent } from './analytics/super-user/super-user.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -58,6 +59,7 @@ const routes: Routes = [
   { path: 'resetPassword/:token', component: ResetPasswordComponent},
   { path: 'analytics/users', component: UserComponent, canActivate: [AuthGuardAdmin]},
   { path: 'analytics/users/recentLog', component: RecentLogComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/users/super', component: SuperUserComponent, canActivate: [AuthGuardAdmin]},
   { path: 'analytics/users/:deviceId', component: UserLogComponent, canActivate: [AuthGuardAdmin]},
   { path: 'analytics/devices', component: DeviceComponent, canActivate: [AuthGuardAdmin]},
   { path: 'analytics/bookings', component: BookingComponent, canActivate: [AuthGuardAdmin]},
@@ -89,7 +91,8 @@ const routes: Routes = [
     MapComponent,
     GeneralComponent,
     ActivityComponent,
-    DailyDataComponent
+    DailyDataComponent,
+    SuperUserComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
