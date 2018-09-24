@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {Routes, RouterModule} from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ChartsModule } from 'ng2-charts';
 import 'hammerjs';
 
 //Modules
@@ -47,20 +48,24 @@ import { RecentLogComponent } from './analytics/recent-log/recent-log.component'
 import { RestaurantComponent } from './analytics/restaurant/restaurant.component';
 import { MapComponent } from './analytics/map/map.component';
 import { GeneralComponent } from './analytics/general/general.component';
+import { ActivityComponent } from './analytics/activity/activity.component';
+import { DailyDataComponent } from './analytics/daily-data/daily-data.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'terms-privacy', component: TermsPrivacyComponent},
-  { path: 'login', component: LoginComponent },
-  { path: 'resetPassword/:token', component: ResetPasswordComponent },
-  { path: 'analytics/users', component: UserComponent },
-  { path: 'analytics/users/recentLog', component: RecentLogComponent},
-  { path: 'analytics/users/:deviceId', component: UserLogComponent},
-  { path: 'analytics/devices', component: DeviceComponent},
-  { path: 'analytics/bookings', component: BookingComponent},
-  { path: 'analytics/restaurants', component: RestaurantComponent},
-  { path: 'analytics/map', component: MapComponent},
-  { path: 'analytics', component: GeneralComponent}
+  { path: 'login', component: LoginComponent},
+  { path: 'resetPassword/:token', component: ResetPasswordComponent},
+  { path: 'analytics/users', component: UserComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/users/recentLog', component: RecentLogComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/users/:deviceId', component: UserLogComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/devices', component: DeviceComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/bookings', component: BookingComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/restaurants', component: RestaurantComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/map', component: MapComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics', component: GeneralComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/activity', component: ActivityComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/dailyData', component: DailyDataComponent, canActivate: [AuthGuardAdmin]}
 ];
 
 @NgModule({
@@ -82,7 +87,9 @@ const routes: Routes = [
     RecentLogComponent,
     RestaurantComponent,
     MapComponent,
-    GeneralComponent
+    GeneralComponent,
+    ActivityComponent,
+    DailyDataComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -100,7 +107,8 @@ const routes: Routes = [
     OnboardingAppModule,
     RestaurantAppModule,
     RouterModule.forRoot(routes),
-    FacebookModule.forRoot()
+    FacebookModule.forRoot(),
+    ChartsModule
   ],
   entryComponents: [DialogConfirmComponent, DialogTermsComponent, DialogForgotPasswordComponent],
   providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,
