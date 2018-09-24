@@ -3,11 +3,20 @@
 
     <div class="scroll-wrapper">
       <div class="frame">
+        <div class="card">
+          <div class="header">
+            <div class="title">
+              <h3>Daily User Activity (Aggregate)</h3>
+            </div>
+            <div class="toolbar">
+              <p-dropdown [options]="days" [styleClass]="'dropdown'" [(ngModel)]="weekday" (onChange)="dailyResult(weekday)"></p-dropdown>
+            </div>
+          </div>
 
-        <p-dropdown [options]="days" [(ngModel)]="weekday" (onChange)="dailyResult(weekday)"></p-dropdown>
-
-        <div class="chart-wrapper">
-          <div class="chart">
+          <div class="loading-wrapper">
+            <p-progressSpinner strokeWidth="8" *ngIf="chartLoading"></p-progressSpinner>
+          </div>
+          <div class="chart-wrapper">
             <canvas *ngIf = "lineChartData"
                     baseChart
                     [datasets]="lineChartData"
@@ -21,6 +30,7 @@
             </canvas>
           </div>
         </div>
+
       </div>
     </div>
   </main>
