@@ -1,0 +1,46 @@
+<div class="content-area">
+  <main class="site-main" role="main">
+
+    <div class="scroll-wrapper">
+      <div class="frame">
+        <div class="card">
+          <div class="header">
+            <div class="title">
+              <h3>Conversion Funnels</h3>
+            </div>
+          </div>
+          <div class="loading-wrapper">
+            <p-progressSpinner strokeWidth="8" *ngIf="chartLoading"></p-progressSpinner>
+          </div>
+
+          <div>
+          <p-calendar [(ngModel)]="rangeDates1" selectionMode="range" [readonlyInput]="true"></p-calendar>
+          <input type="number" [(ngModel)]="testLow1">
+          <input type="number" [(ngModel)]="testHigh1">
+          <button (click)="gatherData(1)" >Update Dataset #1</button>
+          </div>
+
+          <div>
+          <p-calendar [(ngModel)]="rangeDates2" selectionMode="range" [readonlyInput]="true"></p-calendar>
+          <input type="number" [(ngModel)]="testLow2">
+          <input type="number" [(ngModel)]="testHigh2">
+          <button (click)="gatherData(2)" >Update Dataset #2</button>
+          </div>
+
+          <div class="chart-wrapper">
+            <canvas baseChart
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+

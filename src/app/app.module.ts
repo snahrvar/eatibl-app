@@ -51,6 +51,7 @@ import { GeneralComponent } from './analytics/general/general.component';
 import { ActivityComponent } from './analytics/activity/activity.component';
 import { DailyDataComponent } from './analytics/daily-data/daily-data.component';
 import { SuperUserComponent } from './analytics/super-user/super-user.component';
+import { FunnelComponent } from './analytics/funnel/funnel.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -67,7 +68,8 @@ const routes: Routes = [
   { path: 'analytics/map', component: MapComponent, canActivate: [AuthGuardAdmin]},
   { path: 'analytics', component: GeneralComponent, canActivate: [AuthGuardAdmin]},
   { path: 'analytics/activity', component: ActivityComponent, canActivate: [AuthGuardAdmin]},
-  { path: 'analytics/dailyData', component: DailyDataComponent, canActivate: [AuthGuardAdmin]}
+  { path: 'analytics/dailyData', component: DailyDataComponent, canActivate: [AuthGuardAdmin]},
+  { path: 'analytics/funnel', component: FunnelComponent, canActivate: [AuthGuardAdmin]}
 ];
 
 @NgModule({
@@ -92,7 +94,8 @@ const routes: Routes = [
     GeneralComponent,
     ActivityComponent,
     DailyDataComponent,
-    SuperUserComponent
+    SuperUserComponent,
+    FunnelComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
