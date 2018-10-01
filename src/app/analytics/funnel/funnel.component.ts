@@ -79,6 +79,15 @@ export class FunnelComponent implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true
   };
+  // events
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
+
+  public chartHovered(e:any):void {
+    console.log(e);
+  }
+
   public barChartLabels:string[] = ['App Start', 'Visit Restaurant', 'Booking: Initiated', 'Create Booking: Success'];
   public barChartType:string = 'bar';
   public barChartLegend:boolean = true;
