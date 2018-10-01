@@ -2,6 +2,15 @@
   <main class="site-main" role="main">
 
     <div class="scroll-wrapper">
+
+      <div class = 'top-section'>
+        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true"></p-calendar>
+        <button (click)="createHeatMap(currentMap)" >Update Data</button>
+        <div *ngIf="resultArray">Date Points: {{resultArray.length}}</div>
+      </div>
+      <div>
+      </div>
+
       <agm-map [latitude]="mapOptions?.latitude" [longitude]="mapOptions?.longitude" [scrollwheel]="false" [zoom]="mapOptions?.zoom" (mapReady) = "createHeatMap($event)"></agm-map>
     </div>
   </main>

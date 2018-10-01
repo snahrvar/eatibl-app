@@ -18,6 +18,12 @@ export class MapComponent implements OnInit {
   mapOptions = {} as any;
   apiUrl = environment.apiURL;
   heatmapData: google.maps.LatLng[] = [];
+  currentMap: any;
+  heatmap: any;
+  maxIntensity: number = 10;
+  rangeDates: Date[] = [new Date("July 26 2018"), new Date("Dec 31 2019")];
+
+  resultArray: any; //for storing API result
 
   ngOnInit() {
     //Set google map options
@@ -29,27 +35,46 @@ export class MapComponent implements OnInit {
   }
 
   createHeatMap(mapInstance){
+    this.currentMap = mapInstance; //cache map instance in component variable
 
-    this.http.get(this.apiUrl + '/analytics/geolocation')
+    var postObj = {dateRange: this.rangeDates};
+    this.http.post(this.apiUrl + '/analytics/geolocation', postObj)
       .subscribe(
         res => {
-          let resultArray: any;
-          resultArray = res;
+          //if we have existing heatmap, remove it
+          if(typeof(this.heatmap) == 'object'){
+            this.heatmap.setMap(null);
+            this.heatmap = [];
+            this.heatmapData = [];
+          }
 
-          for (var i = 0; i < resultArray.length; i++){
-            var current = new google.maps.LatLng(Number(resultArray[i].lat),Number(resultArray[i].lng));
+          this.resultArray = res;
+
+          //format back-end data into google maps friendly format
+          for (var i = 0; i < this.resultArray.length; i++){
+            var current = new google.maps.LatLng(Number(this.resultArray[i].lat),Number(this.resultArray[i].lng));
             this.heatmapData[i] = current;
           }
 
-          var heatmap = new google.maps.visualization.HeatmapLayer({
+          //generate heatmap layer
+          this.heatmap = new google.maps.visualization.HeatmapLayer({
             data: this.heatmapData
           });
 
-          heatmap.set('radius', 20);
-          heatmap.set('maxIntensity', 15);
-          heatmap.set('dissipating', true);
+          //establish heatmap settings
+          this.heatmap.set('radius', 20);
+          this.heatmap.set('dissipating', true);
 
-          heatmap.setMap(mapInstance);
+          if(this.resultArray.length > 10000)
+            this.heatmap.set('maxIntensity', 15);
+          if(this.resultArray.length < 1000)
+            this.heatmap.set('maxIntensity', 10);
+          else
+            this.heatmap.set('maxIntensity', 12);
+
+
+          //apply heatmap to the actual map
+          this.heatmap.setMap(this.currentMap);
         },
         err => {
           console.log("Error occurred");
