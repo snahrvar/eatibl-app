@@ -4,6 +4,7 @@ import { AnalyticsRestaurantService } from '../../services/analytics-restaurant.
 import { Restaurant } from '../../models/restaurant.model';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { FunctionsService } from './../../_services/functions.service';
 
 @Component({
   selector: 'app-restaurant',
@@ -12,13 +13,17 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 })
 export class RestaurantComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['name', 'vicinity', 'bookings', 'bookingCount', 'customers', 'bookingAttempt', 'mapVisit', 'cardVisit', 'markerClick', 'created_at'];
+  displayedColumns = ['navigation', 'name', 'vicinity', 'bookings', 'bookingCount', 'customers', 'bookingAttempt', 'mapVisit', 'cardVisit', 'markerClick', 'created_at'];
   dataSource:MatTableDataSource<Restaurant> = new MatTableDataSource<Restaurant>();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private restaurantService: AnalyticsRestaurantService, private router: Router) { }
+  constructor(
+    private restaurantService: AnalyticsRestaurantService,
+    private router: Router,
+    private functions: FunctionsService
+  ) { }
 
   ngOnInit() {
     this.restaurantService.getRestaurants().subscribe(
@@ -29,6 +34,7 @@ export class RestaurantComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    console.log(this.dataSource)
   }
 
   FilterUser(value) {

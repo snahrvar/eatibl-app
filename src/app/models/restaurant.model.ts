@@ -9,6 +9,7 @@ export class Restaurant {
     public mapVisit: number,
     public cardVisit: number,
     public markerClick: number,
+    public _id: string,
     public created_at?: Date,
     public updatedAt?: Date) {
 

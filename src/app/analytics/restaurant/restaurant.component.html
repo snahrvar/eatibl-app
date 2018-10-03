@@ -7,6 +7,10 @@
           <input matInput type='text' (keyup)="FilterUser($event.target.value)" placeholder="Filter here" />
         </mat-form-field>
         <mat-table [dataSource]='dataSource' matSort>
+          <ng-container matColumnDef='navigation'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+            <mat-cell *matCellDef="let resto"><div class="flex-row"><button class="button-icon blue" (click)="functions.navigateTo(resto._id + '/action/Edit', { 'tab': 'images' })"><i class="fa fa-list" aria-hidden="true"></i></button><button class="button-icon blue" (click)="functions.navigateTo(resto._id + '/pricing/week', '')"><i class="fa fa-bar-chart" aria-hidden="true"></i></button></div></mat-cell>
+          </ng-container>
           <ng-container matColumnDef='name'>
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
             <mat-cell *matCellDef="let resto">{{ resto.name }}</mat-cell>

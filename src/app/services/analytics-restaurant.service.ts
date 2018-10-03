@@ -19,7 +19,7 @@ export class AnalyticsRestaurantService {
       .pipe(
         map(users => users.map( t => {
           return { name: t.name, vicinity: t.vicinity, bookings: t.bookings, bookingCount: t.bookings.length, bookingAttempt: t.bookingAttempt, customers: t.customers, mapVisit: t.mapVisit,
-            cardVisit: t.cardVisit, markerClick: t.markerClick, updatedAt: t.updatedAt, created_at: t.created_at }
+            cardVisit: t.cardVisit, markerClick: t.markerClick, updatedAt: t.updatedAt, created_at: t.created_at, _id: t._id }
         })),
         tap( console.log)
       );
