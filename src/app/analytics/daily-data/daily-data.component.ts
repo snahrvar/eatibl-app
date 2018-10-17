@@ -13,7 +13,7 @@ import { environment } from '../../../environments/environment';
 export class DailyDataComponent implements OnInit, AfterViewInit {
 
   apiUrl = environment.apiURL;
-  displayedColumns = ['date', 'devices', 'bookings', 'bookingAttempts', 'sessions', 'users'];
+  displayedColumns = ['date', 'devices', 'bookings', 'seats', 'bookingAttempts', 'sessions', 'users'];
   dataSource:MatTableDataSource<any> = new MatTableDataSource<any>();
 
   @ViewChild(MatSort) sort:MatSort;
@@ -27,6 +27,7 @@ export class DailyDataComponent implements OnInit, AfterViewInit {
         res => {
           let resultArray:any = res;
           this.dataSource.data = resultArray;
+          console.log(res);
         },
         err => {
           console.log("Error occurred");

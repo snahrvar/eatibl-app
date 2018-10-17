@@ -15,6 +15,10 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>Bookings</mat-header-cell>
             <mat-cell *matCellDef="let data">{{ data.bookings }}</mat-cell>
           </ng-container>
+          <ng-container matColumnDef='seats'>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Seats</mat-header-cell>
+            <mat-cell *matCellDef="let data">{{ data.seats }}</mat-cell>
+          </ng-container>
           <ng-container matColumnDef='bookingAttempts'>
             <mat-header-cell *matHeaderCellDef mat-sort-header>Booking Attempts</mat-header-cell>
             <mat-cell *matCellDef="let data">{{ data.bookingAttempts }}</mat-cell>
