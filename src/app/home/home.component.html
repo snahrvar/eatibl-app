@@ -26,10 +26,10 @@
             <div class="phone-wrapper">
               <div class="slide-wrapper">
                 <div class="slide">
-                  <img src="assets/images/app-button.png" alt="">
+                  <slideshow [autoPlay]="true" [showArrows]="false" [showDots]="false" [autoPlayInterval]="3000" [imageUrls]="screens"></slideshow>
                 </div>
               </div>
-              <img class="landing-phone" src="assets/images/landing-phone.png" alt="">
+              <img class="landing-phone" src="assets/images/phone.png" alt="">
             </div>
 
           </div>
@@ -53,15 +53,15 @@
           <p>Make a booking in 30 seconds<br>And save up to 50%!</p>
         </div> <!-- end of users-toptext -->
         <div class="users-icons">
-          <div class="icon">
+          <div class="icon animated-up" animateOnScroll animationName="fade-up">
             <img src="assets/images/icon-phone.png" alt="">
             <p>Download our Mobile app on your iOS and Android device</p>
           </div>
-          <div class="icon">
+          <div class="icon animated-up" animateOnScroll animationName="fade-up">
             <img src="assets/images/icon-plate.png" alt="">
             <p>Browse through our selection of 150+ Restaurants in the GTA</p>
           </div>
-          <div class="icon">
+          <div class="icon animated-up" animateOnScroll animationName="fade-up">
             <img src="assets/images/icon-tag.png" alt="">
             <p>Book the perfect time and place, and go enjoy your discounted meal!</p>
           </div>
@@ -72,7 +72,7 @@
     <div id="users-easy">
       <div class="frame flex-row">
         <div class="users-easy-left">
-          <div class="phone-wrapper">
+          <div class="phone-wrapper animated-right" animateOnScroll animationName="fade-right">
             <div class="slide-wrapper">
               <div class="slide">
                 <img src="assets/images/mobile-screen-1.jpg" alt="">
@@ -81,7 +81,7 @@
             <img class="landing-phone" src="assets/images/second-phone.png" alt="">
           </div>
         </div>
-        <div class="users-easy-right">
+        <div class="users-easy-right animated-left" animateOnScroll animationName="fade-left">
           <div class="users-easy-right-text">
             <h2>Features</h2>
               <p>100% Free to use (that's right, no strings attached)</p>
@@ -102,15 +102,15 @@
         </div> <!-- end of rest-toptext -->
         <div class="rest-main">
           <div class="rest-left">
-            <div class="icon">
+            <div class="icon animated-right" animateOnScroll animationName="fade-right">
               <img src="assets/images/icon-clock.png" alt="">
               <p>Managing your eatibl account is a breeze. You're always in control of your discounts and the number of seats you'd like to offer.</p>
             </div>
-            <div class="icon">
+            <div class="icon animated-right" animateOnScroll animationName="fade-right">
               <img src="assets/images/icon-desktop.png" alt="">
               <p>Keeping track of your reservations is simple and organized. With your own Eatibl account, you can view upcoming reservations and keep your business flowing.</p>
             </div>
-            <div class="email-signup">
+            <div class="email-signup animated-right" animateOnScroll animationName="fade-right">
               <p>Partner with eatibl to help grow your business.</p>
               <form id="restaurantForm" action="process.php" method="POST" novalidate>
                 <input id="restEmail" [(ngModel)]="email2" type="email" name="restEmail" class="tooltip" title="" placeholder="Enter your email...">
@@ -120,7 +120,7 @@
             </div> <!-- end of email-signup -->
           </div> <!-- end of rest-left -->
           <div class="rest-right">
-            <div class="tablet-wrapper">
+            <div class="tablet-wrapper animated-left" animateOnScroll animationName="fade-left">
               <div class="slide-wrapper">
                 <div class="slide">
                   <img src="assets/images/tablet-screen-1.jpg" alt="">
