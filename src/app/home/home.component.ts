@@ -23,11 +23,10 @@ export class HomeComponent implements OnInit {
   formTwo = false;
   formThree = false;
   screens = [
-    'assets/images/screen1.png',
-    'assets/images/screen2.png',
-    'assets/images/screen3.png',
-    'assets/images/screen4.png',
-    'assets/images/screen5.png'
+    'assets/images/screen2.jpg',
+    'assets/images/screen3.jpg',
+    'assets/images/screen4.jpg',
+    'assets/images/screen5.jpg'
   ]
 
   constructor(
