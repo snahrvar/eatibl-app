@@ -333,6 +333,7 @@ $lightgrey: #f4f4f4;
       h2{
         margin: 10px 0;
         color: $red;
+        text-align: center;
       }
       p{
         width: 50%;
@@ -656,5 +657,48 @@ $lightgrey: #f4f4f4;
         }
       }
     }
+  }
+  .animated-up{
+    position: relative;
+    opacity: 0;
+    transition: all 1s;
+    top: 30px;
+    &.fade-up{
+      opacity: 1;
+      top: 0;
+    }
+  }
+  .animated-right{
+    position: relative;
+    opacity: 0;
+    transition: all 1s;
+    right: 30px;
+    &.fade-right{
+      opacity: 1;
+      right: 0;
+    }
+  }
+  .animated-left{
+    position: relative;
+    opacity: 0;
+    transition: all 1s;
+    left: 30px;
+    &.fade-left{
+      opacity: 1;
+      left: 0;
+    }
+  }
+  slideshow{
+    height: 100%;
+    width: 100%;
+    padding: 4% 4% 0 5%;
+  }
+  .ui-carousel-header {
+    margin: 0px 1px;
+    height: 0px;
+    overflow: hidden;
+    padding: 7px 10px 8px;
+    display: none !important;
+    border: 0;
   }
 }

@@ -22,6 +22,12 @@ export class HomeComponent implements OnInit {
   formOne = false;
   formTwo = false;
   formThree = false;
+  screens = [
+    'assets/images/screen2.jpg',
+    'assets/images/screen3.jpg',
+    'assets/images/screen4.jpg',
+    'assets/images/screen5.jpg'
+  ]
 
   constructor(
     public userService: UserService,
@@ -83,6 +89,11 @@ export class HomeComponent implements OnInit {
             if(type == 'General')
               this.formThree = true;
         });
+  }
+
+  //Reveal on scroll function
+  revealOnScroll(){
+
   }
 
 }

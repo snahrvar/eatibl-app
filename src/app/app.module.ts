@@ -52,6 +52,7 @@ import { ActivityComponent } from './analytics/activity/activity.component';
 import { DailyDataComponent } from './analytics/daily-data/daily-data.component';
 import { SuperUserComponent } from './analytics/super-user/super-user.component';
 import { FunnelComponent } from './analytics/funnel/funnel.component';
+import { AnimateOnScrollModule } from 'ng2-animate-on-scroll';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -114,7 +115,8 @@ const routes: Routes = [
     RestaurantAppModule,
     RouterModule.forRoot(routes),
     FacebookModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    AnimateOnScrollModule.forRoot()
   ],
   entryComponents: [DialogConfirmComponent, DialogTermsComponent, DialogForgotPasswordComponent],
   providers: [SampleService, ClockService, FunctionsService, UserService, AuthGuard, AuthGuardAdmin,
